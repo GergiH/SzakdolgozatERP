@@ -1,0 +1,145 @@
+﻿@model ERPSzakdolgozat.Models.Employee
+
+@{
+	ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Employee</h4>
+<hr />
+<div class="row">
+	<form asp-action="Edit">
+		<div class="col-md-6 col-md-offset-3">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#general" data-toggle="tab" aria-expanded="true">General</a></li>
+				<li class=""><a href="#financials" data-toggle="tab" aria-expanded="false">Financials</a></li>
+			</ul>
+			<div id="employeeTabs" class="tab-content">
+				<div class="tab-pane fade active in" id="general">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<div class="form-group">
+						<label asp-for="Name" class="control-label"></label>
+						<input asp-for="Name" class="form-control" />
+						<span asp-validation-for="Name" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="DateOfBirth" class="control-label"></label>
+						<input asp-for="DateOfBirth" class="form-control" />
+						<span asp-validation-for="DateOfBirth" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="JoinedOn" class="control-label"></label>
+						<input asp-for="JoinedOn" class="form-control" />
+						<span asp-validation-for="JoinedOn" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="LeavingOn" class="control-label"></label>
+						<input asp-for="LeavingOn" class="form-control" />
+						<span asp-validation-for="LeavingOn" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<div class="checkbox">
+							<label>
+								<input asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+							</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label asp-for="CompanyIdentifier" class="control-label"></label>
+						<input asp-for="CompanyIdentifier" class="form-control" />
+						<span asp-validation-for="CompanyIdentifier" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="LeaderId" class="control-label"></label>
+						@*<input asp-for="LeaderId" class="form-control" />*@
+						<select asp-for="LeaderId" asp-items="@(new SelectList(@ViewBag.Leaders, "Value", "Text", Model.LeaderId))" class="form-control"></select>
+						<span asp-validation-for="LeaderId" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="TeamId" class="control-label"></label>
+						<input asp-for="TeamId" class="form-control" />
+						<span asp-validation-for="TeamId" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="HomeZIP" class="control-label"></label>
+						<input asp-for="HomeZIP" class="form-control" />
+						<span asp-validation-for="HomeZIP" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="HomeCountry" class="control-label"></label>
+						<input asp-for="HomeCountry" class="form-control" />
+						<span asp-validation-for="HomeCountry" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="HomeCity" class="control-label"></label>
+						<input asp-for="HomeCity" class="form-control" />
+						<span asp-validation-for="HomeCity" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="HomeStreet" class="control-label"></label>
+						<input asp-for="HomeStreet" class="form-control" />
+						<span asp-validation-for="HomeStreet" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="MailZIP" class="control-label"></label>
+						<input asp-for="MailZIP" class="form-control" />
+						<span asp-validation-for="MailZIP" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="MailCountry" class="control-label"></label>
+						<input asp-for="MailCountry" class="form-control" />
+						<span asp-validation-for="MailCountry" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="MailCity" class="control-label"></label>
+						<input asp-for="MailCity" class="form-control" />
+						<span asp-validation-for="MailCity" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="MailStreet" class="control-label"></label>
+						<input asp-for="MailStreet" class="form-control" />
+						<span asp-validation-for="MailStreet" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<div class="checkbox">
+							<label>
+								<input asp-for="SameAddress" /> @Html.DisplayNameFor(model => model.SameAddress)
+							</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label asp-for="Mobile" class="control-label"></label>
+						<input asp-for="Mobile" class="form-control" />
+						<span asp-validation-for="Mobile" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="Email" class="control-label"></label>
+						<input asp-for="Email" class="form-control" />
+						<span asp-validation-for="Email" class="text-danger"></span>
+					</div>
+
+					<input type="hidden" asp-for="Id" />
+					<input type="hidden" asp-for="CreatedDate" />
+					<input type="hidden" asp-for="ModifiedDate" />
+				</div>
+				<div class="tab-pane fade" id="financials">
+					<p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<a asp-action="Index" class="btn btn-default">Back to List</a>
+				<input type="submit" value="Save" class="btn btn-primary pull-right" />
+			</div>
+		</div>
+	</form>
+</div>
+
+<div>
+	
+</div>
+
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
