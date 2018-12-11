@@ -12,22 +12,6 @@ body {
     padding-right: 15px;
 }
 
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
-}
-
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
-}
-
-/* QR code generator */
-#qrCode {
-    margin: 15px;
-}
-
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */
@@ -35,3 +19,39 @@ body {
         display: none;
     }
 }
+
+.navbar-default {
+	background-color: #f7f7f7;
+}
+
+/* Navbar size related stuff */
+.navbar {
+	min-height: 50px;
+}
+
+.navbar-brand {
+	padding: 0 15px;
+	height: 50px;
+	line-height: 50px;
+}
+
+.navbar-toggle {
+	/* (50px - button height 34px) / 2 = 8px */
+	margin-top: 8px;
+	padding: 9px 10px !important;
+}
+
+.navbar-text {
+	margin-top: 11.5px;
+	margin-bottom: 11.5px;
+}
+
+@media (min-width: 768px) {
+	.navbar-nav > li > a {
+		/* (50px - line-height of 27px) / 2 = 11.5px */
+		padding-top: 11.5px;
+		padding-bottom: 11.5px;
+		line-height: 27px;
+	}
+}
+/* End of size related stuff */

@@ -165,10 +165,18 @@ namespace ERPSzakdolgozat.Controllers
 
 		private void FillDropdownLists()
 		{
-			ViewBag.Leaders = _context.Employees.Where(e => e.IsLeader).Select(e => new SelectListItem
+			ViewBag.Leaders = _context.Employees
+				.Where(e => e.IsLeader)
+				.Select(e => new SelectListItem
+				{
+					Value = e.Id.ToString(),
+					Text = e.Name
+				});
+
+			ViewBag.Teams = _context.Teams.Select(t => new SelectListItem
 			{
-				Value = e.Id.ToString(),
-				Text = e.Name
+				Value = t.Id.ToString(),
+				Text = t.Name
 			});
 		}
 	}

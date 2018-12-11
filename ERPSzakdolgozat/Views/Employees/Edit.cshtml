@@ -18,25 +18,34 @@
 			<div id="employeeTabs" class="tab-content">
 				<div class="tab-pane fade active in" id="general">
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-					<div class="form-group">
-						<label asp-for="Name" class="control-label"></label>
-						<input asp-for="Name" class="form-control" />
-						<span asp-validation-for="Name" class="text-danger"></span>
+					<div class="form-group row">
+						<div class="col-md-4">
+							<label asp-for="CompanyIdentifier" class="control-label"></label>
+							<input asp-for="CompanyIdentifier" class="form-control" />
+							<span asp-validation-for="CompanyIdentifier" class="text-danger"></span>
+						</div>
+						<div class="col-md-8">
+							<label asp-for="Name" class="control-label"></label>
+							<input asp-for="Name" class="form-control" />
+							<span asp-validation-for="Name" class="text-danger"></span>
+						</div>
 					</div>
 					<div class="form-group">
 						<label asp-for="DateOfBirth" class="control-label"></label>
 						<input asp-for="DateOfBirth" class="form-control" />
 						<span asp-validation-for="DateOfBirth" class="text-danger"></span>
 					</div>
-					<div class="form-group">
-						<label asp-for="JoinedOn" class="control-label"></label>
-						<input asp-for="JoinedOn" class="form-control" />
-						<span asp-validation-for="JoinedOn" class="text-danger"></span>
-					</div>
-					<div class="form-group">
-						<label asp-for="LeavingOn" class="control-label"></label>
-						<input asp-for="LeavingOn" class="form-control" />
-						<span asp-validation-for="LeavingOn" class="text-danger"></span>
+					<div class="form-group row">
+						<div class="col-md-6">
+							<label asp-for="JoinedOn" class="control-label"></label>
+							<input asp-for="JoinedOn" class="form-control" />
+							<span asp-validation-for="JoinedOn" class="text-danger"></span>
+						</div>
+						<div class="col-md-6">
+							<label asp-for="LeavingOn" class="control-label"></label>
+							<input asp-for="LeavingOn" class="form-control" />
+							<span asp-validation-for="LeavingOn" class="text-danger"></span>
+						</div>
 					</div>
 					<div class="form-group">
 						<div class="checkbox">
@@ -45,36 +54,36 @@
 							</label>
 						</div>
 					</div>
-					<div class="form-group">
-						<label asp-for="CompanyIdentifier" class="control-label"></label>
-						<input asp-for="CompanyIdentifier" class="form-control" />
-						<span asp-validation-for="CompanyIdentifier" class="text-danger"></span>
+					<div class="form-group row">
+						<div class="col-md-6">
+							<label asp-for="LeaderId" class="control-label"></label>
+							<select asp-for="LeaderId" asp-items="@(new SelectList(@ViewBag.Leaders, "Value", "Text", Model.LeaderId))" class="form-control"></select>
+							<span asp-validation-for="LeaderId" class="text-danger"></span>
+						</div>
+						<div class="col-md-6">
+							<label asp-for="TeamId" class="control-label"></label>
+							<select asp-for="LeaderId" asp-items="@(new SelectList(@ViewBag.Teams, "Value", "Text", Model.TeamId))" class="form-control"></select>
+							<span asp-validation-for="TeamId" class="text-danger"></span>
+						</div>
 					</div>
-					<div class="form-group">
-						<label asp-for="LeaderId" class="control-label"></label>
-						@*<input asp-for="LeaderId" class="form-control" />*@
-						<select asp-for="LeaderId" asp-items="@(new SelectList(@ViewBag.Leaders, "Value", "Text", Model.LeaderId))" class="form-control"></select>
-						<span asp-validation-for="LeaderId" class="text-danger"></span>
-					</div>
-					<div class="form-group">
-						<label asp-for="TeamId" class="control-label"></label>
-						<input asp-for="TeamId" class="form-control" />
-						<span asp-validation-for="TeamId" class="text-danger"></span>
-					</div>
-					<div class="form-group">
-						<label asp-for="HomeZIP" class="control-label"></label>
-						<input asp-for="HomeZIP" class="form-control" />
-						<span asp-validation-for="HomeZIP" class="text-danger"></span>
-					</div>
+
+					<h5>Contact</h5>
 					<div class="form-group">
 						<label asp-for="HomeCountry" class="control-label"></label>
 						<input asp-for="HomeCountry" class="form-control" />
 						<span asp-validation-for="HomeCountry" class="text-danger"></span>
 					</div>
-					<div class="form-group">
-						<label asp-for="HomeCity" class="control-label"></label>
-						<input asp-for="HomeCity" class="form-control" />
-						<span asp-validation-for="HomeCity" class="text-danger"></span>
+					<div class="form-group row">
+						<div class="col-md-3">
+							<label asp-for="HomeZIP" class="control-label"></label>
+							<input asp-for="HomeZIP" class="form-control" />
+							<span asp-validation-for="HomeZIP" class="text-danger"></span>
+						</div>
+						<div class="col-md-9">
+							<label asp-for="HomeCity" class="control-label"></label>
+							<input asp-for="HomeCity" class="form-control" />
+							<span asp-validation-for="HomeCity" class="text-danger"></span>
+						</div>
 					</div>
 					<div class="form-group">
 						<label asp-for="HomeStreet" class="control-label"></label>
