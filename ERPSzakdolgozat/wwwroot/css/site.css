@@ -21,7 +21,7 @@ body {
 }
 
 .navbar-default {
-	background-color: #f7f7f7;
+	background-color: #f8f8f8;
 }
 
 /* Navbar size related stuff */
@@ -55,3 +55,11 @@ body {
 	}
 }
 /* End of size related stuff */
+
+.nav-tabs {
+	margin-bottom: 10px;
+}
+
+.well {
+	background-color: #f8f8f8;
+}

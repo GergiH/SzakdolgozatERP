@@ -54,13 +54,19 @@ namespace ERPSzakdolgozat.Controllers
 				return NotFound();
 			}
 
-			return View(employee);
+			FillDropdownLists();
+			ViewBag.IsDetails = "true";
+
+			return View("Edit", employee);
 		}
 
 		// GET: Employees/Create
 		public IActionResult Create()
 		{
-			return View();
+			Employee employee = new Employee();
+			FillDropdownLists();
+
+			return View(employee);
 		}
 
 		// POST: Employees/Create
