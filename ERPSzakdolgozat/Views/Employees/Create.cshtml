@@ -13,6 +13,7 @@
 		<div class="col-md-8 col-md-offset-2">
 			<div class="well">
 				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
 				<div class="form-group row">
 					<div class="col-md-4">
 						<label asp-for="CompanyIdentifier" class="control-label"></label>
@@ -136,17 +137,18 @@
 							<span asp-validation-for="MailStreet" class="text-danger"></span>
 						</div>
 					</div>
-
-					<input type="hidden" asp-for="Id" />
-					<input type="hidden" asp-for="CreatedDate" />
-					<input type="hidden" asp-for="ModifiedDate" />
-
-					<div class="form-group">
-						<a asp-action="Index" class="btn btn-default">Back to List</a>
-						<input type="submit" value="Create" class="btn btn-success pull-right" />
-					</div>
 				</div>
 			</div>
+
+			<input type="hidden" asp-for="Id" />
+			<input type="hidden" asp-for="CreatedDate" />
+			<input type="hidden" asp-for="ModifiedDate" />
+
+			<div class="form-group">
+				<a asp-action="Index" class="btn btn-default">Back to List</a>
+				<input type="submit" value="Create" class="btn btn-success pull-right" />
+			</div>
+		</div>
 	</form>
 </div>
 

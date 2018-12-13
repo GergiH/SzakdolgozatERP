@@ -61,5 +61,13 @@ body {
 }
 
 .well {
-	background-color: #f8f8f8;
+	background-color: #f1f1ff;
+}
+
+.list-group-item {
+	padding: 20px;
+}
+
+.disabled-item {
+	background-color: #f4f4f4;
 }

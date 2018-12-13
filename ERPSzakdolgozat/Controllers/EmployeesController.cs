@@ -48,6 +48,7 @@ namespace ERPSzakdolgozat.Controllers
 			}
 
 			var employee = await _context.Employees
+				.Include(e => e.EmployeeFinancials)
 				.FirstOrDefaultAsync(m => m.Id == id);
 			if (employee == null)
 			{
@@ -56,6 +57,14 @@ namespace ERPSzakdolgozat.Controllers
 
 			FillDropdownLists();
 			ViewBag.IsDetails = "true";
+			ViewBag.LeaderName = _context.Employees
+				.Where(e => e.Id == employee.LeaderId)
+				.Select(e => e.Name)
+				.FirstOrDefault();
+			ViewBag.TeamName = _context.Teams
+				.Where(e => e.Id == employee.TeamId)
+				.Select(e => e.Name)
+				.FirstOrDefault();
 
 			return View("Edit", employee);
 		}
@@ -76,6 +85,8 @@ namespace ERPSzakdolgozat.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+				// TODO create a financial record as well
+
 				_context.Add(employee);
 				await _context.SaveChangesAsync();
 				return RedirectToAction(nameof(Index));
@@ -91,7 +102,9 @@ namespace ERPSzakdolgozat.Controllers
 				return NotFound();
 			}
 
-			var employee = await _context.Employees.FindAsync(id);
+			var employee = await _context.Employees
+				.Include(e => e.EmployeeFinancials)
+				.FirstOrDefaultAsync(e => e.Id == id);
 			if (employee == null)
 			{
 				return NotFound();
@@ -130,6 +143,9 @@ namespace ERPSzakdolgozat.Controllers
 						throw;
 					}
 				}
+
+				// TODO if leave date is on, active should be false
+
 				return RedirectToAction(nameof(Index));
 			}
 			return View(employee);
@@ -184,6 +200,28 @@ namespace ERPSzakdolgozat.Controllers
 				Value = t.Id.ToString(),
 				Text = t.Name
 			});
+
+			ViewBag.Currencies = _context.Currencies.Select(c => new SelectListItem
+			{
+				Value = c.Id.ToString(),
+				Text = c.Name
+			});
+
+			ViewBag.Roles = _context.Roles
+				.Where(r => r.IsSelectable == true)
+				.Select(r => new SelectListItem
+				{
+					Value = r.Id.ToString(),
+					Text = r.Name
+				});
+
+			ViewBag.SkillLevels = _context.SkillLevels
+				.Where(s => s.IsSelectable == true)
+				.Select(s => new SelectListItem
+				{
+					Value = s.Id.ToString(),
+					Text = s.Name
+				});
 		}
 	}
 }

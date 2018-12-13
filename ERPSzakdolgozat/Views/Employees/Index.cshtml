@@ -71,11 +71,12 @@
 				<td>
 					<div class="dropdown">
 						<button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-							...
+							<i class="glyphicon glyphicon-option-horizontal"></i>
 						</button>
 						<ul class="dropdown-menu dropdown-menu-right">
 							<li><a asp-action="Edit" asp-route-id="@item.Id">Edit</a></li>
 							<li><a asp-action="Details" asp-route-id="@item.Id">Details</a></li>
+							<li class="divider"></li>
 							<li><a asp-action="Delete" asp-route-id="@item.Id">Delete</a></li>
 						</ul>
 					</div>

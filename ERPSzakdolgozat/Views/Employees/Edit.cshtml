@@ -31,9 +31,10 @@ else
 			</ul>
 
 			<div class="well">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
 				<div id="employeeTabs" class="tab-content">
 					<div class="tab-pane fade active in" id="general">
-						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 						<div class="form-group row">
 							<div class="col-md-4">
 								<label asp-for="CompanyIdentifier" class="control-label"></label>
@@ -72,14 +73,43 @@ else
 						</div>
 						<div class="form-group row">
 							<div class="col-md-6">
-								<label asp-for="LeaderId" class="control-label">Leader</label>
-								<select asp-for="LeaderId" asp-items="@(new SelectList(@ViewBag.Leaders, "Value", "Text", Model.LeaderId))" class="form-control"></select>
-								<span asp-validation-for="LeaderId" class="text-danger"></span>
+								<label asp-for="RoleId" class="control-label"></label>
+								<select asp-for="RoleId" asp-items="@(new SelectList(@ViewBag.Roles, "Value", "Text", Model.TeamId))" class="form-control"></select>
+								<span asp-validation-for="RoleId" class="text-danger"></span>
 							</div>
 							<div class="col-md-6">
-								<label asp-for="TeamId" class="control-label">Team</label>
-								<select asp-for="LeaderId" asp-items="@(new SelectList(@ViewBag.Teams, "Value", "Text", Model.TeamId))" class="form-control"></select>
-								<span asp-validation-for="TeamId" class="text-danger"></span>
+								<label asp-for="SkillLevelId" class="control-label"></label>
+								<select asp-for="SkillLevelId" asp-items="@(new SelectList(@ViewBag.SkillLevels, "Value", "Text", Model.SkillLevelId))" class="form-control"></select>
+								<span asp-validation-for="SkillLevelId" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-md-6">
+								@if (ViewBag.IsDetails == "true")
+								{
+									<label asp-for="LeaderId" class="control-label">Leader</label>
+									<input value="@(ViewBag.LeaderName)" class="form-control" />
+								}
+								else
+								{
+									<label asp-for="LeaderId" class="control-label">Leader</label>
+									<select asp-for="LeaderId" asp-items="@(new SelectList(@ViewBag.Leaders, "Value", "Text", Model.LeaderId))" class="form-control"></select>
+									<span asp-validation-for="LeaderId" class="text-danger"></span>
+								}
+
+							</div>
+							<div class="col-md-6">
+								@if (ViewBag.IsDetails == "true")
+								{
+									<label asp-for="TeamId" class="control-label">Team</label>
+									<input value="@(ViewBag.TeamName)" class="form-control" />
+								}
+								else
+								{
+									<label asp-for="TeamId" class="control-label">Team</label>
+									<select asp-for="TeamId" asp-items="@(new SelectList(@ViewBag.Teams, "Value", "Text", Model.TeamId))" class="form-control"></select>
+									<span asp-validation-for="TeamId" class="text-danger"></span>
+								}
 							</div>
 						</div>
 
@@ -163,8 +193,94 @@ else
 						<input type="hidden" asp-for="CreatedDate" />
 						<input type="hidden" asp-for="ModifiedDate" />
 					</div>
+
 					<div class="tab-pane fade" id="financials">
-						<p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
+						<div class="list-group">
+							<div class="list-group-item">
+								<h5 class="list-group-item-heading">Latest</h5>
+
+								<div class="form-group row">
+									<div class="col-md-4">
+										<label asp-for="EmployeeFinancials[0].ActiveFrom" class="control-label"></label>
+										<input asp-for="EmployeeFinancials[0].ActiveFrom" class="form-control" />
+										<span asp-validation-for="EmployeeFinancials[0].ActiveFrom" class="text-danger"></span>
+									</div>
+									<div class="col-md-4">
+										<label asp-for="EmployeeFinancials[0].CurrencyId" class="control-label">Currency</label>
+										<select asp-for="EmployeeFinancials[0].CurrencyId" asp-items="@(new SelectList(@ViewBag.Currencies, "Value", "Text", Model.EmployeeFinancials[0].CurrencyId))" class="form-control"></select>
+										<span asp-validation-for="EmployeeFinancials[0].CurrencyId" class="text-danger"></span>
+									</div>
+									<div class="col-md-4">
+										<label asp-for="EmployeeFinancials[0].WorkHours" class="control-label"></label>
+										<input asp-for="EmployeeFinancials[0].WorkHours" class="form-control" />
+										<span asp-validation-for="EmployeeFinancials[0].WorkHours" class="text-danger"></span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label asp-for="EmployeeFinancials[0].GrossSalary" class="control-label"></label>
+									<input asp-for="EmployeeFinancials[0].GrossSalary" class="form-control" />
+									<span asp-validation-for="EmployeeFinancials[0].GrossSalary" class="text-danger"></span>
+								</div>
+								<div class="form-group">
+									<label asp-for="EmployeeFinancials[0].Cafeteria" class="control-label"></label>
+									<input asp-for="EmployeeFinancials[0].Cafeteria" class="form-control" />
+									<span asp-validation-for="EmployeeFinancials[0].Cafeteria" class="text-danger"></span>
+								</div>
+								<div class="form-group">
+									<label asp-for="EmployeeFinancials[0].Bonus" class="control-label"></label>
+									<input asp-for="EmployeeFinancials[0].Bonus" class="form-control" />
+									<span asp-validation-for="EmployeeFinancials[0].Bonus" class="text-danger"></span>
+								</div>
+							</div>
+
+							<input type="hidden" asp-for="EmployeeFinancials[0].Id" />
+							<input type="hidden" asp-for="EmployeeFinancials[0].CreatedDate" />
+							<input type="hidden" asp-for="EmployeeFinancials[0].ModifiedDate" />
+
+							@if (Model.EmployeeFinancials.Count > 1)
+							{
+								for (int i = 1; i < Model.EmployeeFinancials.Count; i++)
+								{
+									<div class="list-group-item disabled-item">
+										<h5 class="list-group-item-heading">@Model.EmployeeFinancials[i].ActiveFrom.ToString("d")</h5>
+
+										<div class="form-group row">
+											<div class="col-md-6">
+												<label asp-for="EmployeeFinancials[i].CurrencyId" class="control-label">Currency</label>
+												<select asp-for="EmployeeFinancials[i].CurrencyId" asp-items="@(new SelectList(@ViewBag.Currencies, "Value", "Text", Model.EmployeeFinancials[i].CurrencyId))" class="form-control" disabled></select>
+												<span asp-validation-for="EmployeeFinancials[i].CurrencyId" class="text-danger"></span>
+												<input asp-for="EmployeeFinancials[i].CurrencyId" type="hidden" />
+											</div>
+											<div class="col-md-6">
+												<label asp-for="EmployeeFinancials[i].WorkHours" class="control-label"></label>
+												<input asp-for="EmployeeFinancials[i].WorkHours" class="form-control" readonly />
+												<span asp-validation-for="EmployeeFinancials[i].WorkHours" class="text-danger"></span>
+											</div>
+										</div>
+										<div class="form-group">
+											<label asp-for="EmployeeFinancials[i].GrossSalary" class="control-label"></label>
+											<input asp-for="EmployeeFinancials[i].GrossSalary" class="form-control" readonly />
+											<span asp-validation-for="EmployeeFinancials[i].GrossSalary" class="text-danger"></span>
+										</div>
+										<div class="form-group">
+											<label asp-for="EmployeeFinancials[i].Cafeteria" class="control-label"></label>
+											<input asp-for="EmployeeFinancials[i].Cafeteria" class="form-control" readonly />
+											<span asp-validation-for="EmployeeFinancials[i].Cafeteria" class="text-danger"></span>
+										</div>
+										<div class="form-group">
+											<label asp-for="EmployeeFinancials[i].Bonus" class="control-label"></label>
+											<input asp-for="EmployeeFinancials[i].Bonus" class="form-control" readonly />
+											<span asp-validation-for="EmployeeFinancials[i].Bonus" class="text-danger"></span>
+										</div>
+									</div>
+
+									<input type="hidden" asp-for="EmployeeFinancials[i].Id" />
+									<input type="hidden" asp-for="EmployeeFinancials[i].CreatedDate" />
+									<input type="hidden" asp-for="EmployeeFinancials[i].ModifiedDate" />
+									<input type="hidden" asp-for="EmployeeFinancials[i].ActiveFrom" />
+								}
+							}
+						</div>
 					</div>
 				</div>
 			</div>

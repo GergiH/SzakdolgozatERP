@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ERPSzakdolgozat.Models
@@ -19,6 +20,12 @@ namespace ERPSzakdolgozat.Models
 
 		[Required]
 		public string CompanyIdentifier { get; set; }
+
+		[Required]
+		public int SkillLevelId { get; set; }
+
+		[Required]
+		public int RoleId { get; set; }
 
 		[Required]
 		public int LeaderId { get; set; }
@@ -49,5 +56,7 @@ namespace ERPSzakdolgozat.Models
 
 		[Required]
 		public string Email { get; set; }
+
+		public List<EmployeeFinancial> EmployeeFinancials { get; set; }
 	}
 }
