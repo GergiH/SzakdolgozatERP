@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ERPSzakdolgozat.Models
 {
@@ -7,6 +8,7 @@ namespace ERPSzakdolgozat.Models
 	{
 		[Key]
 		[Required]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
 
 		[Required]

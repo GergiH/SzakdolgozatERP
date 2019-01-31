@@ -30,257 +30,325 @@ else
 				<li class=""><a href="#financials" data-toggle="tab" aria-expanded="false">Financials</a></li>
 			</ul>
 
-			<div class="well">
-				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-				<div id="employeeTabs" class="tab-content">
-					<div class="tab-pane fade active in" id="general">
-						<div class="form-group row">
-							<div class="col-md-4">
-								<label asp-for="CompanyIdentifier" class="control-label"></label>
-								<input asp-for="CompanyIdentifier" class="form-control" />
-								<span asp-validation-for="CompanyIdentifier" class="text-danger"></span>
-							</div>
-							<div class="col-md-8">
+			<div id="employeeTabs" class="tab-content">
+				<div class="tab-pane fade active in" id="general">
+					<div class="form-group">
+						<div class="checkbox">
+							<label>
+								<input asp-for="Active" /> <strong>@Html.DisplayNameFor(model => model.Active)</strong>
+							</label>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-md-4">
+							<label asp-for="CompanyIdentifier" class="control-label"></label>
+							<input asp-for="CompanyIdentifier" class="form-control" />
+							<span asp-validation-for="CompanyIdentifier" class="text-danger"></span>
+						</div>
+						<div class="col-md-8">
+							@if (ViewBag.IsDetails == "true")
+							{
 								<label asp-for="Name" class="control-label"></label>
 								<input asp-for="Name" class="form-control" />
-								<span asp-validation-for="Name" class="text-danger"></span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label asp-for="DateOfBirth" class="control-label"></label>
-							<input asp-for="DateOfBirth" class="form-control" />
-							<span asp-validation-for="DateOfBirth" class="text-danger"></span>
-						</div>
-						<div class="form-group row">
-							<div class="col-md-6">
-								<label asp-for="JoinedOn" class="control-label"></label>
-								<input asp-for="JoinedOn" class="form-control" />
-								<span asp-validation-for="JoinedOn" class="text-danger"></span>
-							</div>
-							<div class="col-md-6">
-								<label asp-for="LeavingOn" class="control-label"></label>
-								<input asp-for="LeavingOn" class="form-control" />
-								<span asp-validation-for="LeavingOn" class="text-danger"></span>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="checkbox">
-								<label>
-									<input asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
-								</label>
-							</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-md-6">
-								<label asp-for="RoleId" class="control-label"></label>
-								<select asp-for="RoleId" asp-items="@(new SelectList(@ViewBag.Roles, "Value", "Text", Model.TeamId))" class="form-control"></select>
-								<span asp-validation-for="RoleId" class="text-danger"></span>
-							</div>
-							<div class="col-md-6">
-								<label asp-for="SkillLevelId" class="control-label"></label>
-								<select asp-for="SkillLevelId" asp-items="@(new SelectList(@ViewBag.SkillLevels, "Value", "Text", Model.SkillLevelId))" class="form-control"></select>
-								<span asp-validation-for="SkillLevelId" class="text-danger"></span>
-							</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-md-6">
-								@if (ViewBag.IsDetails == "true")
-								{
-									<label asp-for="LeaderId" class="control-label">Leader</label>
-									<input value="@(ViewBag.LeaderName)" class="form-control" />
-								}
-								else
-								{
-									<label asp-for="LeaderId" class="control-label">Leader</label>
-									<select asp-for="LeaderId" asp-items="@(new SelectList(@ViewBag.Leaders, "Value", "Text", Model.LeaderId))" class="form-control"></select>
-									<span asp-validation-for="LeaderId" class="text-danger"></span>
-								}
-
-							</div>
-							<div class="col-md-6">
-								@if (ViewBag.IsDetails == "true")
-								{
-									<label asp-for="TeamId" class="control-label">Team</label>
-									<input value="@(ViewBag.TeamName)" class="form-control" />
-								}
-								else
-								{
-									<label asp-for="TeamId" class="control-label">Team</label>
-									<select asp-for="TeamId" asp-items="@(new SelectList(@ViewBag.Teams, "Value", "Text", Model.TeamId))" class="form-control"></select>
-									<span asp-validation-for="TeamId" class="text-danger"></span>
-								}
-							</div>
-						</div>
-
-						<h4>Contact</h4>
-
-						<div class="form-group">
-							<label asp-for="Mobile" class="control-label"></label>
-							<input asp-for="Mobile" class="form-control" />
-							<span asp-validation-for="Mobile" class="text-danger"></span>
-						</div>
-						<div class="form-group">
-							<label asp-for="Email" class="control-label"></label>
-							<input asp-for="Email" class="form-control" />
-							<span asp-validation-for="Email" class="text-danger"></span>
-						</div>
-
-						<div class="list-group">
-							<div class="list-group-item">
-								<h5 class="list-group-item-heading">Home</h5>
-
-								<div class="form-group">
-									<label asp-for="HomeCountry" class="control-label">Country</label>
-									<input asp-for="HomeCountry" class="form-control" />
-									<span asp-validation-for="HomeCountry" class="text-danger"></span>
-								</div>
-								<div class="form-group row">
-									<div class="col-md-3">
-										<label asp-for="HomeZIP" class="control-label">ZIP</label>
-										<input asp-for="HomeZIP" class="form-control" />
-										<span asp-validation-for="HomeZIP" class="text-danger"></span>
-									</div>
-									<div class="col-md-9">
-										<label asp-for="HomeCity" class="control-label">City</label>
-										<input asp-for="HomeCity" class="form-control" />
-										<span asp-validation-for="HomeCity" class="text-danger"></span>
-									</div>
-								</div>
-								<div class="form-group">
-									<label asp-for="HomeStreet" class="control-label">Street</label>
-									<input asp-for="HomeStreet" class="form-control" />
-									<span asp-validation-for="HomeStreet" class="text-danger"></span>
-								</div>
-							</div>
-
-							<div class="list-group-item">
-								<h5 class="list-group-item-heading">Mailing</h5>
-
-								<div class="form-group">
-									<div class="checkbox">
-										<label>
-											<input asp-for="SameAddress" /> @Html.DisplayNameFor(model => model.SameAddress)
-										</label>
-									</div>
-								</div>
-								<div class="form-group">
-									<label asp-for="MailCountry" class="control-label">Country</label>
-									<input asp-for="MailCountry" class="form-control mailAddress" readonly="@(Model.SameAddress == true ? true : false)" />
-									<span asp-validation-for="MailCountry" class="text-danger"></span>
-								</div>
-								<div class="form-group row">
-									<div class="col-md-3">
-										<label asp-for="MailZIP" class="control-label">ZIP</label>
-										<input asp-for="MailZIP" class="form-control mailAddress" readonly="@(Model.SameAddress == true ? true : false)" />
-										<span asp-validation-for="MailZIP" class="text-danger"></span>
-									</div>
-									<div class="col-md-9">
-										<label asp-for="MailCity" class="control-label">City</label>
-										<input asp-for="MailCity" class="form-control mailAddress" readonly="@(Model.SameAddress == true ? true : false)" />
-										<span asp-validation-for="MailCity" class="text-danger"></span>
-									</div>
-								</div>
-								<div class="form-group">
-									<label asp-for="MailStreet" class="control-label">Street</label>
-									<input asp-for="MailStreet" class="form-control mailAddress" readonly="@(Model.SameAddress == true ? true : false)" />
-									<span asp-validation-for="MailStreet" class="text-danger"></span>
-								</div>
-							</div>
-						</div>
-
-						<input type="hidden" asp-for="Id" />
-						<input type="hidden" asp-for="CreatedDate" />
-						<input type="hidden" asp-for="ModifiedDate" />
-					</div>
-
-					<div class="tab-pane fade" id="financials">
-						<div class="list-group">
-							<div class="list-group-item">
-								<h5 class="list-group-item-heading">Latest</h5>
-
-								<div class="form-group row">
-									<div class="col-md-4">
-										<label asp-for="EmployeeFinancials[0].ActiveFrom" class="control-label"></label>
-										<input asp-for="EmployeeFinancials[0].ActiveFrom" class="form-control" />
-										<span asp-validation-for="EmployeeFinancials[0].ActiveFrom" class="text-danger"></span>
-									</div>
-									<div class="col-md-4">
-										<label asp-for="EmployeeFinancials[0].CurrencyId" class="control-label">Currency</label>
-										<select asp-for="EmployeeFinancials[0].CurrencyId" asp-items="@(new SelectList(@ViewBag.Currencies, "Value", "Text", Model.EmployeeFinancials[0].CurrencyId))" class="form-control"></select>
-										<span asp-validation-for="EmployeeFinancials[0].CurrencyId" class="text-danger"></span>
-									</div>
-									<div class="col-md-4">
-										<label asp-for="EmployeeFinancials[0].WorkHours" class="control-label"></label>
-										<input asp-for="EmployeeFinancials[0].WorkHours" class="form-control" />
-										<span asp-validation-for="EmployeeFinancials[0].WorkHours" class="text-danger"></span>
-									</div>
-								</div>
-								<div class="form-group">
-									<label asp-for="EmployeeFinancials[0].GrossSalary" class="control-label"></label>
-									<input asp-for="EmployeeFinancials[0].GrossSalary" class="form-control" />
-									<span asp-validation-for="EmployeeFinancials[0].GrossSalary" class="text-danger"></span>
-								</div>
-								<div class="form-group">
-									<label asp-for="EmployeeFinancials[0].Cafeteria" class="control-label"></label>
-									<input asp-for="EmployeeFinancials[0].Cafeteria" class="form-control" />
-									<span asp-validation-for="EmployeeFinancials[0].Cafeteria" class="text-danger"></span>
-								</div>
-								<div class="form-group">
-									<label asp-for="EmployeeFinancials[0].Bonus" class="control-label"></label>
-									<input asp-for="EmployeeFinancials[0].Bonus" class="form-control" />
-									<span asp-validation-for="EmployeeFinancials[0].Bonus" class="text-danger"></span>
-								</div>
-							</div>
-
-							<input type="hidden" asp-for="EmployeeFinancials[0].Id" />
-							<input type="hidden" asp-for="EmployeeFinancials[0].CreatedDate" />
-							<input type="hidden" asp-for="EmployeeFinancials[0].ModifiedDate" />
-
-							@if (Model.EmployeeFinancials.Count > 1)
+							}
+							else
 							{
-								for (int i = 1; i < Model.EmployeeFinancials.Count; i++)
-								{
-									<div class="list-group-item disabled-item">
-										<h5 class="list-group-item-heading">@Model.EmployeeFinancials[i].ActiveFrom.ToString("d")</h5>
+								<label asp-for="Name" class="control-label"></label>
+								<div class="input-group">
+									<input asp-for="Name" class="form-control" readonly />
 
-										<div class="form-group row">
-											<div class="col-md-6">
-												<label asp-for="EmployeeFinancials[i].CurrencyId" class="control-label">Currency</label>
-												<select asp-for="EmployeeFinancials[i].CurrencyId" asp-items="@(new SelectList(@ViewBag.Currencies, "Value", "Text", Model.EmployeeFinancials[i].CurrencyId))" class="form-control" disabled></select>
-												<span asp-validation-for="EmployeeFinancials[i].CurrencyId" class="text-danger"></span>
-												<input asp-for="EmployeeFinancials[i].CurrencyId" type="hidden" />
-											</div>
-											<div class="col-md-6">
-												<label asp-for="EmployeeFinancials[i].WorkHours" class="control-label"></label>
-												<input asp-for="EmployeeFinancials[i].WorkHours" class="form-control" readonly />
-												<span asp-validation-for="EmployeeFinancials[i].WorkHours" class="text-danger"></span>
-											</div>
-										</div>
-										<div class="form-group">
-											<label asp-for="EmployeeFinancials[i].GrossSalary" class="control-label"></label>
-											<input asp-for="EmployeeFinancials[i].GrossSalary" class="form-control" readonly />
-											<span asp-validation-for="EmployeeFinancials[i].GrossSalary" class="text-danger"></span>
-										</div>
-										<div class="form-group">
-											<label asp-for="EmployeeFinancials[i].Cafeteria" class="control-label"></label>
-											<input asp-for="EmployeeFinancials[i].Cafeteria" class="form-control" readonly />
-											<span asp-validation-for="EmployeeFinancials[i].Cafeteria" class="text-danger"></span>
-										</div>
-										<div class="form-group">
-											<label asp-for="EmployeeFinancials[i].Bonus" class="control-label"></label>
-											<input asp-for="EmployeeFinancials[i].Bonus" class="form-control" readonly />
-											<span asp-validation-for="EmployeeFinancials[i].Bonus" class="text-danger"></span>
-										</div>
-									</div>
+									<span class="input-group-btn">
+										<button id="name-unlock" type="button" class="btn btn-default">Unlock</button>
+									</span>
+								</div>
+							}
 
-									<input type="hidden" asp-for="EmployeeFinancials[i].Id" />
-									<input type="hidden" asp-for="EmployeeFinancials[i].CreatedDate" />
-									<input type="hidden" asp-for="EmployeeFinancials[i].ModifiedDate" />
-									<input type="hidden" asp-for="EmployeeFinancials[i].ActiveFrom" />
-								}
+							<span asp-validation-for="Name" class="text-danger"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label asp-for="DateOfBirth" class="control-label"></label>
+						<input asp-for="DateOfBirth" class="form-control" />
+						<span asp-validation-for="DateOfBirth" class="text-danger"></span>
+					</div>
+					<div class="form-group row">
+						<div class="col-md-6">
+							<label asp-for="JoinedOn" class="control-label"></label>
+							<input asp-for="JoinedOn" class="form-control" />
+							<span asp-validation-for="JoinedOn" class="text-danger"></span>
+						</div>
+						<div class="col-md-6">
+							<label asp-for="LeavingOn" class="control-label"></label>
+							<input asp-for="LeavingOn" class="form-control" />
+							<span asp-validation-for="LeavingOn" class="text-danger"></span>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-md-6">
+							<label asp-for="RoleId" class="control-label"></label>
+							<select asp-for="RoleId" asp-items="@(new SelectList(@ViewBag.Roles, "Value", "Text", Model.TeamId))" class="form-control"></select>
+							<span asp-validation-for="RoleId" class="text-danger"></span>
+						</div>
+						<div class="col-md-6">
+							<label asp-for="SkillLevelId" class="control-label"></label>
+							<select asp-for="SkillLevelId" asp-items="@(new SelectList(@ViewBag.SkillLevels, "Value", "Text", Model.SkillLevelId))" class="form-control"></select>
+							<span asp-validation-for="SkillLevelId" class="text-danger"></span>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-md-6">
+							@if (ViewBag.IsDetails == "true")
+							{
+								<label asp-for="LeaderId" class="control-label">Leader</label>
+								<input value="@(ViewBag.LeaderName)" class="form-control" />
+							}
+							else
+							{
+								<label asp-for="LeaderId" class="control-label">Leader</label>
+								<select asp-for="LeaderId" asp-items="@(new SelectList(@ViewBag.Leaders, "Value", "Text", Model.LeaderId))" class="form-control"></select>
+								<span asp-validation-for="LeaderId" class="text-danger"></span>
+							}
+
+						</div>
+						<div class="col-md-6">
+							@if (ViewBag.IsDetails == "true")
+							{
+								<label asp-for="TeamId" class="control-label">Team</label>
+								<input value="@(ViewBag.TeamName)" class="form-control" />
+							}
+							else
+							{
+								<label asp-for="TeamId" class="control-label">Team</label>
+								<select asp-for="TeamId" asp-items="@(new SelectList(@ViewBag.Teams, "Value", "Text", Model.TeamId))" class="form-control"></select>
+								<span asp-validation-for="TeamId" class="text-danger"></span>
 							}
 						</div>
+					</div>
+
+					<h4>Contact</h4>
+
+					<div class="form-group">
+						<label asp-for="Mobile" class="control-label"></label>
+						<input asp-for="Mobile" class="form-control" />
+						<span asp-validation-for="Mobile" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="Email" class="control-label"></label>
+						<input asp-for="Email" class="form-control" />
+						<span asp-validation-for="Email" class="text-danger"></span>
+					</div>
+
+					<div class="list-group">
+						<div class="list-group-item">
+							<h4 class="list-group-item-heading">Home</h4>
+
+							<div class="form-group">
+								<label asp-for="HomeCountry" class="control-label">Country</label>
+								<input asp-for="HomeCountry" class="form-control" />
+								<span asp-validation-for="HomeCountry" class="text-danger"></span>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-3">
+									<label asp-for="HomeZIP" class="control-label">ZIP</label>
+									<input asp-for="HomeZIP" class="form-control" />
+									<span asp-validation-for="HomeZIP" class="text-danger"></span>
+								</div>
+								<div class="col-md-9">
+									<label asp-for="HomeCity" class="control-label">City</label>
+									<input asp-for="HomeCity" class="form-control" />
+									<span asp-validation-for="HomeCity" class="text-danger"></span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label asp-for="HomeStreet" class="control-label">Street</label>
+								<input asp-for="HomeStreet" class="form-control" />
+								<span asp-validation-for="HomeStreet" class="text-danger"></span>
+							</div>
+						</div>
+
+						<div class="list-group-item">
+							<h4 class="list-group-item-heading">Mailing</h4>
+
+							<div class="form-group">
+								<div class="checkbox">
+									<label>
+										<input asp-for="SameAddress" /> Same as Home Address
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label asp-for="MailCountry" class="control-label">Country</label>
+								<input asp-for="MailCountry" class="form-control mailAddress" readonly="@(Model.SameAddress == true ? true : false)" />
+								<span asp-validation-for="MailCountry" class="text-danger"></span>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-3">
+									<label asp-for="MailZIP" class="control-label">ZIP</label>
+									<input asp-for="MailZIP" class="form-control mailAddress" readonly="@(Model.SameAddress == true ? true : false)" />
+									<span asp-validation-for="MailZIP" class="text-danger"></span>
+								</div>
+								<div class="col-md-9">
+									<label asp-for="MailCity" class="control-label">City</label>
+									<input asp-for="MailCity" class="form-control mailAddress" readonly="@(Model.SameAddress == true ? true : false)" />
+									<span asp-validation-for="MailCity" class="text-danger"></span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label asp-for="MailStreet" class="control-label">Street</label>
+								<input asp-for="MailStreet" class="form-control mailAddress" readonly="@(Model.SameAddress == true ? true : false)" />
+								<span asp-validation-for="MailStreet" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
+
+					<input type="hidden" asp-for="Id" id="EmployeeId" />
+					<input type="hidden" asp-for="CreatedDate" />
+					<input type="hidden" asp-for="ModifiedDate" />
+				</div>
+
+				<div class="tab-pane fade" id="financials">
+					@if (ViewBag.IsDetails != "true")
+					{
+						<div class="form-group">
+							<button type="button" id="AddFinancial" class="btn btn-success" data-toggle="modal" data-target="#NewFinancialModal">Add new</button>
+						</div>
+					}
+
+					<div class="modal" id="NewFinancialModal">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title">New financial record</h4>
+								</div>
+								<div class="modal-body">
+									<div class="form-group row">
+										<div class="col-md-6">
+											<label class="control-label">Currency</label>
+											<select id="nF_Currency" name="nF_Currency" asp-items="@(new SelectList(@ViewBag.Currencies, "Value", "Text"))" class="form-control"></select>
+										</div>
+										<div class="col-md-6">
+											<label asp-for="EmployeeFinancials[0].WorkHours" class="control-label"></label>
+											<input id="nF_WorkHours" name="nF_WorkHours" class="form-control" value="0" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label asp-for="EmployeeFinancials[0].GrossSalary" class="control-label"></label>
+										<input id="nF_GrossSalary" name="nF_GrossSalary" class="form-control" value="0" />
+									</div>
+									<div class="form-group">
+										<label asp-for="EmployeeFinancials[0].Cafeteria" class="control-label"></label>
+										<input id="nF_Cafeteria" name="nF_Cafeteria" class="form-control" value="0" />
+									</div>
+									<div class="form-group">
+										<label asp-for="EmployeeFinancials[0].Bonus" class="control-label"></label>
+										<input id="nF_Bonus" name="nF_Bonus" class="form-control" value="0" />
+									</div>
+								</div>
+								<div class="modal-footer">
+									<div class="col-md-8">
+										<label class="text-warning">Saving this will reload the page (save your other changes beforehand).</label>
+									</div>
+
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									<button type="button" id="SaveNewFinancial" class="btn btn-primary">Save</button>
+								</div>
+
+								<div id="NewFinancialAlert" class="alert alert-dismissible alert-danger" style="display:none;">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									<strong>Oh snap!</strong>and try submitting again.
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="list-group">
+						<div class="list-group-item">
+							<h4 class="list-group-item-heading">Latest</h4>
+
+							<div class="form-group row">
+								<div class="col-md-4">
+									<label asp-for="EmployeeFinancials[0].ActiveFrom" class="control-label"></label>
+									<input asp-for="EmployeeFinancials[0].ActiveFrom" class="form-control" />
+									<span asp-validation-for="EmployeeFinancials[0].ActiveFrom" class="text-danger"></span>
+								</div>
+								<div class="col-md-4">
+									<label asp-for="EmployeeFinancials[0].CurrencyId" class="control-label">Currency</label>
+									<select asp-for="EmployeeFinancials[0].CurrencyId" asp-items="@(new SelectList(@ViewBag.Currencies, "Value", "Text", Model.EmployeeFinancials[0].CurrencyId))" class="form-control"></select>
+									<span asp-validation-for="EmployeeFinancials[0].CurrencyId" class="text-danger"></span>
+								</div>
+								<div class="col-md-4">
+									<label asp-for="EmployeeFinancials[0].WorkHours" class="control-label"></label>
+									<input asp-for="EmployeeFinancials[0].WorkHours" class="form-control" />
+									<span asp-validation-for="EmployeeFinancials[0].WorkHours" class="text-danger"></span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label asp-for="EmployeeFinancials[0].GrossSalary" class="control-label"></label>
+								<input asp-for="EmployeeFinancials[0].GrossSalary" class="form-control" />
+								<span asp-validation-for="EmployeeFinancials[0].GrossSalary" class="text-danger"></span>
+							</div>
+							<div class="form-group">
+								<label asp-for="EmployeeFinancials[0].Cafeteria" class="control-label"></label>
+								<input asp-for="EmployeeFinancials[0].Cafeteria" class="form-control" />
+								<span asp-validation-for="EmployeeFinancials[0].Cafeteria" class="text-danger"></span>
+							</div>
+							<div class="form-group">
+								<label asp-for="EmployeeFinancials[0].Bonus" class="control-label"></label>
+								<input asp-for="EmployeeFinancials[0].Bonus" class="form-control" />
+								<span asp-validation-for="EmployeeFinancials[0].Bonus" class="text-danger"></span>
+							</div>
+						</div>
+
+						<input type="hidden" asp-for="EmployeeFinancials[0].Id" />
+						<input type="hidden" asp-for="EmployeeFinancials[0].CreatedDate" />
+						<input type="hidden" asp-for="EmployeeFinancials[0].ModifiedDate" />
+
+						@if (Model.EmployeeFinancials.Count > 1)
+						{
+							for (int i = 1; i < Model.EmployeeFinancials.Count; i++)
+							{
+								<div class="list-group-item disabled-item">
+									<h5 class="list-group-item-heading">Active from - @Model.EmployeeFinancials[i].ActiveFrom.ToString("d")</h5>
+
+									<div class="form-group row">
+										<div class="col-md-6">
+											<label asp-for="EmployeeFinancials[i].CurrencyId" class="control-label">Currency</label>
+											<select asp-for="EmployeeFinancials[i].CurrencyId" asp-items="@(new SelectList(@ViewBag.Currencies, "Value", "Text", Model.EmployeeFinancials[i].CurrencyId))" class="form-control" disabled></select>
+											<span asp-validation-for="EmployeeFinancials[i].CurrencyId" class="text-danger"></span>
+											<input asp-for="EmployeeFinancials[i].CurrencyId" type="hidden" />
+										</div>
+										<div class="col-md-6">
+											<label asp-for="EmployeeFinancials[i].WorkHours" class="control-label"></label>
+											<input asp-for="EmployeeFinancials[i].WorkHours" class="form-control" readonly />
+											<span asp-validation-for="EmployeeFinancials[i].WorkHours" class="text-danger"></span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label asp-for="EmployeeFinancials[i].GrossSalary" class="control-label"></label>
+										<input asp-for="EmployeeFinancials[i].GrossSalary" class="form-control" readonly />
+										<span asp-validation-for="EmployeeFinancials[i].GrossSalary" class="text-danger"></span>
+									</div>
+									<div class="form-group">
+										<label asp-for="EmployeeFinancials[i].Cafeteria" class="control-label"></label>
+										<input asp-for="EmployeeFinancials[i].Cafeteria" class="form-control" readonly />
+										<span asp-validation-for="EmployeeFinancials[i].Cafeteria" class="text-danger"></span>
+									</div>
+									<div class="form-group">
+										<label asp-for="EmployeeFinancials[i].Bonus" class="control-label"></label>
+										<input asp-for="EmployeeFinancials[i].Bonus" class="form-control" readonly />
+										<span asp-validation-for="EmployeeFinancials[i].Bonus" class="text-danger"></span>
+									</div>
+								</div>
+
+								<input type="hidden" asp-for="EmployeeFinancials[i].Id" />
+								<input type="hidden" asp-for="EmployeeFinancials[i].CreatedDate" />
+								<input type="hidden" asp-for="EmployeeFinancials[i].ModifiedDate" />
+								<input type="hidden" asp-for="EmployeeFinancials[i].ActiveFrom" />
+							}
+						}
 					</div>
 				</div>
 			</div>

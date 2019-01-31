@@ -10,12 +10,16 @@ namespace ERPSzakdolgozat.Models
 		public string Name { get; set; }
 
 		[Required]
+		[DataType(DataType.Date)]
 		public DateTime DateOfBirth { get; set; }
 
 		[Required]
+		[DataType(DataType.Date)]
 		public DateTime JoinedOn { get; set; }
 
+		[DataType(DataType.Date)]
 		public DateTime? LeavingOn { get; set; }
+
 		public bool Active { get; set; }
 
 		[Required]

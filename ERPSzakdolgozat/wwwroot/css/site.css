@@ -1,12 +1,9 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
-for details on configuring this project to bundle and minify static web assets. */
-body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿body {
+	padding-top: 50px;
+	padding-bottom: 20px;
+	background-color: #edf7e8;
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
@@ -20,54 +17,40 @@ body {
     }
 }
 
-.navbar-default {
-	background-color: #f8f8f8;
-}
-
-/* Navbar size related stuff */
-.navbar {
-	min-height: 50px;
-}
-
-.navbar-brand {
-	padding: 0 15px;
-	height: 50px;
-	line-height: 50px;
-}
-
-.navbar-toggle {
-	/* (50px - button height 34px) / 2 = 8px */
-	margin-top: 8px;
-	padding: 9px 10px !important;
-}
-
-.navbar-text {
-	margin-top: 11.5px;
-	margin-bottom: 11.5px;
-}
-
-@media (min-width: 768px) {
-	.navbar-nav > li > a {
-		/* (50px - line-height of 27px) / 2 = 11.5px */
-		padding-top: 11.5px;
-		padding-bottom: 11.5px;
-		line-height: 27px;
-	}
-}
-/* End of size related stuff */
-
 .nav-tabs {
 	margin-bottom: 10px;
 }
 
-.well {
-	background-color: #f1f1ff;
+.navbar-default {
+	background-color: #fff;
 }
 
 .list-group-item {
 	padding: 20px;
 }
 
+.well {
+	background-color: #fff;
+}
+
 .disabled-item {
-	background-color: #f4f4f4;
+	background-color: #f5f5f5;
+}
+
+.bg-light {
+	background-color: #fff;
+	color: #333333;
+}
+
+.bg-dark {
+	background-color: #4d4d4d;
+	color: #fff;
+}
+
+.pos-relative {
+	position: relative;
+}
+
+.pos-absolute {
+	position: absolute;
 }
