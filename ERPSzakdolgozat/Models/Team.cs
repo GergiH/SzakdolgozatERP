@@ -14,5 +14,7 @@ namespace ERPSzakdolgozat.Models
 		public int UnitId { get; set; }
 
 		public bool Active { get; set; }
+		
+		public virtual Unit Unit { get; set; }
 	}
 }

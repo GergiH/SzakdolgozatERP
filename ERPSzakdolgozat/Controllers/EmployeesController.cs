@@ -78,8 +78,10 @@ namespace ERPSzakdolgozat.Controllers
 				return NotFound();
 			}
 
+			employee.EmployeeFinancials = employee.EmployeeFinancials.OrderByDescending(e => e.ActiveFrom).ToList();
+
 			FillDropdownLists();
-			ViewBag.IsDetails = "true";
+
 			ViewBag.LeaderName = _context.Employees
 				.Where(e => e.Id == employee.LeaderId)
 				.Select(e => e.Name)
@@ -89,7 +91,7 @@ namespace ERPSzakdolgozat.Controllers
 				.Select(e => e.Name)
 				.FirstOrDefault();
 
-			return View("Edit", employee);
+			return View(employee);
 		}
 
 		// GET: Employees/Create

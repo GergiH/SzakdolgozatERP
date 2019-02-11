@@ -46,37 +46,3 @@ $('#saveEdit').click(function () {
 		});
 	}
 });
-
-//$('#SaveNewFinancial').click(function () {
-//	$.ajax({
-//		url: '../AddFinancial',
-//		type: 'POST',
-//		data: {
-//			currencyId: $('#nF_Currency').val(),
-//			workHours: $('#nF_WorkHours').val(),
-//			grossSalary: $('#nF_GrossSalary').val(),
-//			cafeteria: $('#nF_Cafeteria').val(),
-//			bonus: $('#nF_Bonus').val(),
-//			employeeId: $('#EmployeeId').val()
-//		},
-//		dataType: "json",
-//		success: function (data) {
-//			if (data === 1) {
-//				$('#NewFinancialAlert').removeClass('alert-success');
-//				$('#NewFinancialAlert').addClass('alert-danger');
-//				$('#NewFinancialAlert').text('errorvanbaszki');
-//			} else {
-//				$('#NewFinancialAlert').removeClass('alert-danger');
-//				$('#NewFinancialAlert').addClass('alert-success');
-//				$('#NewFinancialAlert').text('nincserrorjee');
-//			}
-
-//			$('#NewFinancialAlert').show();
-
-//			window.location.reload();
-//		},
-//		error: function (XMLHttpRequest, textStatus, errorThrown) {
-//			// console.log(XMLHttpRequest, textStatus, errorThrown);
-//		}
-//	});
-//});
