@@ -3,6 +3,7 @@ using ERPSzakdolgozat.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Employees
-		public IActionResult Index()
+		public IActionResult Index(string search, bool active = true)
 		{
 			IQueryable<Employee_Index> employeeVMList = _context.Employees
 				.AsNoTracking()
@@ -45,6 +46,28 @@ namespace ERPSzakdolgozat.Controllers
 					Name = e.Name,
 					TeamName = teamNames.FirstOrDefault(t => t.Key == e.TeamId).Value
 				});
+
+			if (!string.IsNullOrEmpty(search))
+			{
+				employeeVMList = employeeVMList
+					.Where(e => e.Name.Contains(search, StringComparison.CurrentCultureIgnoreCase) 
+						|| e.CompanyIdentifier.Contains(search, StringComparison.CurrentCultureIgnoreCase));
+			}
+
+			if (active == true)
+			{
+				employeeVMList = employeeVMList.Where(e => e.Active == true);
+			}
+			else
+			{
+				employeeVMList = employeeVMList.Where(e => e.Active == false);
+			}
+
+			employeeVMList = employeeVMList.OrderBy(e => e.Name);
+
+			// Setting ViewBag values for the view to keep the filters after reloading the page
+			ViewBag.search = search;
+			ViewBag.active = active;
 
 			return View(employeeVMList);
 		}
@@ -65,8 +88,10 @@ namespace ERPSzakdolgozat.Controllers
 				return NotFound();
 			}
 
+			employee.EmployeeFinancials = employee.EmployeeFinancials.OrderByDescending(e => e.ActiveFrom).ToList();
+
 			FillDropdownLists();
-			ViewBag.IsDetails = "true";
+
 			ViewBag.LeaderName = _context.Employees
 				.Where(e => e.Id == employee.LeaderId)
 				.Select(e => e.Name)
@@ -76,13 +101,17 @@ namespace ERPSzakdolgozat.Controllers
 				.Select(e => e.Name)
 				.FirstOrDefault();
 
-			return View("Edit", employee);
+			return View(employee);
 		}
 
 		// GET: Employees/Create
 		public IActionResult Create()
 		{
-			Employee employee = new Employee();
+			Employee employee = new Employee
+			{
+				Active = true,
+				JoinedOn = DateTime.Now
+			};
 			FillDropdownLists();
 
 			return View(employee);
@@ -95,10 +124,27 @@ namespace ERPSzakdolgozat.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				// TODO create a financial record as well
+				employee.Id = _context.Employees.Max(e => e.Id) + 1;
 
 				_context.Add(employee);
 				await _context.SaveChangesAsync();
+
+				EmployeeFinancial employeeFinancial = new EmployeeFinancial
+				{
+					ActiveFrom = DateTime.Now,
+					Bonus = 0,
+					Cafeteria = 0,
+					CreatedDate = DateTime.Now,
+					CurrencyId = 1,
+					EmployeeId = employee.Id,
+					GrossSalary = 0,
+					Id = _context.EmployeeFinancials.Max(e => e.Id) + 1,
+					ModifiedDate = DateTime.Now,
+					WorkHours = 0
+				};
+				_context.Add(employeeFinancial);
+				await _context.SaveChangesAsync();
+
 				return RedirectToAction(nameof(Index));
 			}
 			return View(employee);
@@ -119,6 +165,8 @@ namespace ERPSzakdolgozat.Controllers
 			{
 				return NotFound();
 			}
+
+			employee.EmployeeFinancials = employee.EmployeeFinancials.OrderByDescending(e => e.ActiveFrom).ToList();
 
 			FillDropdownLists();
 
@@ -188,6 +236,40 @@ namespace ERPSzakdolgozat.Controllers
 			_context.Employees.Remove(employee);
 			await _context.SaveChangesAsync();
 			return RedirectToAction(nameof(Index));
+		}
+
+		public async Task<IActionResult> Statistics()
+		{
+			return View();
+		}
+
+		public int AddFinancial(int currencyId, int workHours, double grossSalary, double cafeteria, double bonus, int employeeId)
+		{
+			try
+			{
+				EmployeeFinancial newFinancial = new EmployeeFinancial
+				{
+					ActiveFrom = DateTime.Now,
+					Bonus = bonus,
+					Cafeteria = cafeteria,
+					CreatedDate = DateTime.Now,
+					CurrencyId = currencyId,
+					EmployeeId = employeeId,
+					GrossSalary = grossSalary,
+					Id = _context.EmployeeFinancials.Max(e => e.Id) + 1,
+					ModifiedDate = DateTime.Now,
+					WorkHours = workHours
+				};
+
+				_context.EmployeeFinancials.Add(newFinancial);
+				_context.SaveChanges();
+			}
+			catch
+			{
+				return 1; // return a value to make JS success/error message in 'employee_edit.js'
+			}
+
+			return 0;
 		}
 
 		private bool EmployeeExists(int id)

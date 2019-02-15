@@ -1,144 +1,265 @@
 ﻿@model ERPSzakdolgozat.Models.Employee
 
 @{
-    ViewData["Title"] = "Details";
+	ViewData["Title"] = "Details";
 }
 
 <h2>Details</h2>
 
-<div>
-    <h4>Employee</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DateOfBirth)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DateOfBirth)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.JoinedOn)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.JoinedOn)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.LeavingOn)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LeavingOn)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Active)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Active)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CompanyIdentifier)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CompanyIdentifier)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.LeaderId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LeaderId)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TeamId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TeamId)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.HomeZIP)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.HomeZIP)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.HomeCountry)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.HomeCountry)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.HomeCity)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.HomeCity)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.HomeStreet)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.HomeStreet)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.MailZIP)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.MailZIP)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.MailCountry)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.MailCountry)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.MailCity)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.MailCity)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.MailStreet)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.MailStreet)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.SameAddress)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.SameAddress)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Mobile)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Mobile)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ModifiedDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ModifiedDate)
-        </dd>
-    </dl>
+<h4>Employee</h4>
+<hr />
+<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#general" data-toggle="tab" aria-expanded="true">General</a></li>
+			<li class=""><a href="#financials" data-toggle="tab" aria-expanded="false">Financials</a></li>
+		</ul>
+
+		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+		<div id="employeeTabs" class="tab-content">
+			<div class="tab-pane fade active in" id="general">
+				<div class="form-group">
+					<div class="checkbox">
+						<label>
+							<input asp-for="Active" disabled /> <strong>@Html.DisplayNameFor(model => model.Active)</strong>
+						</label>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-md-4">
+						<label asp-for="CompanyIdentifier" class="control-label"></label>
+						<input asp-for="CompanyIdentifier" class="form-control" readonly />
+						<span asp-validation-for="CompanyIdentifier" class="text-danger"></span>
+					</div>
+					<div class="col-md-8">
+						<label asp-for="Name" class="control-label"></label>
+						<input asp-for="Name" class="form-control" readonly />
+
+						<span asp-validation-for="Name" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label asp-for="DateOfBirth" class="control-label"></label>
+					<input asp-for="DateOfBirth" class="form-control" readonly />
+					<span asp-validation-for="DateOfBirth" class="text-danger"></span>
+				</div>
+				<div class="form-group row">
+					<div class="col-md-6">
+						<label asp-for="JoinedOn" class="control-label"></label>
+						<input asp-for="JoinedOn" class="form-control" readonly />
+						<span asp-validation-for="JoinedOn" class="text-danger"></span>
+					</div>
+					<div class="col-md-6">
+						<label asp-for="LeavingOn" class="control-label"></label>
+						<input asp-for="LeavingOn" class="form-control" readonly />
+						<span asp-validation-for="LeavingOn" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-md-6">
+						<label asp-for="RoleId" class="control-label"></label>
+						<select asp-for="RoleId" asp-items="@(new SelectList(@ViewBag.Roles, "Value", "Text", Model.TeamId))" class="form-control" disabled></select>
+						<span asp-validation-for="RoleId" class="text-danger"></span>
+					</div>
+					<div class="col-md-6">
+						<label asp-for="SkillLevelId" class="control-label"></label>
+						<select asp-for="SkillLevelId" asp-items="@(new SelectList(@ViewBag.SkillLevels, "Value", "Text", Model.SkillLevelId))" class="form-control" disabled></select>
+						<span asp-validation-for="SkillLevelId" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-md-6">
+						<label asp-for="LeaderId" class="control-label">Leader</label>
+						<input value="@(ViewBag.LeaderName)" class="form-control" readonly />
+					</div>
+					<div class="col-md-6">
+						<label asp-for="TeamId" class="control-label">Team</label>
+						<input value="@(ViewBag.TeamName)" class="form-control" readonly />
+					</div>
+				</div>
+
+				<h4>Contact</h4>
+
+				<div class="form-group">
+					<label asp-for="Mobile" class="control-label"></label>
+					<input asp-for="Mobile" class="form-control" readonly />
+					<span asp-validation-for="Mobile" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Email" class="control-label"></label>
+					<input asp-for="Email" class="form-control" readonly />
+					<span asp-validation-for="Email" class="text-danger"></span>
+				</div>
+
+				<div class="list-group">
+					<div class="list-group-item">
+						<h4 class="list-group-item-heading">Home</h4>
+
+						<div class="form-group">
+							<label asp-for="HomeCountry" class="control-label">Country</label>
+							<input asp-for="HomeCountry" class="form-control" readonly />
+							<span asp-validation-for="HomeCountry" class="text-danger"></span>
+						</div>
+						<div class="form-group row">
+							<div class="col-md-3">
+								<label asp-for="HomeZIP" class="control-label">ZIP</label>
+								<input asp-for="HomeZIP" class="form-control" readonly />
+								<span asp-validation-for="HomeZIP" class="text-danger"></span>
+							</div>
+							<div class="col-md-9">
+								<label asp-for="HomeCity" class="control-label">City</label>
+								<input asp-for="HomeCity" class="form-control" readonly />
+								<span asp-validation-for="HomeCity" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label asp-for="HomeStreet" class="control-label">Street</label>
+							<input asp-for="HomeStreet" class="form-control" readonly />
+							<span asp-validation-for="HomeStreet" class="text-danger"></span>
+						</div>
+					</div>
+
+					<div class="list-group-item">
+						<h4 class="list-group-item-heading">Mailing</h4>
+
+						<div class="form-group">
+							<div class="checkbox">
+								<label>
+									<input asp-for="SameAddress" disabled /> Same as Home Address
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label asp-for="MailCountry" class="control-label">Country</label>
+							<input asp-for="MailCountry" class="form-control mailAddress" readonly />
+							<span asp-validation-for="MailCountry" class="text-danger"></span>
+						</div>
+						<div class="form-group row">
+							<div class="col-md-3">
+								<label asp-for="MailZIP" class="control-label">ZIP</label>
+								<input asp-for="MailZIP" class="form-control mailAddress" readonly />
+								<span asp-validation-for="MailZIP" class="text-danger"></span>
+							</div>
+							<div class="col-md-9">
+								<label asp-for="MailCity" class="control-label">City</label>
+								<input asp-for="MailCity" class="form-control mailAddress" readonly />
+								<span asp-validation-for="MailCity" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label asp-for="MailStreet" class="control-label">Street</label>
+							<input asp-for="MailStreet" class="form-control mailAddress" readonly />
+							<span asp-validation-for="MailStreet" class="text-danger"></span>
+						</div>
+					</div>
+				</div>
+
+				<input type="hidden" asp-for="Id" id="EmployeeId" />
+				<input type="hidden" asp-for="CreatedDate" />
+				<input type="hidden" asp-for="ModifiedDate" />
+			</div>
+
+			<div class="tab-pane fade" id="financials">
+				<div class="list-group">
+					<div class="list-group-item">
+						<h4 class="list-group-item-heading">Latest</h4>
+
+						<div class="form-group row">
+							<div class="col-md-4">
+								<label asp-for="EmployeeFinancials[0].ActiveFrom" class="control-label"></label>
+								<input asp-for="EmployeeFinancials[0].ActiveFrom" class="form-control" readonly />
+								<span asp-validation-for="EmployeeFinancials[0].ActiveFrom" class="text-danger"></span>
+							</div>
+							<div class="col-md-4">
+								<label asp-for="EmployeeFinancials[0].CurrencyId" class="control-label">Currency</label>
+								<select asp-for="EmployeeFinancials[0].CurrencyId" asp-items="@(new SelectList(@ViewBag.Currencies, "Value", "Text", Model.EmployeeFinancials[0].CurrencyId))" class="form-control" disabled></select>
+								<span asp-validation-for="EmployeeFinancials[0].CurrencyId" class="text-danger"></span>
+							</div>
+							<div class="col-md-4">
+								<label asp-for="EmployeeFinancials[0].WorkHours" class="control-label"></label>
+								<input asp-for="EmployeeFinancials[0].WorkHours" class="form-control" readonly />
+								<span asp-validation-for="EmployeeFinancials[0].WorkHours" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-md-4">
+								<label asp-for="EmployeeFinancials[0].GrossSalary" class="control-label"></label>
+								<input asp-for="EmployeeFinancials[0].GrossSalary" class="form-control" readonly />
+								<span asp-validation-for="EmployeeFinancials[0].GrossSalary" class="text-danger"></span>
+							</div>
+							<div class="col-md-4">
+								<label asp-for="EmployeeFinancials[0].Cafeteria" class="control-label"></label>
+								<input asp-for="EmployeeFinancials[0].Cafeteria" class="form-control" readonly />
+								<span asp-validation-for="EmployeeFinancials[0].Cafeteria" class="text-danger"></span>
+							</div>
+							<div class="col-md-4">
+								<label asp-for="EmployeeFinancials[0].Bonus" class="control-label"></label>
+								<input asp-for="EmployeeFinancials[0].Bonus" class="form-control" readonly />
+								<span asp-validation-for="EmployeeFinancials[0].Bonus" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
+
+					<input type="hidden" asp-for="EmployeeFinancials[0].Id" />
+					<input type="hidden" asp-for="EmployeeFinancials[0].CreatedDate" />
+					<input type="hidden" asp-for="EmployeeFinancials[0].ModifiedDate" />
+
+					@if (Model.EmployeeFinancials.Count > 1)
+					{
+						for (int i = 1; i < Model.EmployeeFinancials.Count; i++)
+						{
+							<div class="list-group-item disabled-item">
+								<h5 class="list-group-item-heading">Active from - @Model.EmployeeFinancials[i].ActiveFrom.ToString("d")</h5>
+
+								<div class="form-group row">
+									<div class="col-md-6">
+										<label asp-for="EmployeeFinancials[i].CurrencyId" class="control-label">Currency</label>
+										<select asp-for="EmployeeFinancials[i].CurrencyId" asp-items="@(new SelectList(@ViewBag.Currencies, "Value", "Text", Model.EmployeeFinancials[i].CurrencyId))" class="form-control" disabled></select>
+										<span asp-validation-for="EmployeeFinancials[i].CurrencyId" class="text-danger"></span>
+										<input asp-for="EmployeeFinancials[i].CurrencyId" type="hidden" />
+									</div>
+									<div class="col-md-6">
+										<label asp-for="EmployeeFinancials[i].WorkHours" class="control-label"></label>
+										<input asp-for="EmployeeFinancials[i].WorkHours" class="form-control" readonly />
+										<span asp-validation-for="EmployeeFinancials[i].WorkHours" class="text-danger"></span>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-md-4">
+										<label asp-for="EmployeeFinancials[i].GrossSalary" class="control-label"></label>
+										<input asp-for="EmployeeFinancials[i].GrossSalary" class="form-control" readonly />
+										<span asp-validation-for="EmployeeFinancials[i].GrossSalary" class="text-danger"></span>
+									</div>
+									<div class="col-md-4">
+										<label asp-for="EmployeeFinancials[i].Cafeteria" class="control-label"></label>
+										<input asp-for="EmployeeFinancials[i].Cafeteria" class="form-control" readonly />
+										<span asp-validation-for="EmployeeFinancials[i].Cafeteria" class="text-danger"></span>
+									</div>
+									<div class="col-md-4">
+										<label asp-for="EmployeeFinancials[i].Bonus" class="control-label"></label>
+										<input asp-for="EmployeeFinancials[i].Bonus" class="form-control" readonly />
+										<span asp-validation-for="EmployeeFinancials[i].Bonus" class="text-danger"></span>
+									</div>
+								</div>
+							</div>
+
+							<input type="hidden" asp-for="EmployeeFinancials[i].Id" />
+							<input type="hidden" asp-for="EmployeeFinancials[i].CreatedDate" />
+							<input type="hidden" asp-for="EmployeeFinancials[i].ModifiedDate" />
+							<input type="hidden" asp-for="EmployeeFinancials[i].ActiveFrom" />
+						}
+					}
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<a asp-action="Index" class="btn btn-default">Back to List</a>
+		</div>
+	</div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,54 @@
+﻿@model ERPSzakdolgozat.Models.Team
+
+@{
+	ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Team</h4>
+<hr />
+<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="Code" class="control-label"></label>
+				<input asp-for="Code" class="form-control" />
+				<span asp-validation-for="Code" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Name" class="control-label"></label>
+				<input asp-for="Name" class="form-control" />
+				<span asp-validation-for="Name" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="UnitId" class="control-label">Unit in</label>
+				<select asp-for="UnitId" class="form-control" asp-items="ViewBag.UnitId"></select>
+			</div>
+			<div class="form-group">
+				<div class="checkbox">
+					<label>
+						<input asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+					</label>
+				</div>
+			</div>
+
+			<input type="hidden" asp-for="CreatedDate" />
+			<input type="hidden" asp-for="ModifiedDate" />
+
+			<div class="form-group">
+				<a asp-action="Index" class="btn btn-default">Back to List</a>
+
+				<input type="submit" value="Create" class="btn btn-success pull-right" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<div>
+</div>
+
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
