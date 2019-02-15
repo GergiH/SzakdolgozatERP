@@ -12,29 +12,39 @@ namespace ERPSzakdolgozat.Controllers
 	public class EmployeesController : Controller
 	{
 		private readonly ERPDBContext _context;
+		private Dictionary<int, string> employeeNames;
+		private Dictionary<int, string> teamNames;
 
 		public EmployeesController(ERPDBContext context)
 		{
 			_context = context;
+			employeeNames = _context.Employees
+				.AsNoTracking()
+				.ToDictionary(e => e.Id, e => e.Name);
+			teamNames = _context.Teams
+				.AsNoTracking()
+				.ToDictionary(t => t.Id, t => t.Name);
 		}
 
 		// GET: Employees
 		public IActionResult Index()
 		{
-			IEnumerable<Employee_Index> employeeVMList = _context.Employees.Select(e => new Employee_Index
-			{
-				Active = e.Active,
-				Address = e.HomeCountry + ", " + e.HomeZIP + " " + e.HomeCity + " - " + e.HomeStreet,
-				CompanyIdentifier = e.CompanyIdentifier,
-				CreatedDate = e.CreatedDate,
-				Email = e.Email,
-				Id = e.Id,
-				LeaderName = _context.Employees.Where(x => x.Id == e.LeaderId).FirstOrDefault().Name,
-				Mobile = e.Mobile,
-				ModifiedDate = e.ModifiedDate,
-				Name = e.Name,
-				TeamName = _context.Teams.Where(t => t.Id == e.TeamId).FirstOrDefault().Name
-			});
+			IQueryable<Employee_Index> employeeVMList = _context.Employees
+				.AsNoTracking()
+				.Select(e => new Employee_Index
+				{
+					Active = e.Active,
+					Address = e.HomeCountry + ", " + e.HomeZIP + " " + e.HomeCity + " - " + e.HomeStreet,
+					CompanyIdentifier = e.CompanyIdentifier,
+					CreatedDate = e.CreatedDate,
+					Email = e.Email,
+					Id = e.Id,
+					LeaderName = employeeNames.FirstOrDefault(x => x.Key == e.LeaderId).Value,
+					Mobile = e.Mobile,
+					ModifiedDate = e.ModifiedDate,
+					Name = e.Name,
+					TeamName = teamNames.FirstOrDefault(t => t.Key == e.TeamId).Value
+				});
 
 			return View(employeeVMList);
 		}
