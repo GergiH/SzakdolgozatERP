@@ -9,7 +9,7 @@ namespace ERPSzakdolgozat.Models
 	public class Currency : BaseProperties
 	{
 		[Required]
-		public string Name { get; set; }
+		public string CurrencyName { get; set; }
 		public double ExchangeValue { get; set; }
 		public int InYear { get; set; }
 	}

@@ -21,8 +21,8 @@ namespace ERPSzakdolgozat.Controllers
         // GET: Teams
         public async Task<IActionResult> Index()
         {
-            var eRPDBContext = _context.Teams.Include(t => t.Unit);
-            return View(await eRPDBContext.ToListAsync());
+            var teamList = _context.Teams.AsNoTracking().Include(t => t.Unit);
+            return View(await teamList.ToListAsync());
         }
 
         // GET: Teams/Details/5
@@ -47,7 +47,7 @@ namespace ERPSzakdolgozat.Controllers
         // GET: Teams/Create
         public IActionResult Create()
         {
-            ViewData["UnitId"] = new SelectList(_context.Units, "Id", "Name");
+            ViewData["UnitId"] = new SelectList(_context.Units, "Id", "UnitName");
 
 			Team team = new Team
 			{
@@ -73,7 +73,7 @@ namespace ERPSzakdolgozat.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["UnitId"] = new SelectList(_context.Units, "Id", "Name", team.UnitId);
+            ViewData["UnitId"] = new SelectList(_context.Units, "Id", "UnitName", team.UnitId);
             return View(team);
         }
 
@@ -90,7 +90,7 @@ namespace ERPSzakdolgozat.Controllers
             {
                 return NotFound();
             }
-            ViewData["UnitId"] = new SelectList(_context.Units, "Id", "Name", team.UnitId);
+            ViewData["UnitId"] = new SelectList(_context.Units, "Id", "UnitName", team.UnitId);
             return View(team);
         }
 
@@ -124,7 +124,7 @@ namespace ERPSzakdolgozat.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UnitId"] = new SelectList(_context.Units, "Id", "Name", team.UnitId);
+            ViewData["UnitId"] = new SelectList(_context.Units, "Id", "UnitName", team.UnitId);
             return View(team);
         }
 

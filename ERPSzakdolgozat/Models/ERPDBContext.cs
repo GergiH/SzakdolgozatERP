@@ -39,7 +39,7 @@ namespace ERPSzakdolgozat.Models
 				LeaderId = 2,
 				Mobile = "+36901234567",
 				JoinedOn = DateTime.Now.AddYears(-1),
-				Name = "Kis Kutya",
+				EmployeeName = "Kis Kutya",
 				TeamId = 1,
 				SameAddress = false,
 				HomeZIP = "2400",
@@ -61,7 +61,7 @@ namespace ERPSzakdolgozat.Models
 				LeaderId = 2,
 				Mobile = "+36909999999",
 				JoinedOn = DateTime.Now.AddYears(-1),
-				Name = "Nagy Kutya",
+				EmployeeName = "Nagy Kutya",
 				TeamId = 1,
 				SameAddress = true,
 				HomeZIP = "2400",
@@ -123,7 +123,7 @@ namespace ERPSzakdolgozat.Models
 				ModifiedDate = DateTime.Now,
 				ExchangeValue = 1,
 				InYear = 2019,
-				Name = "HUF"
+				CurrencyName = "HUF"
 			},
 			new Currency
 			{
@@ -132,7 +132,7 @@ namespace ERPSzakdolgozat.Models
 				ModifiedDate = DateTime.Now,
 				ExchangeValue = 300,
 				InYear = 2019,
-				Name = "USD"
+				CurrencyName = "USD"
 			});
 
 			modelBuilder.Entity<Role>().HasData(new Role
@@ -141,7 +141,7 @@ namespace ERPSzakdolgozat.Models
 				CreatedDate = DateTime.Now,
 				ModifiedDate = DateTime.Now,
 				IsSelectable = true,
-				Name = "Developer"
+				RoleName = "Developer"
 			},
 			new Role
 			{
@@ -149,7 +149,7 @@ namespace ERPSzakdolgozat.Models
 				CreatedDate = DateTime.Now,
 				ModifiedDate = DateTime.Now,
 				IsSelectable = true,
-				Name = "Tester"
+				RoleName = "Tester"
 			},
 			new Role
 			{
@@ -157,7 +157,7 @@ namespace ERPSzakdolgozat.Models
 				CreatedDate = DateTime.Now,
 				ModifiedDate = DateTime.Now,
 				IsSelectable = true,
-				Name = "Manager"
+				RoleName = "Manager"
 			});
 
 			modelBuilder.Entity<SkillLevel>().HasData(new SkillLevel
@@ -166,7 +166,7 @@ namespace ERPSzakdolgozat.Models
 				CreatedDate = DateTime.Now,
 				ModifiedDate = DateTime.Now,
 				IsSelectable = true,
-				Name = "Junior"
+				SkillLevelName = "Junior"
 			},
 			new SkillLevel
 			{
@@ -174,7 +174,7 @@ namespace ERPSzakdolgozat.Models
 				CreatedDate = DateTime.Now,
 				ModifiedDate = DateTime.Now,
 				IsSelectable = true,
-				Name = "Senior"
+				SkillLevelName = "Senior"
 			},
 			new SkillLevel
 			{
@@ -182,7 +182,7 @@ namespace ERPSzakdolgozat.Models
 				CreatedDate = DateTime.Now,
 				ModifiedDate = DateTime.Now,
 				IsSelectable = false,
-				Name = "God"
+				SkillLevelName = "God"
 			});
 
 			modelBuilder.Entity<Team>().HasData(new Team
@@ -191,8 +191,8 @@ namespace ERPSzakdolgozat.Models
 				CreatedDate = DateTime.Now,
 				ModifiedDate = DateTime.Now,
 				Active = true,
-				Code = "BTE",
-				Name = "Best Team Ever",
+				TeamCode = "BTE",
+				TeamName = "Best Team Ever",
 				UnitId = 1
 			});
 
@@ -202,8 +202,8 @@ namespace ERPSzakdolgozat.Models
 				CreatedDate = DateTime.Now,
 				ModifiedDate = DateTime.Now,
 				Active = true,
-				Code = "BUE",
-				Name = "Best Unit Ever"
+				UnitCode = "BUE",
+				UnitName = "Best Unit Ever"
 			});
 
 			//modelBuilder.Entity<Post>(entity =>

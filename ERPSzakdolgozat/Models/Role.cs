@@ -9,7 +9,7 @@ namespace ERPSzakdolgozat.Models
 	public class Role : BaseProperties
 	{
 		[Required]
-		public string Name { get; set; }
+		public string RoleName { get; set; }
 		public bool IsSelectable { get; set; }
 	}
 }

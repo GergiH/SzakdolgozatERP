@@ -7,7 +7,7 @@ namespace ERPSzakdolgozat.Models
 	public class Employee : BaseProperties
 	{
 		[Required]
-		public string Name { get; set; }
+		public string EmployeeName { get; set; }
 
 		[Required]
 		[DataType(DataType.Date)]

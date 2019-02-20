@@ -34,16 +34,16 @@
 							<span asp-validation-for="CompanyIdentifier" class="text-danger"></span>
 						</div>
 						<div class="col-md-8">
-							<label asp-for="Name" class="control-label"></label>
+							<label asp-for="EmployeeName" class="control-label"></label>
 							<div class="input-group">
-								<input asp-for="Name" class="form-control" readonly />
+								<input asp-for="EmployeeName" class="form-control" readonly />
 
 								<span class="input-group-btn">
 									<button id="name-unlock" type="button" class="btn btn-default">Unlock</button>
 								</span>
 							</div>
 
-							<span asp-validation-for="Name" class="text-danger"></span>
+							<span asp-validation-for="EmployeeName" class="text-danger"></span>
 						</div>
 					</div>
 					<div class="form-group">
@@ -66,24 +66,24 @@
 					<div class="form-group row">
 						<div class="col-md-6">
 							<label asp-for="RoleId" class="control-label"></label>
-							<select asp-for="RoleId" asp-items="@(new SelectList(@ViewBag.Roles, "Value", "Text", Model.TeamId))" class="form-control"></select>
+							<select asp-for="RoleId" asp-items="@(new SelectList((List<SelectListItem>)ViewData["Roles"], "Value", "Text", Model.TeamId))" class="form-control"></select>
 							<span asp-validation-for="RoleId" class="text-danger"></span>
 						</div>
 						<div class="col-md-6">
 							<label asp-for="SkillLevelId" class="control-label"></label>
-							<select asp-for="SkillLevelId" asp-items="@(new SelectList(@ViewBag.SkillLevels, "Value", "Text", Model.SkillLevelId))" class="form-control"></select>
+							<select asp-for="SkillLevelId" asp-items="@(new SelectList((List<SelectListItem>)ViewData["SkillLevels"], "Value", "Text", Model.SkillLevelId))" class="form-control"></select>
 							<span asp-validation-for="SkillLevelId" class="text-danger"></span>
 						</div>
 					</div>
 					<div class="form-group row">
 						<div class="col-md-6">
 							<label asp-for="LeaderId" class="control-label">Leader</label>
-							<select asp-for="LeaderId" asp-items="@(new SelectList(@ViewBag.Leaders, "Value", "Text", Model.LeaderId))" class="form-control"></select>
+							<select asp-for="LeaderId" asp-items="@(new SelectList((List<SelectListItem>)ViewData["Leaders"], "Value", "Text", Model.LeaderId))" class="form-control"></select>
 							<span asp-validation-for="LeaderId" class="text-danger"></span>
 						</div>
 						<div class="col-md-6">
 							<label asp-for="TeamId" class="control-label">Team</label>
-							<select asp-for="TeamId" asp-items="@(new SelectList(@ViewBag.Teams, "Value", "Text", Model.TeamId))" class="form-control"></select>
+							<select asp-for="TeamId" asp-items="@(new SelectList((List<SelectListItem>)ViewData["Teams"], "Value", "Text", Model.TeamId))" class="form-control"></select>
 							<span asp-validation-for="TeamId" class="text-danger"></span>
 						</div>
 					</div>
@@ -185,7 +185,7 @@
 									<div class="form-group row">
 										<div class="col-md-6">
 											<label class="control-label">Currency</label>
-											<select id="nF_Currency" name="nF_Currency" asp-items="@(new SelectList(@ViewBag.Currencies, "Value", "Text"))" class="form-control"></select>
+											<select id="nF_Currency" name="nF_Currency" asp-items="@(new SelectList((List<SelectListItem>)ViewData["Currencies"], "Value", "Text"))" class="form-control"></select>
 										</div>
 										<div class="col-md-6">
 											<label asp-for="EmployeeFinancials[0].WorkHours" class="control-label"></label>
@@ -234,7 +234,7 @@
 								</div>
 								<div class="col-md-4">
 									<label asp-for="EmployeeFinancials[0].CurrencyId" class="control-label">Currency</label>
-									<select asp-for="EmployeeFinancials[0].CurrencyId" asp-items="@(new SelectList(@ViewBag.Currencies, "Value", "Text", Model.EmployeeFinancials[0].CurrencyId))" class="form-control"></select>
+									<select asp-for="EmployeeFinancials[0].CurrencyId" asp-items="@(new SelectList((List<SelectListItem>)ViewData["Currencies"], "Value", "Text", Model.EmployeeFinancials[0].CurrencyId))" class="form-control"></select>
 									<span asp-validation-for="EmployeeFinancials[0].CurrencyId" class="text-danger"></span>
 								</div>
 								<div class="col-md-4">
@@ -276,7 +276,7 @@
 									<div class="form-group row">
 										<div class="col-md-6">
 											<label asp-for="EmployeeFinancials[i].CurrencyId" class="control-label">Currency</label>
-											<select asp-for="EmployeeFinancials[i].CurrencyId" asp-items="@(new SelectList(@ViewBag.Currencies, "Value", "Text", Model.EmployeeFinancials[i].CurrencyId))" class="form-control" disabled></select>
+											<select asp-for="EmployeeFinancials[i].CurrencyId" asp-items="@(new SelectList((List<SelectListItem>)ViewData["Currencies"], "Value", "Text", Model.EmployeeFinancials[i].CurrencyId))" class="form-control" disabled></select>
 											<span asp-validation-for="EmployeeFinancials[i].CurrencyId" class="text-danger"></span>
 											<input asp-for="EmployeeFinancials[i].CurrencyId" type="hidden" />
 										</div>

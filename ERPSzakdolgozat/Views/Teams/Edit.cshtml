@@ -13,18 +13,18 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Code" class="control-label"></label>
-                <input asp-for="Code" class="form-control" />
-                <span asp-validation-for="Code" class="text-danger"></span>
+                <label asp-for="TeamCode" class="control-label"></label>
+                <input asp-for="TeamCode" class="form-control" />
+                <span asp-validation-for="TeamCode" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="TeamName" class="control-label"></label>
+                <input asp-for="TeamName" class="form-control" />
+                <span asp-validation-for="TeamName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="UnitId" class="control-label">Unit in</label>
-                <select asp-for="UnitId" class="form-control" asp-items="ViewBag.UnitId"></select>
+                <select asp-for="UnitId" class="form-control" asp-items="@((SelectList)ViewData["UnitId"])"></select>
                 <span asp-validation-for="UnitId" class="text-danger"></span>
             </div>
             <div class="form-group">

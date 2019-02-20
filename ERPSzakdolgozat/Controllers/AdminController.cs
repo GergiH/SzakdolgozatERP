@@ -28,7 +28,7 @@ namespace ERPSzakdolgozat.Controllers
 
 			if (!string.IsNullOrEmpty(search))
 			{
-				units = units.Where(e => e.Name.Contains(search, StringComparison.CurrentCultureIgnoreCase));
+				units = units.Where(e => e.UnitName.Contains(search, StringComparison.CurrentCultureIgnoreCase));
 			}
 
 			if (active == true)
@@ -40,7 +40,7 @@ namespace ERPSzakdolgozat.Controllers
 				units = units.Where(e => e.Active == false);
 			}
 
-			units = units.OrderBy(e => e.Name);
+			units = units.OrderBy(e => e.UnitName);
 
 			ViewBag.search = search;
 			ViewBag.active = active;
@@ -57,8 +57,8 @@ namespace ERPSzakdolgozat.Controllers
 		{
 			Unit unit = _context.Units.Find(id);
 
-			unit.Code = code;
-			unit.Name = name;
+			unit.UnitCode = code;
+			unit.UnitName = name;
 			unit.Active = active;
 			unit.ModifiedDate = DateTime.Now;
 
@@ -73,10 +73,10 @@ namespace ERPSzakdolgozat.Controllers
 			{
 				Id = _context.Units.Max(u => u.Id) + 1,
 				Active = true,
-				Code = createCode,
+				UnitCode = createCode,
 				CreatedDate = DateTime.Now,
 				ModifiedDate = DateTime.Now,
-				Name = createName
+				UnitName = createName
 			};
 
 			_context.Units.Add(unit);

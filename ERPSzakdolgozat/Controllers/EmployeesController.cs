@@ -13,22 +13,22 @@ namespace ERPSzakdolgozat.Controllers
 	public class EmployeesController : Controller
 	{
 		private readonly ERPDBContext _context;
-		private Dictionary<int, string> employeeNames;
-		private Dictionary<int, string> teamNames;
+		private Dictionary<int, string> _employeeNames;
+		private Dictionary<int, string> _teamNames;
 
 		public EmployeesController(ERPDBContext context)
 		{
 			_context = context;
-			employeeNames = _context.Employees
+			_employeeNames = _context.Employees
 				.AsNoTracking()
-				.ToDictionary(e => e.Id, e => e.Name);
-			teamNames = _context.Teams
+				.ToDictionary(e => e.Id, e => e.EmployeeName);
+			_teamNames = _context.Teams
 				.AsNoTracking()
-				.ToDictionary(t => t.Id, t => t.Name);
+				.ToDictionary(t => t.Id, t => t.TeamName);
 		}
 
 		// GET: Employees
-		public IActionResult Index(string search, bool active = true)
+		public async Task<IActionResult> Index(string search, bool active = true)
 		{
 			IQueryable<Employee_Index> employeeVMList = _context.Employees
 				.AsNoTracking()
@@ -40,17 +40,17 @@ namespace ERPSzakdolgozat.Controllers
 					CreatedDate = e.CreatedDate,
 					Email = e.Email,
 					Id = e.Id,
-					LeaderName = employeeNames.FirstOrDefault(x => x.Key == e.LeaderId).Value,
+					LeaderName = _employeeNames.FirstOrDefault(x => x.Key == e.LeaderId).Value,
 					Mobile = e.Mobile,
 					ModifiedDate = e.ModifiedDate,
-					Name = e.Name,
-					TeamName = teamNames.FirstOrDefault(t => t.Key == e.TeamId).Value
+					EmployeeName = e.EmployeeName,
+					TeamName = _teamNames.FirstOrDefault(t => t.Key == e.TeamId).Value
 				});
 
 			if (!string.IsNullOrEmpty(search))
 			{
 				employeeVMList = employeeVMList
-					.Where(e => e.Name.Contains(search, StringComparison.CurrentCultureIgnoreCase) 
+					.Where(e => e.EmployeeName.Contains(search, StringComparison.CurrentCultureIgnoreCase) 
 						|| e.CompanyIdentifier.Contains(search, StringComparison.CurrentCultureIgnoreCase));
 			}
 
@@ -63,13 +63,13 @@ namespace ERPSzakdolgozat.Controllers
 				employeeVMList = employeeVMList.Where(e => e.Active == false);
 			}
 
-			employeeVMList = employeeVMList.OrderBy(e => e.Name);
+			employeeVMList = employeeVMList.OrderBy(e => e.EmployeeName);
 
 			// Setting ViewBag values for the view to keep the filters after reloading the page
-			ViewBag.search = search;
-			ViewBag.active = active;
+			ViewData["search"] = search;
+			ViewData["active"] = active;
 
-			return View(employeeVMList);
+			return View(await employeeVMList.ToListAsync());
 		}
 
 		// GET: Employees/Details/5
@@ -80,7 +80,8 @@ namespace ERPSzakdolgozat.Controllers
 				return NotFound();
 			}
 
-			var employee = await _context.Employees
+			Employee employee = await _context.Employees
+				.AsNoTracking()
 				.Include(e => e.EmployeeFinancials)
 				.FirstOrDefaultAsync(m => m.Id == id);
 			if (employee == null)
@@ -92,13 +93,13 @@ namespace ERPSzakdolgozat.Controllers
 
 			FillDropdownLists();
 
-			ViewBag.LeaderName = _context.Employees
-				.Where(e => e.Id == employee.LeaderId)
-				.Select(e => e.Name)
+			ViewData["LeaderName"] = _employeeNames
+				.Where(e => e.Key == employee.LeaderId)
+				.Select(e => e.Value)
 				.FirstOrDefault();
-			ViewBag.TeamName = _context.Teams
-				.Where(e => e.Id == employee.TeamId)
-				.Select(e => e.Name)
+			ViewData["TeamName"] = _teamNames
+				.Where(e => e.Key == employee.TeamId)
+				.Select(e => e.Value)
 				.FirstOrDefault();
 
 			return View(employee);
@@ -158,7 +159,7 @@ namespace ERPSzakdolgozat.Controllers
 				return NotFound();
 			}
 
-			var employee = await _context.Employees
+			Employee employee = await _context.Employees
 				.Include(e => e.EmployeeFinancials)
 				.FirstOrDefaultAsync(e => e.Id == id);
 			if (employee == null)
@@ -279,41 +280,52 @@ namespace ERPSzakdolgozat.Controllers
 
 		private void FillDropdownLists()
 		{
-			ViewBag.Leaders = _context.Employees
+			ViewData["Leaders"] = _context.Employees
+				.AsNoTracking()
 				.Where(e => e.IsLeader)
 				.Select(e => new SelectListItem
 				{
 					Value = e.Id.ToString(),
-					Text = e.Name
-				});
+					Text = e.EmployeeName
+				})
+				.ToList();
 
-			ViewBag.Teams = _context.Teams.Select(t => new SelectListItem
-			{
-				Value = t.Id.ToString(),
-				Text = t.Name
-			});
+			ViewData["Teams"] = _teamNames
+				.Select(t => new SelectListItem
+				{
+					Value = t.Key.ToString(),
+					Text = t.Value
+				})
+				.ToList();
 
-			ViewBag.Currencies = _context.Currencies.Select(c => new SelectListItem
-			{
-				Value = c.Id.ToString(),
-				Text = c.Name
-			});
+			ViewData["Currencies"] = _context.Currencies
+				.AsNoTracking()
+				.Select(c => new SelectListItem
+				{
+					Value = c.Id.ToString(),
+					Text = c.CurrencyName
+				})
+				.ToList();
 
-			ViewBag.Roles = _context.Roles
+			ViewData["Roles"] = _context.Roles
+				.AsNoTracking()
 				.Where(r => r.IsSelectable == true)
 				.Select(r => new SelectListItem
 				{
 					Value = r.Id.ToString(),
-					Text = r.Name
-				});
+					Text = r.RoleName
+				})
+				.ToList();
 
-			ViewBag.SkillLevels = _context.SkillLevels
+			ViewData["SkillLevels"] = _context.SkillLevels
+				.AsNoTracking()
 				.Where(s => s.IsSelectable == true)
 				.Select(s => new SelectListItem
 				{
 					Value = s.Id.ToString(),
-					Text = s.Name
-				});
+					Text = s.SkillLevelName
+				})
+				.ToList();
 		}
 	}
 }

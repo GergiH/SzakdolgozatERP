@@ -9,7 +9,7 @@ namespace ERPSzakdolgozat.Models
 	public class SkillLevel : BaseProperties
 	{
 		[Required]
-		public string Name { get; set; }
+		public string SkillLevelName { get; set; }
 		public bool IsSelectable { get; set; }
 	}
 }

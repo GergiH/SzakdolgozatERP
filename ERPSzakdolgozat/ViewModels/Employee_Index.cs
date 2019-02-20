@@ -4,7 +4,7 @@ namespace ERPSzakdolgozat.ViewModels
 {
 	public class Employee_Index : BaseProperties
 	{
-		public string Name { get; set; }
+		public string EmployeeName { get; set; }
 
 		public bool Active { get; set; }
 

@@ -2,13 +2,13 @@
 
 namespace ERPSzakdolgozat.Models
 {
-	public class Unit : BaseProperties
+	public class Client : BaseProperties
 	{
 		[Required]
-		public string UnitCode { get; set; }
+		public string ClientId { get; set; }
 
 		[Required]
-		public string UnitName { get; set; }
+		public string ClientName { get; set; }
 
 		public bool Active { get; set; }
 	}

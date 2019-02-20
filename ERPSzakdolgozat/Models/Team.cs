@@ -5,10 +5,10 @@ namespace ERPSzakdolgozat.Models
 	public class Team : BaseProperties
 	{
 		[Required]
-		public string Code { get; set; }
+		public string TeamCode { get; set; }
 
 		[Required]
-		public string Name { get; set; }
+		public string TeamName { get; set; }
 
 		[Required]
 		public int UnitId { get; set; }
