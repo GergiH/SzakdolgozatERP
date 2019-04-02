@@ -1,29 +1,24 @@
-﻿@model ERPSzakdolgozat.Models.Team
+﻿@model ERPSzakdolgozat.Models.Unit
 
 @{
 	ViewData["Title"] = "Edit";
 }
 
-<h2>Team - Edit</h2>
+<h2>Unit - Edit</h2>
 <hr />
 <div class="row">
 	<div class="col-md-8 col-md-offset-2">
 		<form asp-action="Edit">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<div class="form-group">
-				<label asp-for="TeamCode" class="control-label"></label>
-				<input asp-for="TeamCode" class="form-control" />
-				<span asp-validation-for="TeamCode" class="text-danger"></span>
+				<label asp-for="UnitCode" class="control-label"></label>
+				<input asp-for="UnitCode" class="form-control" />
+				<span asp-validation-for="UnitCode" class="text-danger"></span>
 			</div>
 			<div class="form-group">
-				<label asp-for="TeamName" class="control-label"></label>
-				<input asp-for="TeamName" class="form-control" />
-				<span asp-validation-for="TeamName" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="UnitId" class="control-label">Unit in</label>
-				<select asp-for="UnitId" class="form-control" asp-items="@((SelectList)ViewData["UnitId"])"></select>
-				<span asp-validation-for="UnitId" class="text-danger"></span>
+				<label asp-for="UnitName" class="control-label"></label>
+				<input asp-for="UnitName" class="form-control" />
+				<span asp-validation-for="UnitName" class="text-danger"></span>
 			</div>
 			<div class="form-group">
 				<div class="checkbox">

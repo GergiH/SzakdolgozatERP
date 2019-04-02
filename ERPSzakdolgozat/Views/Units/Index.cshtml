@@ -1,10 +1,10 @@
-﻿@model IEnumerable<ERPSzakdolgozat.Models.Team>
+﻿@model IEnumerable<ERPSzakdolgozat.Models.Unit>
 
 @{
 	ViewData["Title"] = "Index";
 }
 
-<h2>Teams - List</h2>
+<h2>Units - List</h2>
 
 <div class="col-md-12 margin-bottom-sm">
 	<a asp-action="Create" class="btn btn-success pull-right">Create New</a>
@@ -14,16 +14,13 @@
 	<thead class="bg-dark">
 		<tr>
 			<th>
-				@Html.DisplayNameFor(model => model.TeamCode)
+				@Html.DisplayNameFor(model => model.UnitCode)
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.TeamName)
+				@Html.DisplayNameFor(model => model.UnitName)
 			</th>
 			<th>
 				@Html.DisplayNameFor(model => model.Active)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Unit)
 			</th>
 			<th></th>
 		</tr>
@@ -33,16 +30,13 @@
 		{
 			<tr>
 				<td>
-					@Html.DisplayFor(modelItem => item.TeamCode)
+					@Html.DisplayFor(modelItem => item.UnitCode)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.TeamName)
+					@Html.DisplayFor(modelItem => item.UnitName)
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.Active)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Unit.UnitCode)
 				</td>
 				<td>
 					<div class="dropdown">

@@ -66,10 +66,10 @@ function copyAddress() {
 $('#name-unlock').click(function () {
 	var buttonText = $(this).text();
 	if (buttonText === 'Unlock') {
-		$('#Name').prop('readonly', false);
+		$('#EmployeeName').prop('readonly', false);
 		$(this).text('Lock');
 	} else {
-		$('#Name').prop('readonly', true);
+		$('#EmployeeName').prop('readonly', true);
 		$(this).text('Unlock');
 	}
 });

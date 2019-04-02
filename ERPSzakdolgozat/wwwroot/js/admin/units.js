@@ -10,10 +10,10 @@
 		},
 		dataType: "json",
 		success: function (data) {
-			$('#editTitle').text('Edit - ' + data.name);
+			$('#editTitle').text('Edit - ' + data.UnitName);
 
-			$('#editCode').val(data.code);
-			$('#editName').val(data.name);
+			$('#editCode').val(data.UnitCode);
+			$('#editName').val(data.UnitName);
 			$('#editActive').prop('checked', data.active);
 		},
 		error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -46,3 +46,5 @@ $('#saveEdit').click(function () {
 		});
 	}
 });
+
+// TODO törölni ezt, mert egységes Edit képernyők mellett ez nem kell

@@ -15,6 +15,6 @@ namespace ERPSzakdolgozat.Models
 		public DateTime CreatedDate { get; set; }
 
 		[Required]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; set; } = DateTime.Now;
 	}
 }

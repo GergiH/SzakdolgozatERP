@@ -11,10 +11,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\Admin\Units.cshtml">
+    <Content Update="Views\Units\Create.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Admin\Teams.cshtml">
+    <Content Update="Views\Units\Delete.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Units\Details.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Units\Edit.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Units\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css">

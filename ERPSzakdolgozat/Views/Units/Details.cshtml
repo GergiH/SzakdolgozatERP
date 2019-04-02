@@ -1,38 +1,32 @@
-﻿@model ERPSzakdolgozat.Models.Team
+﻿@model ERPSzakdolgozat.Models.Unit
 
 @{
 	ViewData["Title"] = "Details";
 }
 
-<h2>Team - Details</h2>
+<h2>Unit - Details</h2>
 
 <div>
 	<h4>Team</h4>
 	<hr />
 	<dl class="dl-horizontal">
 		<dt>
-			@Html.DisplayNameFor(model => model.TeamCode)
+			@Html.DisplayNameFor(model => model.UnitCode)
 		</dt>
 		<dd>
-			@Html.DisplayFor(model => model.TeamCode)
+			@Html.DisplayFor(model => model.UnitCode)
 		</dd>
 		<dt>
-			@Html.DisplayNameFor(model => model.TeamName)
+			@Html.DisplayNameFor(model => model.UnitName)
 		</dt>
 		<dd>
-			@Html.DisplayFor(model => model.TeamName)
+			@Html.DisplayFor(model => model.UnitName)
 		</dd>
 		<dt>
 			@Html.DisplayNameFor(model => model.Active)
 		</dt>
 		<dd>
 			@Html.DisplayFor(model => model.Active)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.Unit)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.Unit.UnitName)
 		</dd>
 		<dt>
 			@Html.DisplayNameFor(model => model.CreatedDate)
