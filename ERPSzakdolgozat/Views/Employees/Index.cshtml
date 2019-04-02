@@ -4,7 +4,7 @@
 	ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Employees - List</h2>
 
 <form asp-controller="Employees" asp-action="Index" method="get" class="form-inline pos-relative">
 	<div class="col-md-12 margin-bottom-sm">
@@ -12,7 +12,7 @@
 			<strong>Name / Company Id.</strong>
 		</label>
 
-		<div class="input-group">
+		<div class="input-group col-sm-5">
 			<input type="text" name="search" class="form-control" value="@(ViewData["search"])" />
 
 			<span class="input-group-btn">
@@ -32,7 +32,7 @@
 	</div>
 </form>
 
-<table class="table">
+<table class="table table-striped">
 	<thead class="bg-dark">
 		<tr>
 			<th>
