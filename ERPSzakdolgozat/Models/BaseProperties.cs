@@ -12,9 +12,11 @@ namespace ERPSzakdolgozat.Models
 		public int Id { get; set; }
 
 		[Required]
+		[DataType(DataType.Date)]
 		public DateTime CreatedDate { get; set; }
 
 		[Required]
+		[DataType(DataType.Date)]
 		public DateTime ModifiedDate { get; set; } = DateTime.Now;
 	}
 }

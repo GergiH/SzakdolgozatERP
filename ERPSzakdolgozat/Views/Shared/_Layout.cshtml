@@ -8,6 +8,8 @@
 	<environment include="Development">
 		<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
 		<link rel="stylesheet" href="~/css/site.css" />
+		@*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-material-design.min.css" />
+		<link rel="stylesheet" href="~/lib/bootstrap/dist/css/ripples.min.css" />*@
 	</environment>
 	<environment exclude="Development">
 		<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -17,7 +19,7 @@
 	</environment>
 </head>
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
+	<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -58,6 +60,7 @@
 						</a>
 						<ul class="dropdown-menu" role="menu">
 							<li class="dropdown-header">Admin Tools</li>
+							<li><a asp-area="" asp-controller="Currencies" asp-action="Index">Currencies</a></li>
 							<li><a asp-area="" asp-controller="Teams" asp-action="Index">Teams</a></li>
 							<li><a asp-area="" asp-controller="Units" asp-action="Index">Units</a></li>
 						</ul>
@@ -71,10 +74,12 @@
 
 	<div class="container body-content">
 		@RenderBody()
-		<hr />
-		<footer>
-			<p>&copy; 2018 - ERPSzakdolgozat</p>
-		</footer>
+		<div class="col-md-12">
+			<hr />
+			<footer>
+				<p>&copy; 2019-2020 - ERP Szakdolgozat</p>
+			</footer>
+		</div>
 	</div>
 
 	<environment include="Development">
@@ -96,6 +101,9 @@
 				integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
 		</script>
 		<script src="~/js/site.min.js" asp-append-version="true"></script>
+
+		@*<script src="~/lib/bootstrap/dist/js/material.min.js"></script>
+		<script src="~/lib/bootstrap/dist/js/ripples.min.js"></script>*@
 	</environment>
 
 	@RenderSection("Scripts", required: false)

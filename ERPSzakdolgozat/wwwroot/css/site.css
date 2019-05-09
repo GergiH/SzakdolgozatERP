@@ -1,6 +1,7 @@
 ﻿body {
-	padding-top: 50px;
+	padding-top: 62px;
 	padding-bottom: 20px;
+	font-family: Roboto, sans-serif !important;
 }
 
 .body-content {
@@ -52,4 +53,36 @@
 
 .margin-bottom-sm {
 	margin-bottom: 10px !important;
+}
+
+/* Gradients */
+.navbar-default {
+	background: rgb(1,39,46);
+	background: linear-gradient(90deg, rgba(1,39,46,1) 0%, rgba(0,83,99,1) 100%);
+}
+
+
+.navbar-inverse {
+	background: rgb(1,39,46);
+	background: linear-gradient(90deg, rgba(1,39,46,1) 0%, rgba(0,83,99,1) 100%);
+}
+
+.btn-primary {
+	background: rgb(39,128,227);
+	background: linear-gradient(90deg, rgba(39,128,227,1) 0%, rgba(30,111,201,1) 100%);
+}
+
+.btn-success {
+	background: rgb(63,182,24);
+	background: linear-gradient(90deg, rgba(63,182,24,1) 0%, rgba(51,162,15,1) 100%);
+}
+
+.btn-default {
+	background: rgb(54,54,54);
+	background: linear-gradient(90deg, rgba(54,54,54,1) 0%, rgba(0,0,0,1) 100%);
+}
+
+.btn-danger {
+	background: rgb(255,0,57);
+	background: linear-gradient(90deg, rgba(255,0,57,1) 0%, rgba(210,0,47,1) 100%);
 }

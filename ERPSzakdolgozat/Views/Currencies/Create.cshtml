@@ -1,0 +1,44 @@
+﻿@model ERPSzakdolgozat.Models.Currency
+
+@{
+    ViewData["Title"] = "Currency - Create";
+}
+
+<h2>Currency - Create</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="CurrencyName" class="control-label"></label>
+				<input asp-for="CurrencyName" class="form-control" />
+				<span asp-validation-for="CurrencyName" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="ExchangeValue" class="control-label"></label>
+				<input asp-for="ExchangeValue" class="form-control" />
+				<span asp-validation-for="ExchangeValue" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="InYear" class="control-label"></label>
+				<input asp-for="InYear" class="form-control" />
+				<span asp-validation-for="InYear" class="text-danger"></span>
+			</div>
+
+			<input type="hidden" asp-for="CreatedDate" />
+			<input type="hidden" asp-for="ModifiedDate" />
+
+			<div class="form-group">
+				<a asp-action="Index" class="btn btn-default">Back to List</a>
+
+				<input type="submit" value="Create" class="btn btn-success pull-right" />
+			</div>
+		</form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,39 @@
+﻿@model ERPSzakdolgozat.Models.Currency
+
+@{
+    ViewData["Title"] = "Currency - Delete";
+}
+
+	<h2>Currency - Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Currency</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrencyName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CurrencyName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ExchangeValue)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ExchangeValue)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.InYear)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.InYear)
+        </dd>
+    </dl>
+    
+	<form asp-action="Delete">
+		<input type="hidden" asp-for="Id" />
+		<a asp-action="Index" class="btn btn-default">Back to List</a>
+		<input type="submit" value="Delete" class="btn btn-danger" />
+	</form>
+</div>

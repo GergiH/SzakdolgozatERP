@@ -10,8 +10,8 @@
 	<a asp-action="Create" class="btn btn-success pull-right">Create New</a>
 </div>
 
-<table class="table table-striped">
-	<thead class="bg-dark">
+<table class="table table-hover">
+	<thead>
 		<tr>
 			<th>
 				@Html.DisplayNameFor(model => model.UnitCode)
@@ -25,7 +25,7 @@
 			<th></th>
 		</tr>
 	</thead>
-	<tbody class="bg-light">
+	<tbody>
 		@foreach (var item in Model)
 		{
 			<tr>
@@ -38,7 +38,7 @@
 				<td>
 					@Html.DisplayFor(modelItem => item.Active)
 				</td>
-				<td>
+				<td class="text-right">
 					<div class="dropdown">
 						<button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
 							Actions
