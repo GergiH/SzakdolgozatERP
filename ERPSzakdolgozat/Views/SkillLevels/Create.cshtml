@@ -1,0 +1,40 @@
+﻿@model ERPSzakdolgozat.Models.SkillLevel
+
+@{
+	ViewData["Title"] = "Skill Level - Create";
+}
+
+<h2>Skill Level - Create</h2>
+
+<hr />
+<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="SkillLevelName" class="control-label"></label>
+				<input asp-for="SkillLevelName" class="form-control" />
+				<span asp-validation-for="SkillLevelName" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<div class="checkbox">
+					<label>
+						<input asp-for="IsSelectable" checked /> @Html.DisplayNameFor(model => model.IsSelectable)
+					</label>
+				</div>
+			</div>
+			<input type="hidden" asp-for="CreatedDate" />
+			<input type="hidden" asp-for="ModifiedDate" />
+
+			<div class="form-group">
+				<a asp-action="Index" class="btn btn-default">Back to List</a>
+
+				<input type="submit" value="Create" class="btn btn-success pull-right" />
+			</div>
+		</form>
+	</div>
+</div>
+
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

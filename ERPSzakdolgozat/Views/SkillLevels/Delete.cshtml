@@ -1,0 +1,45 @@
+﻿@model ERPSzakdolgozat.Models.SkillLevel
+
+@{
+    ViewData["Title"] = "Skill Level - Delete";
+}
+
+<h2>Skill Level - Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+	<h4>SkillLevel</h4>
+	<hr />
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.SkillLevelName)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.SkillLevelName)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.IsSelectable)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.IsSelectable)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.CreatedDate)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.CreatedDate)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ModifiedDate)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ModifiedDate)
+		</dd>
+	</dl>
+
+	<form asp-action="Delete">
+		<input type="hidden" asp-for="Id" />
+		<a asp-action="Index" class="btn btn-default">Back to List</a>
+		<input type="submit" value="Delete" class="btn btn-danger" />
+	</form>
+</div>

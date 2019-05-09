@@ -1,0 +1,46 @@
+﻿@model ERPSzakdolgozat.Models.Role
+
+@{
+    ViewData["Title"] = "Role - Edit";
+}
+
+<h2>Role - Edit</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+		<form asp-action="Edit">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="RoleName" class="control-label"></label>
+				<input asp-for="RoleName" class="form-control" />
+				<span asp-validation-for="RoleName" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<div class="checkbox">
+					<label>
+						<input asp-for="IsSelectable" /> @Html.DisplayNameFor(model => model.IsSelectable)
+					</label>
+				</div>
+			</div>
+
+			<input type="hidden" asp-for="Id" />
+			<input type="hidden" asp-for="CreatedDate" />
+			<input type="hidden" asp-for="ModifiedDate" />
+
+			<div class="form-group">
+				<a asp-action="Index" class="btn btn-default">Back to List</a>
+
+				<input type="submit" value="Save" class="btn btn-primary pull-right" />
+			</div>
+		</form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
