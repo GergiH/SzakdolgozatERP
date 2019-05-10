@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using ERPSzakdolgozat.Models;
 
 namespace ERPSzakdolgozat.Models
 {
@@ -274,5 +275,8 @@ namespace ERPSzakdolgozat.Models
 			//	new { PostId = 2, First = "Diego", Last = "Vega" });
 			//#endregion
 		}
+
+		// Seeding the DB
+		public DbSet<ERPSzakdolgozat.Models.Client> Client { get; set; }
 	}
 }
