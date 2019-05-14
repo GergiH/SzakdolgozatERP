@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ERPSzakdolgozat.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ERPSzakdolgozat.Models;
 
 namespace ERPSzakdolgozat.Controllers
 {
-    public class RolesController : Controller
+	[Authorize(Policy = "Admin")]
+	public class RolesController : Controller
     {
         private readonly ERPDBContext _context;
 
@@ -18,8 +18,8 @@ namespace ERPSzakdolgozat.Controllers
             _context = context;
         }
 
-        // GET: Roles
-        public async Task<IActionResult> Index()
+		// GET: Roles
+		public async Task<IActionResult> Index()
         {
             return View(await _context.Roles.ToListAsync());
         }

@@ -1,6 +1,8 @@
 ﻿using ERPSzakdolgozat.Helpers;
 using ERPSzakdolgozat.Models;
 using ERPSzakdolgozat.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Security.Claims;
 using System.Text;
 
 namespace ERPSzakdolgozat
@@ -40,9 +43,21 @@ namespace ERPSzakdolgozat
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-			services.AddDefaultIdentity<IdentityUser>()
-				.AddRoles<IdentityRole>()
-				.AddEntityFrameworkStores<ERPDBContext>();
+			// TODO dont know how this works... need to change options to something
+			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+				.AddCookie(options =>
+				{
+					options.LoginPath = "/auth/login";
+					options.AccessDeniedPath = "/auth/accessdenied";
+				});
+
+			services.AddAuthorization(options =>
+			{
+				options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
+				options.AddPolicy("HR", policy => policy.RequireClaim(ClaimTypes.Role, "HR"));
+			});
+
+			services.AddSingleton<IClaimsTransformation, ClaimsTransformer>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
