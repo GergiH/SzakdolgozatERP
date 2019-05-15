@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ERPSzakdolgozat.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ERPSzakdolgozat.Controllers
 {
-    public class UnitsController : Controller
+	[Authorize(Policy = "Admin")]
+	public class UnitsController : Controller
     {
         private readonly ERPDBContext _context;
 
