@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace ERPSzakdolgozat.Controllers
 {
-	[Authorize(Policy = "Admin")]
 	public class UsersController : Controller
 	{
 		private readonly ERPDBContext _context;
@@ -19,12 +18,14 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Users
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Index()
 		{
 			return View(await _context.Users.ToListAsync());
 		}
 
 		// GET: Users/Details/5
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Details(int? id)
 		{
 			if (id == null)
@@ -43,6 +44,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Users/Create
+		[Authorize(Policy = "Admin")]
 		public IActionResult Create()
 		{
 			User user = new User();
@@ -51,6 +53,7 @@ namespace ERPSzakdolgozat.Controllers
 
 		// POST: Users/Create
 		[HttpPost]
+		[Authorize(Policy = "Admin")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create(User user)
 		{
@@ -68,6 +71,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Users/Edit/5
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Edit(int? id)
 		{
 			if (id == null)
@@ -85,6 +89,7 @@ namespace ERPSzakdolgozat.Controllers
 
 		// POST: Users/Edit/5
 		[HttpPost]
+		[Authorize(Policy = "Admin")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(int id, User user)
 		{
@@ -117,6 +122,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Users/Delete/5
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null)
@@ -136,6 +142,7 @@ namespace ERPSzakdolgozat.Controllers
 
 		// POST: Users/Delete/5
 		[HttpPost, ActionName("Delete")]
+		[Authorize(Policy = "Admin")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
@@ -148,6 +155,19 @@ namespace ERPSzakdolgozat.Controllers
 		private bool UserExists(int id)
 		{
 			return _context.Users.Any(e => e.Id == id);
+		}
+
+		// Self User functions
+		[HttpGet]
+		public async Task<IActionResult> SelfEdit()
+		{
+			// TODO change own Name, Email, Mobile
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> SelfEdit(User user)
+		{
+			// TODO same...
 		}
 	}
 }
