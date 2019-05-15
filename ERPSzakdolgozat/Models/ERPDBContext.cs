@@ -17,10 +17,49 @@ namespace ERPSzakdolgozat.Models
 		public DbSet<SkillLevel> SkillLevels { get; set; }
 		public DbSet<Role> Roles { get; set; }
 		public DbSet<Currency> Currencies { get; set; }
+		public DbSet<User> Users { get; set; }
+		public DbSet<AppRole> AppRoles { get; set; }
+		public DbSet<UserRoles> UserRoles { get; set; }
 
 		// Seeding the DB
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<User>().HasData(
+				new User
+				{
+					Id = 1,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					ADName = "CORP\\ghorvath",
+					Email = "van@denincs.com",
+					DisplayName = "Gazsi"
+				});
+
+			modelBuilder.Entity<AppRole>().HasData(
+				new AppRole
+				{
+					Id = 1,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					RoleName = "Admin"
+				},
+				new AppRole
+				{
+					Id = 2,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					RoleName = "HR"
+				});
+
+			modelBuilder.Entity<UserRoles>()
+				.HasKey(u => new { u.UserID, u.RoleID });
+			modelBuilder.Entity<UserRoles>().HasData(
+				new UserRoles
+				{
+					UserID = 1,
+					RoleID = 1
+				});
+
 			// Set relations
 			modelBuilder.Entity<EmployeeFinancial>()
 				.HasOne(e => e.Employee)

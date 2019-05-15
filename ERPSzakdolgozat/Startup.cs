@@ -1,6 +1,5 @@
 ﻿using ERPSzakdolgozat.Helpers;
 using ERPSzakdolgozat.Models;
-using ERPSzakdolgozat.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -57,7 +56,7 @@ namespace ERPSzakdolgozat
 				options.AddPolicy("HR", policy => policy.RequireClaim(ClaimTypes.Role, "HR"));
 			});
 
-			services.AddSingleton<IClaimsTransformation, ClaimsTransformer>();
+			services.AddScoped<IClaimsTransformation, ClaimsTransformer>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

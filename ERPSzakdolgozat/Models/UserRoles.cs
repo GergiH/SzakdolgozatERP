@@ -9,11 +9,15 @@ namespace ERPSzakdolgozat.Models
 {
 	public class UserRoles
 	{
+		[Key]
+		[Column(Order = 0)]
 		[ForeignKey("User")]
-		public string ADName { get; set; }
+		public int UserID { get; set; }
 		public virtual User User { get; set; }
+		[Key]
+		[Column(Order = 1)]
 		[ForeignKey("AppRole")]
-		public string RoleName { get; set; }
+		public int RoleID { get; set; }
 		public virtual AppRole AppRole { get; set; }
 	}
 }
