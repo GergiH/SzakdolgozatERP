@@ -11,9 +11,9 @@ namespace ERPSzakdolgozat.Models
 	{
 		[Key]
 		[Column(Order = 0)]
-		[ForeignKey("User")]
+		[ForeignKey("AppUser")]
 		public int UserID { get; set; }
-		public virtual User User { get; set; }
+		public virtual AppUser AppUser { get; set; }
 		[Key]
 		[Column(Order = 1)]
 		[ForeignKey("AppRole")]

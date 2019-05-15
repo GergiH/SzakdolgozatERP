@@ -29,7 +29,7 @@ namespace ERPSzakdolgozat.Helpers
 			ClaimsIdentity ci = (ClaimsIdentity)principal.Identity;
 
 			// Get all roles of the User
-			string[] userRoles = _context.UserRoles.Where(u => u.User.ADName == ci.Name).Select(r => r.AppRole.RoleName).ToArray();
+			string[] userRoles = _context.UserRoles.Where(u => u.AppUser.ADName == ci.Name).Select(r => r.AppRole.RoleName).ToArray();
 			List<string> actualRoles = ci.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
 			foreach (string role in userRoles)
 			{

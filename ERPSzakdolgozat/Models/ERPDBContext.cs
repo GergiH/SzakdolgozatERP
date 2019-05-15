@@ -17,20 +17,22 @@ namespace ERPSzakdolgozat.Models
 		public DbSet<SkillLevel> SkillLevels { get; set; }
 		public DbSet<Role> Roles { get; set; }
 		public DbSet<Currency> Currencies { get; set; }
-		public DbSet<User> Users { get; set; }
+		public DbSet<AppUser> AppUsers { get; set; }
 		public DbSet<AppRole> AppRoles { get; set; }
 		public DbSet<UserRoles> UserRoles { get; set; }
 
 		// Seeding the DB
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<User>().HasData(
-				new User
+			modelBuilder.Entity<AppUser>().HasData(
+				new AppUser
 				{
 					Id = 1,
 					CreatedDate = DateTime.Now,
 					ModifiedDate = DateTime.Now,
-					ADName = "CORP\\ghorvath",
+					ADName = "CORP\\ghorvath", // Work UserName
+					//ADName = "NyomdNekiNyuszi\\Horváth Gergely", // Home UserName
+					//ADName = User.Identity.Name, // This would be best for debugging, but doesn't work
 					Email = "van@denincs.com",
 					DisplayName = "Horváth Gergely"
 				});
