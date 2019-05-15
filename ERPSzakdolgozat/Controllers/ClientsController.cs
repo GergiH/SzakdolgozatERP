@@ -55,7 +55,11 @@ namespace ERPSzakdolgozat.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(client);
+				client.CreatedDate = DateTime.Now;
+				client.ModifiedDate = DateTime.Now;
+				client.Id = _context.Client.Max(t => t.Id) + 1;
+
+				_context.Add(client);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

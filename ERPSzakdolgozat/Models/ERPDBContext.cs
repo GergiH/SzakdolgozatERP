@@ -32,7 +32,7 @@ namespace ERPSzakdolgozat.Models
 					ModifiedDate = DateTime.Now,
 					ADName = "CORP\\ghorvath",
 					Email = "van@denincs.com",
-					DisplayName = "Gazsi"
+					DisplayName = "Horváth Gergely"
 				});
 
 			modelBuilder.Entity<AppRole>().HasData(

@@ -19,9 +19,9 @@ namespace ERPSzakdolgozat.ViewComponents
 		public async Task<IViewComponentResult> InvokeAsync(string username)
 		{
 			User user = GetUser(username);
-
 			return View("UserNav", user);
 		}
+
 		private User GetUser(string username)
 		{
 			return _context.Users.Where(u => u.ADName == username).FirstOrDefault();

@@ -29,7 +29,26 @@ namespace ERPSzakdolgozat.Models
 
 		[NotMapped] // this means the field is not mapped into a table-field in the DB
 		public string Address {
-			get => Country + " - " + ZIP + " " + City + ", " + Street;
+			get {
+				string a = "";
+				if (!string.IsNullOrEmpty(Country))
+				{
+					a += Country + " - ";
+				}
+				if (!string.IsNullOrEmpty(ZIP))
+				{
+					a += ZIP + " ";
+				}
+				if (!string.IsNullOrEmpty(City))
+				{
+					a += City + ", ";
+				}
+				if (!string.IsNullOrEmpty(Street))
+				{
+					a += Street;
+				}
+				return a;
+			}
 			set { }
 		}
 

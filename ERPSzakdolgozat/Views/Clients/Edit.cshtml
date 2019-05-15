@@ -1,7 +1,7 @@
 ﻿@model ERPSzakdolgozat.Models.Client
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Client - Edit";
 }
 
 <h2>Edit</h2>
@@ -9,91 +9,89 @@
 <h4>Client</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ClientId" class="control-label"></label>
-                <input asp-for="ClientId" class="form-control" />
-                <span asp-validation-for="ClientId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ClientName" class="control-label"></label>
-                <input asp-for="ClientName" class="form-control" />
-                <span asp-validation-for="ClientName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Mobile" class="control-label"></label>
-                <input asp-for="Mobile" class="form-control" />
-                <span asp-validation-for="Mobile" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ContactName" class="control-label"></label>
-                <input asp-for="ContactName" class="form-control" />
-                <span asp-validation-for="ContactName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Country" class="control-label"></label>
-                <input asp-for="Country" class="form-control" />
-                <span asp-validation-for="Country" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ZIP" class="control-label"></label>
-                <input asp-for="ZIP" class="form-control" />
-                <span asp-validation-for="ZIP" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
-                <input asp-for="City" class="form-control" />
-                <span asp-validation-for="City" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Street" class="control-label"></label>
-                <input asp-for="Street" class="form-control" />
-                <span asp-validation-for="Street" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TaxNumber" class="control-label"></label>
-                <input asp-for="TaxNumber" class="form-control" />
-                <span asp-validation-for="TaxNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
-                    </label>
-                </div>
-            </div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedDate" class="control-label"></label>
-                <input asp-for="ModifiedDate" class="form-control" />
-                <span asp-validation-for="ModifiedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
-    </div>
-</div>
+    <div class="col-md-8 col-md-offset-2">
+		<form asp-action="Edit">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group row">
+				<div class="col-md-4">
+					<label asp-for="ClientId" class="control-label"></label>
+					<input asp-for="ClientId" class="form-control" />
+					<span asp-validation-for="ClientId" class="text-danger"></span>
+				</div>
+				<div class="col-md-8">
+					<label asp-for="ClientName" class="control-label"></label>
+					<input asp-for="ClientName" class="form-control" />
+					<span asp-validation-for="ClientName" class="text-danger"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label asp-for="Email" class="control-label"></label>
+				<input asp-for="Email" class="form-control" type="email" />
+				<span asp-validation-for="Email" class="text-danger"></span>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-6">
+					<label asp-for="Phone" class="control-label"></label>
+					<input asp-for="Phone" class="form-control" />
+					<span asp-validation-for="Phone" class="text-danger"></span>
+				</div>
+				<div class="col-md-6">
+					<label asp-for="Mobile" class="control-label"></label>
+					<input asp-for="Mobile" class="form-control" />
+					<span asp-validation-for="Mobile" class="text-danger"></span>
+				</div>
+			</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+			<div class="form-group">
+				<label asp-for="ContactName" class="control-label"></label>
+				<input asp-for="ContactName" class="form-control" />
+				<span asp-validation-for="ContactName" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Country" class="control-label"></label>
+				<input asp-for="Country" class="form-control" />
+				<span asp-validation-for="Country" class="text-danger"></span>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-2">
+					<label asp-for="ZIP" class="control-label"></label>
+					<input asp-for="ZIP" class="form-control" />
+					<span asp-validation-for="ZIP" class="text-danger"></span>
+				</div>
+				<div class="col-md-4">
+					<label asp-for="City" class="control-label"></label>
+					<input asp-for="City" class="form-control" />
+					<span asp-validation-for="City" class="text-danger"></span>
+				</div>
+				<div class="col-md-6">
+					<label asp-for="Street" class="control-label"></label>
+					<input asp-for="Street" class="form-control" />
+					<span asp-validation-for="Street" class="text-danger"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label asp-for="TaxNumber" class="control-label"></label>
+				<input asp-for="TaxNumber" class="form-control" />
+				<span asp-validation-for="TaxNumber" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<div class="checkbox">
+					<label>
+						<input asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+					</label>
+				</div>
+			</div>
+			<input type="hidden" asp-for="Id" />
+			<input type="hidden" asp-for="CreatedDate" />
+			<input type="hidden" asp-for="ModifiedDate" />
+
+			<div class="form-group">
+				<a asp-action="Index" class="btn btn-default">Back to List</a>
+
+				<input type="submit" value="Save" class="btn btn-primary pull-right" />
+			</div>
+		</form>
+    </div>
 </div>
 
 @section Scripts {

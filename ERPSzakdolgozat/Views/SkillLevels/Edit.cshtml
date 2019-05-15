@@ -1,14 +1,15 @@
 ﻿@model ERPSzakdolgozat.Models.SkillLevel
 
 @{
-    ViewData["Title"] = "Skill Level - Edit";
+	ViewData["Title"] = "Skill Level - Edit";
 }
 
-<h2>Skill Level - Edit</h2>
+<h2>Edit</h2>
 
+<h4>Skill Level</h4>
 <hr />
 <div class="row">
-    <div class="col-md-8 col-md-offset-2">
+	<div class="col-md-8 col-md-offset-2">
 		<form asp-action="Edit">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<div class="form-group">
@@ -33,9 +34,9 @@
 				<input type="submit" value="Save" class="btn btn-primary pull-right" />
 			</div>
 		</form>
-    </div>
+	</div>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

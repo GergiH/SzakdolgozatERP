@@ -1,7 +1,7 @@
 ﻿@model ERPSzakdolgozat.Models.Client
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Client - Details";
 }
 
 <h2>Details</h2>
@@ -47,28 +47,10 @@
             @Html.DisplayFor(model => model.ContactName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Country)
+            @Html.DisplayNameFor(model => model.Address)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Country)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ZIP)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ZIP)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.City)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Street)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Street)
+            @Html.DisplayFor(model => model.Address)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.TaxNumber)
@@ -97,6 +79,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+	<a asp-action="Index" class="btn btn-default">Back to List</a>
+	<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
 </div>
