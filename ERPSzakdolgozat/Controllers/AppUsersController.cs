@@ -166,7 +166,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> SelfEdit(User user)
+		public async Task<IActionResult> SelfEdit(AppUser user)
 		{
 			// TODO same...
 			return View(user);

@@ -18,13 +18,13 @@ namespace ERPSzakdolgozat.ViewComponents
 
 		public async Task<IViewComponentResult> InvokeAsync(string username)
 		{
-			User user = await GetUserAsync(username);
+			AppUser user = await GetUserAsync(username);
 			return View("UserNav", user);
 		}
 
-		private async Task<User> GetUserAsync(string username)
+		private async Task<AppUser> GetUserAsync(string username)
 		{
-			return await _context.Users.Where(u => u.ADName == username).FirstOrDefaultAsync();
+			return await _context.AppUsers.Where(u => u.ADName == username).FirstOrDefaultAsync();
 		}
 	}
 }
