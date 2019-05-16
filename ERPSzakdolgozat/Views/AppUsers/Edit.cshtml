@@ -12,6 +12,19 @@
     <div class="col-md-8 col-md-offset-2">
 		<form asp-action="Edit">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+			<div class="form-group text-center">
+				@if (Model.ProfilePicture != null)
+				{
+					string imageBase64 = Convert.ToBase64String(Model.ProfilePicture);
+					string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+					<img src="@imageSrc" class="img-thumbnail" />
+				}
+				else
+				{
+					<img src="~/images/userdefault.png" style="background-color:lightgrey;" />
+				}
+			</div>
 			<div class="form-group">
 				<label asp-for="ADName" class="control-label"></label>
 				<input asp-for="ADName" class="form-control" />
@@ -30,11 +43,13 @@
 			<input type="hidden" asp-for="Id" />
 			<input type="hidden" asp-for="CreatedDate" />
 			<input type="hidden" asp-for="ModifiedDate" />
+			<input type="hidden" asp-for="ProfilePicture" />
 
 			<div class="form-group">
 				<a asp-action="Index" class="btn btn-default">Back to List</a>
 
-				<input type="submit" value="Save" class="btn btn-primary pull-right" />
+				<input type="submit" value="Save" class="btn btn-primary pull-right ml-lg" />
+				<a asp-area="" asp-controller="AppUsers" asp-action="ResetPicture" asp-route-id="@Model.Id" class="btn btn-warning pull-right">Reset Picture</a>
 			</div>
 		</form>
     </div>

@@ -67,6 +67,8 @@ namespace ERPSzakdolgozat.Controllers
 
 				_context.Add(user);
 				await _context.SaveChangesAsync();
+
+				TempData["Toast"] = "created-success";
 				return RedirectToAction(nameof(Index));
 			}
 			return View(user);
@@ -201,6 +203,8 @@ namespace ERPSzakdolgozat.Controllers
 
 					_context.Update(user);
 					await _context.SaveChangesAsync();
+
+					TempData["Toast"] = "saved-success";
 				}
 				catch (DbUpdateConcurrencyException)
 				{
@@ -213,10 +217,41 @@ namespace ERPSzakdolgozat.Controllers
 						throw;
 					}
 				}
-				return RedirectToAction("Index", "Home");
+				return RedirectToAction("SelfEdit");
 			}
 
 			return View(user);
+		}
+
+		/// <summary>
+		/// For resetting the User's picture if it is inappropriate
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public async Task<IActionResult> ResetPicture(int id, string viewName)
+		{
+			AppUser user = await _context.AppUsers.FindAsync(id);
+
+			if (user != null)
+			{
+				user.ProfilePicture = null;
+
+				_context.Update(user);
+				await _context.SaveChangesAsync();
+
+				TempData["Toast"] = "saved-success";
+			}
+			else
+			{
+				return NotFound();
+			}
+			
+			if (viewName == "SelfEdit")
+			{
+				return RedirectToAction("SelfEdit");
+			}
+
+			return RedirectToAction("Edit", new { id });
 		}
 	}
 }

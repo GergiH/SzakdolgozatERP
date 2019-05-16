@@ -13,6 +13,12 @@
 		<form asp-action="SelfEdit" enctype="multipart/form-data">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+			<input type="hidden" asp-for="Id" />
+			<input type="hidden" asp-for="ADName" />
+			<input type="hidden" asp-for="CreatedDate" />
+			<input type="hidden" asp-for="ModifiedDate" />
+			<input type="hidden" asp-for="ProfilePicture" />
+
 			<div class="panel panel-info">
 				<div class="panel-heading">
 					<h3 class="panel-title"><strong>@Model.DisplayName</strong> - @Model.ADName</h3>
@@ -26,12 +32,24 @@
 								string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
 								<img src="@imageSrc" class="img-thumbnail" />
 							}
+							else
+							{
+								<img src="~/images/userdefault.png" style="background-color:lightgrey;" />
+							}
 
 							<div class="form-group text-center pt-md">
 								<input type="file" id="profile" name="profile" accept="image/*" class="inputfile" />
 								<label for="profile" class="inputfile">
 									<i class="glyphicon glyphicon-upload"></i> Set Picture
 								</label>
+
+								@if (Model.ProfilePicture != null)
+								{
+									<div>
+										<a asp-area="" asp-controller="AppUsers" asp-action="ResetPicture" asp-route-id="@Model.Id" asp-route-viewName="SelfEdit" class="btn btn-warning btn-sm">Reset Picture</a>
+									</div>
+								}
+
 								<p id="profileError" class="text-danger" hidden>Picture size can only be 256x256px!</p>
 							</div>
 						</div>
@@ -51,12 +69,6 @@
 					</div>
 				</div>
 			</div>
-
-			<input type="hidden" asp-for="Id" />
-			<input type="hidden" asp-for="ADName" />
-			<input type="hidden" asp-for="CreatedDate" />
-			<input type="hidden" asp-for="ModifiedDate" />
-			<input type="hidden" asp-for="ProfilePicture" />
 
 			<div class="form-group">
 				<a asp-action="Index" class="btn btn-default">Back to List</a>

@@ -6,9 +6,13 @@
 
   <ItemGroup>
     <Compile Remove="Entities\**" />
+    <Compile Remove="wwwroot\js\admin\**" />
     <Content Remove="Entities\**" />
+    <Content Remove="wwwroot\js\admin\**" />
     <EmbeddedResource Remove="Entities\**" />
+    <EmbeddedResource Remove="wwwroot\js\admin\**" />
     <None Remove="Entities\**" />
+    <None Remove="wwwroot\js\admin\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,10 +40,6 @@
     <Content Update="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\js\admin\" />
   </ItemGroup>
 
 </Project>

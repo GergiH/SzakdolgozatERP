@@ -7,40 +7,50 @@
 <h2>Details</h2>
 
 <div>
-    <h4>User</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ADName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ADName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DisplayName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DisplayName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ModifiedDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ModifiedDate)
-        </dd>
-    </dl>
+	<h4>User</h4>
+	<hr />
+	@if (Model.ProfilePicture == null)
+	{
+		<img src="~/images/userdefault.png" height="30" style="background-color:lightgrey;" />
+	}
+	else
+	{
+		string imageBase64 = Convert.ToBase64String(Model.ProfilePicture);
+		string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+		<img src="@imageSrc" class="mb-lg" />
+	}
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ADName)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ADName)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.DisplayName)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.DisplayName)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Email)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Email)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.CreatedDate)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.CreatedDate)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ModifiedDate)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ModifiedDate)
+		</dd>
+	</dl>
 </div>
 <div>
 	<a asp-action="Index" class="btn btn-default">Back to List</a>
