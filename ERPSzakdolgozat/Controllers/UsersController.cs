@@ -162,12 +162,14 @@ namespace ERPSzakdolgozat.Controllers
 		public async Task<IActionResult> SelfEdit()
 		{
 			// TODO change own Name, Email, Mobile
+			return View();
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> SelfEdit(User user)
 		{
 			// TODO same...
+			return View(user);
 		}
 	}
 }
