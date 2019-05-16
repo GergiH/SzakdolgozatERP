@@ -1,8 +1,10 @@
 ﻿using ERPSzakdolgozat.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -162,13 +164,58 @@ namespace ERPSzakdolgozat.Controllers
 		public async Task<IActionResult> SelfEdit()
 		{
 			// TODO change own Name, Email, Mobile
-			return View();
+			AppUser user = await _context.AppUsers.Where(u => u.ADName == User.Identity.Name).FirstOrDefaultAsync();
+
+			if (user == null)
+			{
+				return NotFound();
+			}
+
+			return View(user);
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> SelfEdit(AppUser user)
 		{
-			// TODO same...
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					// Handling profile picture upload
+					IFormFile newPic = Request.Form.Files["profile"];
+					if (newPic != null)
+					{
+						if (newPic.FileName.Contains(".jpg")
+							|| newPic.FileName.Contains(".png")
+							|| newPic.FileName.Contains(".gif")
+							|| newPic.FileName.Contains(".jpeg"))
+						{
+							using (var memoryStream = new MemoryStream())
+							{
+								await newPic.CopyToAsync(memoryStream);
+								user.ProfilePicture = memoryStream.ToArray();
+
+							}
+						}
+					}
+
+					_context.Update(user);
+					await _context.SaveChangesAsync();
+				}
+				catch (DbUpdateConcurrencyException)
+				{
+					if (!UserExists(user.Id))
+					{
+						return NotFound();
+					}
+					else
+					{
+						throw;
+					}
+				}
+				return RedirectToAction("Index", "Home");
+			}
+
 			return View(user);
 		}
 	}

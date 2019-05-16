@@ -5,16 +5,16 @@
 }
 
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+	padding-left: 15px;
+	padding-right: 15px;
 }
 
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
-    }
+	/* Hide captions */
+	.carousel-caption {
+		display: none;
+	}
 }
 
 .nav-tabs {
@@ -85,4 +85,39 @@
 .btn-danger {
 	background: rgb(255,0,57);
 	background: linear-gradient(90deg, rgba(255,0,57,1) 0%, rgba(210,0,47,1) 100%);
+}
+
+input[type="file"] {
+	display: none;
+}
+
+.inputfile {
+	border: 1px solid #ccc;
+	display: inline-block;
+	padding: 6px 12px;
+	cursor: pointer;
+}
+
+.pt-sm {
+	padding-top: 6px !important;
+}
+
+.pt-md {
+	padding-top: 12px !important;
+}
+
+.pt-lg {
+	padding-top: 18px !important;
+}
+
+.mt-sm {
+	margin-top: 6px !important;
+}
+
+.mt-md {
+	margin-top: 12px !important;
+}
+
+.mt-lg {
+	margin-top: 18px !important;
 }
