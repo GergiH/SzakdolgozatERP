@@ -1,4 +1,8 @@
 ﻿$(document).ready(function () {
+	// Tooltips
+	$('[data-toggle="tooltip"]').tooltip(); 
+
+	// Toastr
 	$(document).ready(function () {
 		toastr.options = {
 			"closeButton": true,

@@ -1,4 +1,5 @@
-﻿using ERPSzakdolgozat.Models;
+﻿using ERPSzakdolgozat.Helpers;
+using ERPSzakdolgozat.Models;
 using ERPSzakdolgozat.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ERPSzakdolgozat.Controllers
 {
-	public class EmployeesController : Controller
+	public class EmployeesController : MyController
 	{
 		private readonly ERPDBContext _context;
 		private Dictionary<int, string> _employeeNames;
@@ -50,7 +51,7 @@ namespace ERPSzakdolgozat.Controllers
 			if (!string.IsNullOrEmpty(search))
 			{
 				employeeVMList = employeeVMList
-					.Where(e => e.EmployeeName.Contains(search, StringComparison.CurrentCultureIgnoreCase) 
+					.Where(e => e.EmployeeName.Contains(search, StringComparison.CurrentCultureIgnoreCase)
 						|| e.CompanyIdentifier.Contains(search, StringComparison.CurrentCultureIgnoreCase));
 			}
 
@@ -146,6 +147,7 @@ namespace ERPSzakdolgozat.Controllers
 				_context.Add(employeeFinancial);
 				await _context.SaveChangesAsync();
 
+				TempData["Toast"] = Toasts.Created;
 				return RedirectToAction(nameof(Index));
 			}
 			return View(employee);
@@ -190,6 +192,8 @@ namespace ERPSzakdolgozat.Controllers
 				{
 					_context.Update(employee);
 					await _context.SaveChangesAsync();
+
+					TempData["Toast"] = Toasts.Saved;
 				}
 				catch (DbUpdateConcurrencyException)
 				{
@@ -236,6 +240,8 @@ namespace ERPSzakdolgozat.Controllers
 			var employee = await _context.Employees.FindAsync(id);
 			_context.Employees.Remove(employee);
 			await _context.SaveChangesAsync();
+
+			TempData["Toast"] = Toasts.Deleted;
 			return RedirectToAction(nameof(Index));
 		}
 

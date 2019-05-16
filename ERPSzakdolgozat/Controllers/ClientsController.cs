@@ -1,152 +1,157 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ERPSzakdolgozat.Helpers;
+using ERPSzakdolgozat.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ERPSzakdolgozat.Models;
 
 namespace ERPSzakdolgozat.Controllers
 {
-    public class ClientsController : Controller
-    {
-        private readonly ERPDBContext _context;
+	public class ClientsController : MyController
+	{
+		private readonly ERPDBContext _context;
 
-        public ClientsController(ERPDBContext context)
-        {
-            _context = context;
-        }
+		public ClientsController(ERPDBContext context)
+		{
+			_context = context;
+		}
 
-        // GET: Clients
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Client.OrderBy(c => c.ClientName).ToListAsync());
-        }
+		// GET: Clients
+		public async Task<IActionResult> Index()
+		{
+			return View(await _context.Client.OrderBy(c => c.ClientName).ToListAsync());
+		}
 
-        // GET: Clients/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+		// GET: Clients/Details/5
+		public async Task<IActionResult> Details(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
 
-            var client = await _context.Client
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (client == null)
-            {
-                return NotFound();
-            }
+			var client = await _context.Client
+				.FirstOrDefaultAsync(m => m.Id == id);
+			if (client == null)
+			{
+				return NotFound();
+			}
 
-            return View(client);
-        }
+			return View(client);
+		}
 
-        // GET: Clients/Create
-        public IActionResult Create()
-        {
+		// GET: Clients/Create
+		public IActionResult Create()
+		{
 			Client client = new Client();
-            return View(client);
-        }
+			return View(client);
+		}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Client client)
-        {
-            if (ModelState.IsValid)
-            {
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Create(Client client)
+		{
+			if (ModelState.IsValid)
+			{
 				client.CreatedDate = DateTime.Now;
 				client.ModifiedDate = DateTime.Now;
 				client.Id = _context.Client.Max(t => t.Id) + 1;
 
 				_context.Add(client);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(client);
-        }
+				await _context.SaveChangesAsync();
 
-        // GET: Clients/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+				TempData["Toast"] = Toasts.Created;
+				return RedirectToAction(nameof(Index));
+			}
+			return View(client);
+		}
 
-            var client = await _context.Client.FindAsync(id);
-            if (client == null)
-            {
-                return NotFound();
-            }
-            return View(client);
-        }
+		// GET: Clients/Edit/5
+		public async Task<IActionResult> Edit(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
 
-        // POST: Clients/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Client client)
-        {
-            if (id != client.Id)
-            {
-                return NotFound();
-            }
+			var client = await _context.Client.FindAsync(id);
+			if (client == null)
+			{
+				return NotFound();
+			}
+			return View(client);
+		}
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(client);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ClientExists(client.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(client);
-        }
+		// POST: Clients/Edit/5
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Edit(int id, Client client)
+		{
+			if (id != client.Id)
+			{
+				return NotFound();
+			}
 
-        // GET: Clients/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					_context.Update(client);
+					await _context.SaveChangesAsync();
 
-            var client = await _context.Client
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (client == null)
-            {
-                return NotFound();
-            }
+					TempData["Toast"] = Toasts.Saved;
+				}
+				catch (DbUpdateConcurrencyException)
+				{
+					if (!ClientExists(client.Id))
+					{
+						return NotFound();
+					}
+					else
+					{
+						throw;
+					}
+				}
+				return RedirectToAction(nameof(Index));
+			}
+			return View(client);
+		}
 
-            return View(client);
-        }
+		// GET: Clients/Delete/5
+		public async Task<IActionResult> Delete(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
 
-        // POST: Clients/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var client = await _context.Client.FindAsync(id);
-            _context.Client.Remove(client);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+			var client = await _context.Client
+				.FirstOrDefaultAsync(m => m.Id == id);
+			if (client == null)
+			{
+				return NotFound();
+			}
 
-        private bool ClientExists(int id)
-        {
-            return _context.Client.Any(e => e.Id == id);
-        }
-    }
+			return View(client);
+		}
+
+		// POST: Clients/Delete/5
+		[HttpPost, ActionName("Delete")]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> DeleteConfirmed(int id)
+		{
+			var client = await _context.Client.FindAsync(id);
+			_context.Client.Remove(client);
+			await _context.SaveChangesAsync();
+
+			TempData["Toast"] = Toasts.Deleted;
+			return RedirectToAction(nameof(Index));
+		}
+
+		private bool ClientExists(int id)
+		{
+			return _context.Client.Any(e => e.Id == id);
+		}
+	}
 }

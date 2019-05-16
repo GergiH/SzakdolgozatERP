@@ -11,7 +11,7 @@
 	<hr />
 	@if (Model.ProfilePicture == null)
 	{
-		<img src="~/images/userdefault.png" height="30" style="background-color:lightgrey;" />
+		<img src="~/images/userdefault.png" class="mb-lg" style="background-color:lightgrey;" />
 	}
 	else
 	{
@@ -53,6 +53,6 @@
 	</dl>
 </div>
 <div>
-	<a asp-action="Index" class="btn btn-default">Back to List</a>
+	<a asp-action="Index" class="btn btn-default">Back</a>
 	<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
 </div>

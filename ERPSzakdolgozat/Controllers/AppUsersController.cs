@@ -1,4 +1,5 @@
-﻿using ERPSzakdolgozat.Models;
+﻿using ERPSzakdolgozat.Helpers;
+using ERPSzakdolgozat.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ERPSzakdolgozat.Controllers
 {
-	public class AppUsersController : Controller
+	public class AppUsersController : MyController
 	{
 		private readonly ERPDBContext _context;
 
@@ -68,7 +69,7 @@ namespace ERPSzakdolgozat.Controllers
 				_context.Add(user);
 				await _context.SaveChangesAsync();
 
-				TempData["Toast"] = "created-success";
+				TempData["Toast"] = Toasts.Created;
 				return RedirectToAction(nameof(Index));
 			}
 			return View(user);
@@ -108,6 +109,8 @@ namespace ERPSzakdolgozat.Controllers
 				{
 					_context.Update(user);
 					await _context.SaveChangesAsync();
+
+					TempData["Toast"] = Toasts.Saved;
 				}
 				catch (DbUpdateConcurrencyException)
 				{
@@ -153,6 +156,8 @@ namespace ERPSzakdolgozat.Controllers
 			var user = await _context.AppUsers.FindAsync(id);
 			_context.AppUsers.Remove(user);
 			await _context.SaveChangesAsync();
+
+			TempData["Toast"] = Toasts.Deleted;
 			return RedirectToAction(nameof(Index));
 		}
 
@@ -196,7 +201,6 @@ namespace ERPSzakdolgozat.Controllers
 							{
 								await newPic.CopyToAsync(memoryStream);
 								user.ProfilePicture = memoryStream.ToArray();
-
 							}
 						}
 					}
@@ -204,7 +208,7 @@ namespace ERPSzakdolgozat.Controllers
 					_context.Update(user);
 					await _context.SaveChangesAsync();
 
-					TempData["Toast"] = "saved-success";
+					TempData["Toast"] = Toasts.Saved;
 				}
 				catch (DbUpdateConcurrencyException)
 				{
@@ -239,13 +243,13 @@ namespace ERPSzakdolgozat.Controllers
 				_context.Update(user);
 				await _context.SaveChangesAsync();
 
-				TempData["Toast"] = "saved-success";
+				TempData["Toast"] = Toasts.Saved;
 			}
 			else
 			{
 				return NotFound();
 			}
-			
+
 			if (viewName == "SelfEdit")
 			{
 				return RedirectToAction("SelfEdit");
