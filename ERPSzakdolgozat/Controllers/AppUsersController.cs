@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace ERPSzakdolgozat.Controllers
 {
-	public class UsersController : Controller
+	public class AppUsersController : Controller
 	{
 		private readonly ERPDBContext _context;
 
-		public UsersController(ERPDBContext context)
+		public AppUsersController(ERPDBContext context)
 		{
 			_context = context;
 		}
@@ -21,7 +21,7 @@ namespace ERPSzakdolgozat.Controllers
 		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Index()
 		{
-			return View(await _context.Users.ToListAsync());
+			return View(await _context.AppUsers.ToListAsync());
 		}
 
 		// GET: Users/Details/5
@@ -33,7 +33,7 @@ namespace ERPSzakdolgozat.Controllers
 				return NotFound();
 			}
 
-			var user = await _context.Users
+			var user = await _context.AppUsers
 				.FirstOrDefaultAsync(m => m.Id == id);
 			if (user == null)
 			{
@@ -47,7 +47,7 @@ namespace ERPSzakdolgozat.Controllers
 		[Authorize(Policy = "Admin")]
 		public IActionResult Create()
 		{
-			User user = new User();
+			AppUser user = new AppUser();
 			return View(user);
 		}
 
@@ -55,13 +55,13 @@ namespace ERPSzakdolgozat.Controllers
 		[HttpPost]
 		[Authorize(Policy = "Admin")]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create(User user)
+		public async Task<IActionResult> Create(AppUser user)
 		{
 			if (ModelState.IsValid)
 			{
 				user.CreatedDate = DateTime.Now;
 				user.ModifiedDate = DateTime.Now;
-				user.Id = _context.Users.Max(t => t.Id) + 1;
+				user.Id = _context.AppUsers.Max(t => t.Id) + 1;
 
 				_context.Add(user);
 				await _context.SaveChangesAsync();
@@ -79,7 +79,7 @@ namespace ERPSzakdolgozat.Controllers
 				return NotFound();
 			}
 
-			var user = await _context.Users.FindAsync(id);
+			var user = await _context.AppUsers.FindAsync(id);
 			if (user == null)
 			{
 				return NotFound();
@@ -91,7 +91,7 @@ namespace ERPSzakdolgozat.Controllers
 		[HttpPost]
 		[Authorize(Policy = "Admin")]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, User user)
+		public async Task<IActionResult> Edit(int id, AppUser user)
 		{
 			if (id != user.Id)
 			{
@@ -130,7 +130,7 @@ namespace ERPSzakdolgozat.Controllers
 				return NotFound();
 			}
 
-			var user = await _context.Users
+			var user = await _context.AppUsers
 				.FirstOrDefaultAsync(m => m.Id == id);
 			if (user == null)
 			{
@@ -146,15 +146,15 @@ namespace ERPSzakdolgozat.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
-			var user = await _context.Users.FindAsync(id);
-			_context.Users.Remove(user);
+			var user = await _context.AppUsers.FindAsync(id);
+			_context.AppUsers.Remove(user);
 			await _context.SaveChangesAsync();
 			return RedirectToAction(nameof(Index));
 		}
 
 		private bool UserExists(int id)
 		{
-			return _context.Users.Any(e => e.Id == id);
+			return _context.AppUsers.Any(e => e.Id == id);
 		}
 
 		// Self User functions
