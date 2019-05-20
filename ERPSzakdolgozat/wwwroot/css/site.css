@@ -13,9 +13,9 @@
 	margin-bottom: 10px;
 }
 
-.list-group-item {
+/*.list-group-item {
 	padding: 20px;
-}
+}*/
 
 .well {
 	background-color: #fff;
@@ -72,22 +72,27 @@
 
 .btn-primary {
 	background: rgb(39,128,227);
-	background: linear-gradient(90deg, rgba(39,128,227,1) 0%, rgba(30,111,201,1) 100%);
+	background: linear-gradient(0deg, rgba(39,128,227,1) 0%, rgba(30,111,201,1) 100%);
 }
 
 .btn-success {
 	background: rgb(63,182,24);
-	background: linear-gradient(90deg, rgba(63,182,24,1) 0%, rgba(51,162,15,1) 100%);
+	background: linear-gradient(0deg, rgba(63,182,24,1) 0%, rgba(51,162,15,1) 100%);
 }
 
 .btn-default {
 	background: rgb(54,54,54);
-	background: linear-gradient(90deg, rgba(54,54,54,1) 0%, rgba(0,0,0,1) 100%);
+	background: linear-gradient(0deg, rgba(54,54,54,1) 0%, rgba(0,0,0,1) 100%);
 }
 
 .btn-danger {
 	background: rgb(255,0,57);
-	background: linear-gradient(90deg, rgba(255,0,57,1) 0%, rgba(210,0,47,1) 100%);
+	background: linear-gradient(0deg, rgba(255,0,57,1) 0%, rgba(210,0,47,1) 100%);
+}
+
+.btn-warning {
+	background: rgb(255,117,24);
+	background: linear-gradient(0deg, rgba(255,117,24,1) 0%, rgba(226,104,22,1) 100%);
 }
 
 .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
@@ -200,4 +205,21 @@ input[type="file"] {
 
 .mr-lg {
 	margin-right: 18px !important;
+}
+
+.modal {
+	text-align: center;
+}
+
+.modal:before {
+	display: inline-block;
+	vertical-align: middle;
+	content: " ";
+	height: 100%;
+}
+
+.modal-dialog {
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
 }

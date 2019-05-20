@@ -1,10 +1,12 @@
 ﻿using ERPSzakdolgozat.Helpers;
 using ERPSzakdolgozat.Models;
+using ERPSzakdolgozat.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,6 +16,7 @@ namespace ERPSzakdolgozat.Controllers
 	public class AppUsersController : MyController
 	{
 		private readonly ERPDBContext _context;
+		private int _userID = 0;
 
 		public AppUsersController(ERPDBContext context)
 		{
@@ -24,7 +27,7 @@ namespace ERPSzakdolgozat.Controllers
 		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Index()
 		{
-			return View(await _context.AppUsers.ToListAsync());
+			return View(await _context.AppUsers.AsNoTracking().Include("Roles.AppRole").ToListAsync());
 		}
 
 		// GET: Users/Details/5
@@ -37,6 +40,7 @@ namespace ERPSzakdolgozat.Controllers
 			}
 
 			var user = await _context.AppUsers
+				.Include("Roles.AppRole")
 				.FirstOrDefaultAsync(m => m.Id == id);
 			if (user == null)
 			{
@@ -84,21 +88,44 @@ namespace ERPSzakdolgozat.Controllers
 				return NotFound();
 			}
 
-			var user = await _context.AppUsers.FindAsync(id);
-			if (user == null)
+			var userEditVM = new AppUser_Edit
+			{
+				AppUser = await _context.AppUsers.Include("Roles.AppRole").FirstOrDefaultAsync(u => u.Id == id),
+				HasRole = new List<bool>()
+			};
+
+			if (userEditVM.AppUser == null)
 			{
 				return NotFound();
 			}
-			return View(user);
+
+			// order roles to match ViewData
+			userEditVM.AppUser.Roles = userEditVM.AppUser.Roles.OrderBy(r => r.AppRole.RoleName).ToList();
+
+			var allRoles = _context.AppRoles.AsNoTracking().OrderBy(a => a.RoleName).ToList();
+			foreach (var role in allRoles)
+			{
+				if (userEditVM.AppUser.Roles.Any(r => r.RoleID == role.Id))
+				{
+					userEditVM.HasRole.Add(true);
+				}
+				else
+				{
+					userEditVM.HasRole.Add(false);
+				}
+			}
+
+			ViewDataRoles();
+			return View(userEditVM);
 		}
 
 		// POST: Users/Edit/5
 		[HttpPost]
 		[Authorize(Policy = "Admin")]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, AppUser user)
+		public async Task<IActionResult> Edit(int id, AppUser_Edit userEditVM)
 		{
-			if (id != user.Id)
+			if (id != userEditVM.AppUser.Id)
 			{
 				return NotFound();
 			}
@@ -107,14 +134,45 @@ namespace ERPSzakdolgozat.Controllers
 			{
 				try
 				{
-					_context.Update(user);
+					_context.Update(userEditVM.AppUser);
+					await _context.SaveChangesAsync();
+
+					_userID = _context.AppUsers
+						.Where(u => u.ADName == User.Identity.Name)
+						.Select(u => u.Id)
+						.FirstOrDefault();
+
+					// handle the change of roles
+					List<AppRole> allRoles = await _context.AppRoles.OrderBy(a => a.RoleName).ToListAsync();
+					for (int i = 0; i < allRoles.Count; i++)
+					{
+						bool alreadyHasRole = _context.UserRoles.Any(u => u.RoleID == allRoles[i].Id && u.UserID == _userID);
+						if (userEditVM.HasRole[i] && !alreadyHasRole) // add new role
+						{
+							UserRoles ur = new UserRoles
+							{
+								RoleID = allRoles[i].Id,
+								UserID = _userID
+							};
+							await _context.UserRoles.AddAsync(ur);
+						}
+						else if (!userEditVM.HasRole[i] && alreadyHasRole) // remove unchecked role
+						{
+							UserRoles ur = new UserRoles
+							{
+								RoleID = allRoles[i].Id,
+								UserID = _userID
+							};
+							_context.UserRoles.Remove(ur);
+						}
+					}
 					await _context.SaveChangesAsync();
 
 					TempData["Toast"] = Toasts.Saved;
 				}
 				catch (DbUpdateConcurrencyException)
 				{
-					if (!UserExists(user.Id))
+					if (!UserExists(userEditVM.AppUser.Id))
 					{
 						return NotFound();
 					}
@@ -125,7 +183,7 @@ namespace ERPSzakdolgozat.Controllers
 				}
 				return RedirectToAction(nameof(Index));
 			}
-			return View(user);
+			return View(userEditVM);
 		}
 
 		// GET: Users/Delete/5
@@ -138,6 +196,7 @@ namespace ERPSzakdolgozat.Controllers
 			}
 
 			var user = await _context.AppUsers
+				.Include("Roles.AppRole")
 				.FirstOrDefaultAsync(m => m.Id == id);
 			if (user == null)
 			{
@@ -178,6 +237,7 @@ namespace ERPSzakdolgozat.Controllers
 				return NotFound();
 			}
 
+			ViewDataRoles();
 			return View(user);
 		}
 
@@ -224,7 +284,25 @@ namespace ERPSzakdolgozat.Controllers
 				return RedirectToAction("SelfEdit");
 			}
 
+			ViewDataRoles();
 			return View(user);
+		}
+
+		private void ViewDataRoles()
+		{
+			_userID = _context.AppUsers
+				.Where(u => u.ADName == User.Identity.Name)
+				.Select(u => u.Id)
+				.FirstOrDefault();
+			ViewData["UserRoles"] = _context.AppRoles
+				.AsNoTracking()
+				.Select(r => new
+				{
+					r.RoleName,
+					HasRole = _context.UserRoles.Any(u => u.RoleID == r.Id && u.UserID == _userID)
+				})
+				.OrderBy(r => r.RoleName)
+				.ToDictionary(r => r.RoleName, r => r.HasRole);
 		}
 
 		/// <summary>

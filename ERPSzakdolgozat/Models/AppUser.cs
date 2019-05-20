@@ -16,5 +16,8 @@ namespace ERPSzakdolgozat.Models
 		public string Email { get; set; }
 		[Column(TypeName = "image")]
 		public byte[] ProfilePicture { get; set; }
+
+		[ForeignKey("Id")]
+		public List<UserRoles> Roles { get; set; }
 	}
 }

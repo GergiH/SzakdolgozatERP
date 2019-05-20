@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using ERPSzakdolgozat.Models;
 
 namespace ERPSzakdolgozat.Models
 {
@@ -20,6 +19,7 @@ namespace ERPSzakdolgozat.Models
 		public DbSet<AppUser> AppUsers { get; set; }
 		public DbSet<AppRole> AppRoles { get; set; }
 		public DbSet<UserRoles> UserRoles { get; set; }
+		public DbSet<Client> Client { get; set; }
 
 		// Seeding the DB
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -82,12 +82,6 @@ namespace ERPSzakdolgozat.Models
 					UserID = 1,
 					RoleID = 1
 				});
-
-			// Set relations
-			modelBuilder.Entity<EmployeeFinancial>()
-				.HasOne(e => e.Employee)
-				.WithMany(e => e.EmployeeFinancials)
-				.HasForeignKey(e => e.EmployeeId);
 
 			// Add at least one record of every Model
 			modelBuilder.Entity<Employee>().HasData(
@@ -314,12 +308,21 @@ namespace ERPSzakdolgozat.Models
 					ZIP = "4321"
 				});
 
-			//modelBuilder.Entity<Post>(entity =>
-			//{
-			//	entity.HasOne(d => d.Blog)
-			//		.WithMany(p => p.Posts)
-			//		.HasForeignKey("BlogId");
-			//});
+			// Set relations
+			modelBuilder.Entity<EmployeeFinancial>()
+				.HasOne(e => e.Employee)
+				.WithMany(e => e.EmployeeFinancials)
+				.HasForeignKey(e => e.EmployeeId);
+
+			modelBuilder.Entity<UserRoles>()
+				.HasOne(u => u.AppUser)
+				.WithMany(u => u.Roles)
+				.HasForeignKey(u => u.UserID);
+
+			modelBuilder.Entity<UserRoles>()
+				.HasOne(u => u.AppRole)
+				.WithMany(u => u.UserRoles)
+				.HasForeignKey(u => u.RoleID);
 
 			//#region PostSeed
 			//modelBuilder.Entity<Post>().HasData(
@@ -337,8 +340,5 @@ namespace ERPSzakdolgozat.Models
 			//	new { PostId = 2, First = "Diego", Last = "Vega" });
 			//#endregion
 		}
-
-		// Seeding the DB
-		public DbSet<ERPSzakdolgozat.Models.Client> Client { get; set; }
 	}
 }

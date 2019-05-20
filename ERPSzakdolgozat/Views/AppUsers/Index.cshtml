@@ -24,6 +24,9 @@
 			<th>
 				@Html.DisplayNameFor(model => model.Email)
 			</th>
+			<th>
+				Roles
+			</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -39,6 +42,12 @@
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.Email)
+				</td>
+				<td>
+					@foreach (var role in item.Roles)
+					{
+						<span>@role.AppRole.RoleName. </span>
+					}
 				</td>
 
 				<td class="col-md-2 text-right">

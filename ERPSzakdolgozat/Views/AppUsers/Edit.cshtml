@@ -1,7 +1,8 @@
-﻿@model ERPSzakdolgozat.Models.AppUser
+﻿@model ERPSzakdolgozat.ViewModels.AppUser_Edit
 
 @{
-    ViewData["Title"] = "User - Edit";
+	ViewData["Title"] = "User - Edit";
+	int i = 0;
 }
 
 <h2>Edit</h2>
@@ -9,14 +10,14 @@
 <h4>User</h4>
 <hr />
 <div class="row">
-    <div class="col-md-8 col-md-offset-2">
+	<div class="col-md-8 col-md-offset-2">
 		<form asp-action="Edit">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 			<div class="form-group text-center">
-				@if (Model.ProfilePicture != null)
+				@if (Model.AppUser.ProfilePicture != null)
 				{
-					string imageBase64 = Convert.ToBase64String(Model.ProfilePicture);
+					string imageBase64 = Convert.ToBase64String(Model.AppUser.ProfilePicture);
 					string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
 					<img src="@imageSrc" class="img-thumbnail" />
 				}
@@ -26,35 +27,74 @@
 				}
 			</div>
 			<div class="form-group">
-				<label asp-for="ADName" class="control-label"></label>
-				<input asp-for="ADName" class="form-control" />
-				<span asp-validation-for="ADName" class="text-danger"></span>
+				<label asp-for="AppUser.ADName" class="control-label"></label>
+				<input asp-for="AppUser.ADName" class="form-control" />
+				<span asp-validation-for="AppUser.ADName" class="text-danger"></span>
 			</div>
 			<div class="form-group">
-				<label asp-for="DisplayName" class="control-label"></label>
-				<input asp-for="DisplayName" class="form-control" />
-				<span asp-validation-for="DisplayName" class="text-danger"></span>
+				<label asp-for="AppUser.DisplayName" class="control-label"></label>
+				<input asp-for="AppUser.DisplayName" class="form-control" />
+				<span asp-validation-for="AppUser.DisplayName" class="text-danger"></span>
 			</div>
 			<div class="form-group">
-				<label asp-for="Email" class="control-label"></label>
-				<input asp-for="Email" class="form-control" type="email" />
-				<span asp-validation-for="Email" class="text-danger"></span>
+				<label asp-for="AppUser.Email" class="control-label"></label>
+				<input asp-for="AppUser.Email" class="form-control" type="email" />
+				<span asp-validation-for="AppUser.Email" class="text-danger"></span>
 			</div>
-			<input type="hidden" asp-for="Id" />
-			<input type="hidden" asp-for="CreatedDate" />
-			<input type="hidden" asp-for="ModifiedDate" />
-			<input type="hidden" asp-for="ProfilePicture" />
+			<input type="hidden" asp-for="AppUser.Id" />
+			<input type="hidden" asp-for="AppUser.CreatedDate" />
+			<input type="hidden" asp-for="AppUser.ModifiedDate" />
+			<input type="hidden" asp-for="AppUser.ProfilePicture" />
+
+			<div class="form-group row">
+				<div class="col-md-4 col-md-offset-4">
+					<ul class="list-group">
+						<li class="list-group-item list-group-item-heading" style="background-color: #eee">
+							<strong>Roles</strong>
+						</li>
+
+						@foreach (var role in (Dictionary<string, bool>)ViewData["UserRoles"])
+						{
+							<li class="list-group-item">
+								<div class="checkbox">
+									<label>
+										@Html.CheckBoxFor(model => model.HasRole[i])
+										@role.Key
+									</label>
+								</div>
+							</li>
+
+							i++;
+						}
+					</ul>
+				</div>
+			</div>
+
+			@* modal for picture reset *@
+			<div id="reset-picture-modal" class="modal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Are you sure you want to reset this User's profile picture?</h4>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<a asp-area="" asp-controller="AppUsers" asp-action="ResetPicture" asp-route-id="@Model.AppUser.Id" class="btn btn-warning">Reset</a>
+						</div>
+					</div>
+				</div>
+			</div>
 
 			<div class="form-group">
 				<a asp-action="Index" class="btn btn-default">Back to List</a>
 
 				<input type="submit" value="Save" class="btn btn-primary pull-right ml-lg" />
-				<a asp-area="" asp-controller="AppUsers" asp-action="ResetPicture" asp-route-id="@Model.Id" class="btn btn-warning pull-right">Reset Picture</a>
+				<a href="#" class="btn btn-warning pull-right" onclick="$('#reset-picture-modal').modal()">Reset Picture</a>
 			</div>
 		</form>
-    </div>
+	</div>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
