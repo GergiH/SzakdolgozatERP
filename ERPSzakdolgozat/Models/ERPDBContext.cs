@@ -31,8 +31,8 @@ namespace ERPSzakdolgozat.Models
 					CreatedDate = DateTime.Now,
 					ModifiedDate = DateTime.Now,
 					ADName = "CORP\\ghorvath", // Work UserName
-					//ADName = "NyomdNekiNyuszi\\Horváth Gergely", // Home UserName
-					//ADName = User.Identity.Name, // This would be best for debugging, but doesn't work
+											   //ADName = "NyomdNekiNyuszi\\Horváth Gergely", // Home UserName
+											   //ADName = User.Identity.Name, // This would be best for debugging, but doesn't work
 					Email = "van@denincs.com",
 					DisplayName = "Horváth Gergely"
 				});
@@ -51,6 +51,27 @@ namespace ERPSzakdolgozat.Models
 					CreatedDate = DateTime.Now,
 					ModifiedDate = DateTime.Now,
 					RoleName = "HR"
+				},
+				new AppRole
+				{
+					Id = 3,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					RoleName = "ProjectManager"
+				},
+				new AppRole
+				{
+					Id = 4,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					RoleName = "Sales"
+				},
+				new AppRole
+				{
+					Id = 5,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					RoleName = "Assisstant"
 				});
 
 			modelBuilder.Entity<UserRoles>()

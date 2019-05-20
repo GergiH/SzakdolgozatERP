@@ -1,6 +1,7 @@
 ﻿using ERPSzakdolgozat.Helpers;
 using ERPSzakdolgozat.Models;
 using ERPSzakdolgozat.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -74,6 +75,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Employees/Details/5
+		[Authorize(Policy = "HR")]
 		public async Task<IActionResult> Details(int? id)
 		{
 			if (id == null)
@@ -107,6 +109,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Employees/Create
+		[Authorize(Policy = "HR")]
 		public IActionResult Create()
 		{
 			Employee employee = new Employee
@@ -122,6 +125,7 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: Employees/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "HR")]
 		public async Task<IActionResult> Create(Employee employee)
 		{
 			if (ModelState.IsValid)
@@ -154,6 +158,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Employees/Edit/5
+		[Authorize(Policy = "HR")]
 		public async Task<IActionResult> Edit(int? id)
 		{
 			if (id == null)
@@ -179,6 +184,7 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: Employees/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "HR")]
 		public async Task<IActionResult> Edit(int id, Employee employee)
 		{
 			if (id != employee.Id)
@@ -215,6 +221,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Employees/Delete/5
+		[Authorize(Policy = "HR")]
 		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null)
@@ -235,6 +242,7 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: Employees/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "HR")]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
 			var employee = await _context.Employees.FindAsync(id);
@@ -250,6 +258,7 @@ namespace ERPSzakdolgozat.Controllers
 			return View();
 		}
 
+		[Authorize(Policy = "HR")]
 		public int AddFinancial(int currencyId, int workHours, double grossSalary, double cafeteria, double bonus, int employeeId)
 		{
 			try

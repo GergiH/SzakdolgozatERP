@@ -53,7 +53,10 @@ namespace ERPSzakdolgozat
 			services.AddAuthorization(options =>
 			{
 				options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
-				options.AddPolicy("HR", policy => policy.RequireClaim(ClaimTypes.Role, "HR"));
+				options.AddPolicy("HR", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "HR"));
+				options.AddPolicy("ProjectManager", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "ProjectManager"));
+				options.AddPolicy("Sales", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "Sales"));
+				options.AddPolicy("Assisstant", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "Assisstant"));
 			});
 
 			services.AddScoped<IClaimsTransformation, ClaimsTransformer>();

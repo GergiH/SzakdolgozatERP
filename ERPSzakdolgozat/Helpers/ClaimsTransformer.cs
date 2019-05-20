@@ -1,7 +1,5 @@
 ﻿using ERPSzakdolgozat.Models;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -29,8 +27,14 @@ namespace ERPSzakdolgozat.Helpers
 			ClaimsIdentity ci = (ClaimsIdentity)principal.Identity;
 
 			// Get all roles of the User
-			string[] userRoles = _context.UserRoles.Where(u => u.AppUser.ADName == ci.Name).Select(r => r.AppRole.RoleName).ToArray();
-			List<string> actualRoles = ci.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
+			HashSet<string> userRoles = _context.UserRoles
+				.Where(u => u.AppUser.ADName == ci.Name)
+				.Select(r => r.AppRole.RoleName)
+				.ToHashSet();
+			List<string> actualRoles = ci.Claims
+				.Where(c => c.Type == ClaimTypes.Role)
+				.Select(c => c.Value)
+				.ToList();
 			foreach (string role in userRoles)
 			{
 				if (!ci.HasClaim(ClaimTypes.Role, role))
