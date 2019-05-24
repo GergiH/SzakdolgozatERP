@@ -34,6 +34,7 @@ namespace ERPSzakdolgozat.Models
 											   //ADName = "NyomdNekiNyuszi\\Horváth Gergely", // Home UserName
 											   //ADName = User.Identity.Name, // This would be best for debugging, but doesn't work
 					Email = "van@denincs.com",
+					Mobile = "+36901234567",
 					DisplayName = "Horváth Gergely"
 				});
 

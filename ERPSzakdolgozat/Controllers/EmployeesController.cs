@@ -259,7 +259,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		[Authorize(Policy = "HR")]
-		public int AddFinancial(int currencyId, int workHours, double grossSalary, double cafeteria, double bonus, int employeeId)
+		public JsonResult AddFinancial(int currencyId, int workHours, double grossSalary, double cafeteria, double bonus, int employeeId)
 		{
 			try
 			{
@@ -279,13 +279,15 @@ namespace ERPSzakdolgozat.Controllers
 
 				_context.EmployeeFinancials.Add(newFinancial);
 				_context.SaveChanges();
+
+				ViewData["Toast"] = Toasts.Created;
 			}
 			catch
 			{
-				return 1; // return a value to make JS success/error message in 'employee_edit.js'
+				ViewData["Toast"] = Toasts.CreatedFail;
 			}
 
-			return 0;
+			return Json(null);
 		}
 
 		private bool EmployeeExists(int id)

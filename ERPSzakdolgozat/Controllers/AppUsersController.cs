@@ -229,7 +229,6 @@ namespace ERPSzakdolgozat.Controllers
 		[HttpGet]
 		public async Task<IActionResult> SelfEdit()
 		{
-			// TODO change own Name, Email, Mobile
 			AppUser user = await _context.AppUsers.Where(u => u.ADName == User.Identity.Name).FirstOrDefaultAsync();
 
 			if (user == null)

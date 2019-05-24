@@ -10,7 +10,7 @@
 <h4>User</h4>
 <hr />
 <div class="row">
-	<div class="col-md-8 col-md-offset-2">
+	<div class="col-md-10 col-md-offset-1">
 		<form asp-action="Edit">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -26,48 +26,55 @@
 					<img src="~/images/userdefault.png" style="background-color:lightgrey;" />
 				}
 			</div>
-			<div class="form-group">
-				<label asp-for="AppUser.ADName" class="control-label"></label>
-				<input asp-for="AppUser.ADName" class="form-control" />
-				<span asp-validation-for="AppUser.ADName" class="text-danger"></span>
+			<div class="col-md-8">
+				<div class="form-group">
+					<label asp-for="AppUser.ADName" class="control-label"></label>
+					<input asp-for="AppUser.ADName" class="form-control" />
+					<span asp-validation-for="AppUser.ADName" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="AppUser.DisplayName" class="control-label"></label>
+					<input asp-for="AppUser.DisplayName" class="form-control" />
+					<span asp-validation-for="AppUser.DisplayName" class="text-danger"></span>
+				</div>
+				<div class="form-group row">
+					<div class="col-md-6">
+						<label asp-for="AppUser.Email" class="control-label"></label>
+						<input asp-for="AppUser.Email" class="form-control" type="email" />
+						<span asp-validation-for="AppUser.Email" class="text-danger"></span>
+					</div>
+					<div class="col-md-6">
+						<label asp-for="AppUser.Mobile" class="control-label"></label>
+						<input asp-for="AppUser.Mobile" class="form-control" />
+						<span asp-validation-for="AppUser.Mobile" class="text-danger"></span>
+					</div>
+				</div>
+				<input type="hidden" asp-for="AppUser.Id" />
+				<input type="hidden" asp-for="AppUser.CreatedDate" />
+				<input type="hidden" asp-for="AppUser.ModifiedDate" />
+				<input type="hidden" asp-for="AppUser.ProfilePicture" />
 			</div>
-			<div class="form-group">
-				<label asp-for="AppUser.DisplayName" class="control-label"></label>
-				<input asp-for="AppUser.DisplayName" class="form-control" />
-				<span asp-validation-for="AppUser.DisplayName" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="AppUser.Email" class="control-label"></label>
-				<input asp-for="AppUser.Email" class="form-control" type="email" />
-				<span asp-validation-for="AppUser.Email" class="text-danger"></span>
-			</div>
-			<input type="hidden" asp-for="AppUser.Id" />
-			<input type="hidden" asp-for="AppUser.CreatedDate" />
-			<input type="hidden" asp-for="AppUser.ModifiedDate" />
-			<input type="hidden" asp-for="AppUser.ProfilePicture" />
 
-			<div class="form-group row">
-				<div class="col-md-4 col-md-offset-4">
-					<ul class="list-group">
-						<li class="list-group-item list-group-item-heading" style="background-color: #eee">
-							<strong>Roles</strong>
+			<div class="col-md-4">
+				<ul class="list-group">
+					<li class="list-group-item list-group-item-heading" style="background-color: #eee">
+						<strong>Roles</strong>
+					</li>
+
+					@foreach (var role in (Dictionary<string, bool>)ViewData["UserRoles"])
+					{
+						<li class="list-group-item">
+							<div class="checkbox">
+								<label>
+									@Html.CheckBoxFor(model => model.HasRole[i])
+									@role.Key
+								</label>
+							</div>
 						</li>
 
-						@foreach (var role in (Dictionary<string, bool>)ViewData["UserRoles"])
-						{
-							<li class="list-group-item">
-								<div class="checkbox">
-									<label>
-										@Html.CheckBoxFor(model => model.HasRole[i])
-										@role.Key
-									</label>
-								</div>
-							</li>
-
-							i++;
-						}
-					</ul>
-				</div>
+						i++;
+					}
+				</ul>
 			</div>
 
 			@* modal for picture reset *@

@@ -14,6 +14,8 @@ namespace ERPSzakdolgozat.Models
 		[Required]
 		public string DisplayName { get; set; }
 		public string Email { get; set; }
+		public string Mobile { get; set; }
+
 		[Column(TypeName = "image")]
 		public byte[] ProfilePicture { get; set; }
 

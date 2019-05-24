@@ -1,7 +1,7 @@
 ﻿@model ERPSzakdolgozat.Models.AppUser
 
 @{
-    ViewData["Title"] = "User - Details";
+	ViewData["Title"] = "User - Details";
 }
 
 <h2>Details</h2>
@@ -37,6 +37,12 @@
 		</dt>
 		<dd>
 			@Html.DisplayFor(model => model.Email)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Mobile)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Mobile)
 		</dd>
 		<dt>
 			@Html.DisplayNameFor(model => model.CreatedDate)
