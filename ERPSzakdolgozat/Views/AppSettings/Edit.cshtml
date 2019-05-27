@@ -1,0 +1,42 @@
+﻿@model ERPSzakdolgozat.Models.AppSetting
+
+@{
+    ViewData["Title"] = "Application Setting - Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Application Setting</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+		<form asp-action="Edit">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+			<div class="form-group row">
+				<div class="col-md-4 pt-md">
+					<label class="control-label">@Html.DisplayFor(model => model.SettingName)</label>
+				</div>
+				<div class="col-md-8">
+					<select asp-for="SettingValue" asp-items="@((SelectList)ViewData["SettingList"])" class="form-control"></select>
+					<span asp-validation-for="SettingValue" class="text-danger"></span>
+				</div>
+			</div>
+
+			<input type="hidden" asp-for="Id" />
+			<input type="hidden" asp-for="CreatedDate" />
+			<input type="hidden" asp-for="ModifiedDate" />
+			<input type="hidden" asp-for="SettingName" />
+
+			<div class="form-group">
+				<a asp-action="Index" class="btn btn-default">Back to List</a>
+
+				<input type="submit" value="Save" class="btn btn-primary pull-right" />
+			</div>
+		</form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

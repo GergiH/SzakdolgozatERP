@@ -20,7 +20,7 @@ namespace ERPSzakdolgozat.Controllers
 		// GET: Clients
 		public async Task<IActionResult> Index()
 		{
-			return View(await _context.Client.OrderBy(c => c.ClientName).ToListAsync());
+			return View(await _context.Clients.OrderBy(c => c.ClientName).ToListAsync());
 		}
 
 		// GET: Clients/Details/5
@@ -31,7 +31,7 @@ namespace ERPSzakdolgozat.Controllers
 				return NotFound();
 			}
 
-			var client = await _context.Client
+			var client = await _context.Clients
 				.FirstOrDefaultAsync(m => m.Id == id);
 			if (client == null)
 			{
@@ -56,7 +56,7 @@ namespace ERPSzakdolgozat.Controllers
 			{
 				client.CreatedDate = DateTime.Now;
 				client.ModifiedDate = DateTime.Now;
-				client.Id = _context.Client.Max(t => t.Id) + 1;
+				client.Id = _context.Clients.Max(t => t.Id) + 1;
 
 				_context.Add(client);
 				await _context.SaveChangesAsync();
@@ -75,7 +75,7 @@ namespace ERPSzakdolgozat.Controllers
 				return NotFound();
 			}
 
-			var client = await _context.Client.FindAsync(id);
+			var client = await _context.Clients.FindAsync(id);
 			if (client == null)
 			{
 				return NotFound();
@@ -126,7 +126,7 @@ namespace ERPSzakdolgozat.Controllers
 				return NotFound();
 			}
 
-			var client = await _context.Client
+			var client = await _context.Clients
 				.FirstOrDefaultAsync(m => m.Id == id);
 			if (client == null)
 			{
@@ -141,8 +141,8 @@ namespace ERPSzakdolgozat.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
-			var client = await _context.Client.FindAsync(id);
-			_context.Client.Remove(client);
+			var client = await _context.Clients.FindAsync(id);
+			_context.Clients.Remove(client);
 			await _context.SaveChangesAsync();
 
 			TempData["Toast"] = Toasts.Deleted;
@@ -151,7 +151,7 @@ namespace ERPSzakdolgozat.Controllers
 
 		private bool ClientExists(int id)
 		{
-			return _context.Client.Any(e => e.Id == id);
+			return _context.Clients.Any(e => e.Id == id);
 		}
 	}
 }

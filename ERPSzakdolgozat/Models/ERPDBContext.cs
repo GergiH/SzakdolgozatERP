@@ -19,11 +19,22 @@ namespace ERPSzakdolgozat.Models
 		public DbSet<AppUser> AppUsers { get; set; }
 		public DbSet<AppRole> AppRoles { get; set; }
 		public DbSet<UserRoles> UserRoles { get; set; }
-		public DbSet<Client> Client { get; set; }
+		public DbSet<Client> Clients { get; set; }
+		public DbSet<AppSetting> AppSettings { get; set; }
 
 		// Seeding the DB
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<AppSetting>().HasData(
+				new AppSetting
+				{
+					Id = 1,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					SettingName = "Default - Currency",
+					SettingValue = "HUF"
+				});
+
 			modelBuilder.Entity<AppUser>().HasData(
 				new AppUser
 				{

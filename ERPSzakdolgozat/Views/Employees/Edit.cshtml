@@ -66,7 +66,7 @@
 					<div class="form-group row">
 						<div class="col-md-6">
 							<label asp-for="RoleId" class="control-label"></label>
-							<select asp-for="RoleId" asp-items="@(new SelectList((List<SelectListItem>)ViewData["Roles"], "Value", "Text", Model.TeamId))" class="form-control"></select>
+							<select asp-for="RoleId" asp-items="@(new SelectList((List<SelectListItem>)ViewData["Roles"], "Value", "Text", Model.RoleId))" class="form-control"></select>
 							<span asp-validation-for="RoleId" class="text-danger"></span>
 						</div>
 						<div class="col-md-6">

@@ -15,11 +15,13 @@
 			<div class="form-group row">
 				<div class="col-md-4">
 					<label asp-for="ClientId" class="control-label"></label>
+					<span class="text-muted">(required)</span>
 					<input asp-for="ClientId" class="form-control" />
 					<span asp-validation-for="ClientId" class="text-danger"></span>
 				</div>
 				<div class="col-md-8">
 					<label asp-for="ClientName" class="control-label"></label>
+					<span class="text-muted">(required)</span>
 					<input asp-for="ClientName" class="form-control" />
 					<span asp-validation-for="ClientName" class="text-danger"></span>
 				</div>
