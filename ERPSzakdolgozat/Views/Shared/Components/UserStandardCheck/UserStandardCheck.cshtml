@@ -1,0 +1,12 @@
+﻿@model AppUser
+
+@if (Model == null)
+{
+	<p class="lead">
+		Can't identify your User or you don't have a User Account for the application. Please contact an administrator:
+		@foreach (string item in (List<string>)ViewData["AdministratorNames"])
+		{
+			<span class="label label-warning">@item</span>
+		}
+	</p>
+}

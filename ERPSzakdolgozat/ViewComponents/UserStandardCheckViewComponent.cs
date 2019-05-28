@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace ERPSzakdolgozat.ViewComponents
 {
-	[ViewComponent(Name = "UserNav")]
-	public class UserNavViewComponent : ViewComponent
+	[ViewComponent(Name = "UserStandardCheck")]
+	public class UserStandardCheckViewComponent : ViewComponent
 	{
 		private readonly ERPDBContext _context;
 
-		public UserNavViewComponent(ERPDBContext context)
+		public UserStandardCheckViewComponent(ERPDBContext context)
 		{
 			_context = context;
 		}
@@ -21,7 +21,12 @@ namespace ERPSzakdolgozat.ViewComponents
 		{
 			AppUser user = await GetUserAsync(username);
 			Globals.IsAppUser = user == null ? false : true;
-			return View("UserNav", user);
+			ViewData["AdministratorNames"] = _context.AppUsers
+				.Where(u => u.Roles.Any(r => r.RoleID == 1))
+				.Select(u => u.DisplayName)
+				.ToList();
+
+			return View("UserStandardCheck", user);
 		}
 
 		private async Task<AppUser> GetUserAsync(string username)

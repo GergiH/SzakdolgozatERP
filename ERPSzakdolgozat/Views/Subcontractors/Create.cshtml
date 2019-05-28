@@ -1,0 +1,44 @@
+﻿@model ERPSzakdolgozat.Models.Subcontractor
+
+@{
+	ViewData["Title"] = "Subcontractor - Create";
+}
+
+<h2>Create</h2>
+
+<h4>Subcontractor</h4>
+<hr />
+<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group row">
+				<div class="col-md-8">
+					<label asp-for="SubcontractorName" class="control-label"></label>
+					<input asp-for="SubcontractorName" class="form-control" />
+					<span asp-validation-for="SubcontractorName" class="text-danger"></span>
+				</div>
+				<div class="col-md-4 pt-lg">
+					<div class="checkbox">
+						<label>
+							<input asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<input type="hidden" asp-for="CreatedDate" />
+			<input type="hidden" asp-for="ModifiedDate" />
+
+			<div class="form-group">
+				<a asp-action="Index" class="btn btn-default">Back to List</a>
+
+				<input type="submit" value="Create" class="btn btn-success pull-right" />
+			</div>
+		</form>
+	</div>
+</div>
+
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

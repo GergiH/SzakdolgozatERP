@@ -29,6 +29,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Shared\Components\UserStandardCheck\UserStandardCheck.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Units\Create.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
