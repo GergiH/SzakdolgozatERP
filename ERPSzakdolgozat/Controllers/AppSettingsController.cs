@@ -57,6 +57,8 @@ namespace ERPSzakdolgozat.Controllers
 					await _context.SaveChangesAsync();
 
 					TempData["Toast"] = Toasts.Saved;
+
+					LogicAfterSaveAsync(setting);
 				}
 				catch (DbUpdateConcurrencyException)
 				{
@@ -86,7 +88,7 @@ namespace ERPSzakdolgozat.Controllers
 			// TODO expand the list as settings expand as well
 			switch (setting.SettingName)
 			{
-				case "Default - Currency": // TODO implement logic based on this setting for currency value
+				case "Default - Currency":
 					ViewData["SettingList"] = new SelectList(
 						_context.Currencies
 							.Where(c => c.InYear == DateTime.Now.Year)
@@ -99,8 +101,37 @@ namespace ERPSzakdolgozat.Controllers
 							.ToList(),
 						"Value", "Text", setting.SettingValue);
 					break;
+				case "Default - Overtime Multiplier":
+					double[] multipliers = new double[20];
+					for (int i = 0; i < 20; i++)
+					{
+						multipliers[i] = 1 + (i / 10.0);
+					}
+					ViewData["SettingList"] = new SelectList(multipliers);
+					break;
 				default:
 					ViewData["SettingList"] = null;
+					break;
+			}
+		}
+
+		public async Task LogicAfterSaveAsync(AppSetting setting)
+		{
+			switch (setting.SettingName)
+			{
+				case "Default - Currency":
+					var curr = _context.Currencies
+						.Where(c => c.CurrencyName == setting.SettingValue && c.InYear == DateTime.Now.Year)
+						.FirstOrDefault();
+					if (curr != null)
+					{
+						curr.ExchangeValue = 1; // set the new default currency's multiplier to 1
+
+						_context.Update(curr);
+						await _context.SaveChangesAsync();
+					}
+					break;
+				default:
 					break;
 			}
 		}

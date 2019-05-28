@@ -21,10 +21,17 @@ namespace ERPSzakdolgozat.Models
 		public DbSet<UserRoles> UserRoles { get; set; }
 		public DbSet<Client> Clients { get; set; }
 		public DbSet<AppSetting> AppSettings { get; set; }
+		public DbSet<Risk> Risks { get; set; }
+		public DbSet<Project> Projects { get; set; }
+		public DbSet<ProjectResource> ProjectResources { get; set; }
+		public DbSet<ProjectLog> ProjectLogs { get; set; }
+		public DbSet<ProjectRisk> ProjectRisks { get; set; }
+		public DbSet<Subcontractor> Subcontractors { get; set; }
 
 		// Seeding the DB
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			// Add at least one record of every Model
 			modelBuilder.Entity<AppSetting>().HasData(
 				new AppSetting
 				{
@@ -33,6 +40,14 @@ namespace ERPSzakdolgozat.Models
 					ModifiedDate = DateTime.Now,
 					SettingName = "Default - Currency",
 					SettingValue = "HUF"
+				},
+				new AppSetting
+				{
+					Id = 2,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					SettingName = "Default - Overtime Multiplier",
+					SettingValue = "1,4"
 				});
 
 			modelBuilder.Entity<AppUser>().HasData(
@@ -95,7 +110,6 @@ namespace ERPSzakdolgozat.Models
 					RoleID = 1
 				});
 
-			// Add at least one record of every Model
 			modelBuilder.Entity<Employee>().HasData(
 				new Employee
 				{
@@ -266,8 +280,8 @@ namespace ERPSzakdolgozat.Models
 					CreatedDate = DateTime.Now,
 					ModifiedDate = DateTime.Now,
 					Active = true,
-					TeamCode = "BTE",
-					TeamName = "Best Team Ever",
+					TeamCode = "TitBT",
+					TeamName = "This is the Best Team",
 					UnitId = 1
 				});
 
@@ -319,6 +333,190 @@ namespace ERPSzakdolgozat.Models
 					TaxNumber = "52254-4124-2222322",
 					ZIP = "4321"
 				});
+
+			modelBuilder.Entity<Risk>().HasData( // TODO admin felület risk-nek
+				new Risk
+				{
+					Id = 1,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					RiskName = "Employee absence",
+					RiskWeight = 10
+				},
+				new Risk
+				{
+					Id = 2,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					RiskName = "Resource shortage",
+					RiskWeight = 5
+				},
+				new Risk
+				{
+					Id = 3,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					RiskName = "Wrong estimation",
+					RiskWeight = 2
+				},
+				new Risk
+				{
+					Id = 4,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					RiskName = "Misunderstanding of specifications",
+					RiskWeight = 6
+				});
+
+			modelBuilder.Entity<Subcontractor>().HasData( // TODO subcontractoroknak menü (resources alatt employees és subcontractors)
+				new Subcontractor
+				{
+					Id = 1,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					SubcontractorName = "Külsős Kálmán",
+					IsActive = true
+				},
+				new Subcontractor
+				{
+					Id = 2,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					SubcontractorName = "Beépített Benedek",
+					IsActive = true
+				},
+				new Subcontractor
+				{
+					Id = 3,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					SubcontractorName = "Kiszervezett Kamilla",
+					IsActive = true
+				});
+
+			modelBuilder.Entity<Project>().HasData( // TODO projekteknek felület és controller hegyek (+ chart.js a log alapján a risk és total costra és revenuera)
+				new Project
+				{
+					Id = 1,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					ClientId = 1,
+					Contract = "Signed",
+					ContractValue = 2800000,
+					Description = "Nagyon szuper projekt, ami mindenkinek örömet okoz.",
+					EstimatedEndDate = DateTime.Now.AddMonths(6),
+					HoursAll = 200,
+					HoursDone = 150,
+					HoursRemaining = 50,
+					OvertimeAll = 20,
+					OvertimeDone = 0,
+					OvertimeRemaining = 20,
+					ProjectManager = "CORP\\ghorvath",
+					ProjectName = "Maybe the best project",
+					ResourcesCost = 1600000,
+					ResourcesRevenue = 2400000,
+					ResourcesCostRemaining = 400000,
+					ResourcesCostSpent = 1200000,
+					RiskCost = 200000,
+					RiskCostRemaining = 100000,
+					RiskCostSpent = 100000,
+					RiskRevenue = 400000,
+					StartDate = DateTime.Now,
+					Status = "Executing",
+					TotalCost = 1800000,
+					TotalCostRemaining = 500000,
+					TotalCostSpent = 1300000,
+					TotalRevenue = 2800000,
+					Type = "Fixed price"
+				});
+
+			modelBuilder.Entity<ProjectLog>().HasData(
+				new ProjectLog
+				{
+					Id = 1,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					FieldName = "HoursDone",
+					OriginalValue = "100",
+					NewValue = "150",
+					ProjectId = 1
+				});
+
+			modelBuilder.Entity<ProjectRisk>().HasData(
+				new ProjectRisk
+				{
+					Id = 1,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					RiskId = 1,
+					ProjectId = 1,
+					IsSelected = true
+				},
+				new ProjectRisk
+				{
+					Id = 2,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					RiskId = 2,
+					ProjectId = 1,
+					IsSelected = true
+				},
+				new ProjectRisk
+				{
+					Id = 3,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					RiskId = 3,
+					ProjectId = 1,
+					IsSelected = false
+				},
+				new ProjectRisk
+				{
+					Id = 4,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					RiskId = 4,
+					ProjectId = 1,
+					IsSelected = false
+				});
+
+			modelBuilder.Entity<ProjectResource>().HasData(
+				new ProjectResource
+				{
+					Id = 1,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					Task = "Doesn't do anything",
+					ProjectId = 1,
+					ResourceName = "Kis Kutya",
+					ResourceType = "Employee",
+					Cost = 5000,
+					HoursAll = 150,
+					HoursDone = 100,
+					HoursRemaining = 50,
+					OvertimeAll = 20,
+					OvertimeDone = 0,
+					OvertimeRemaining = 20,
+					Revenue = 8000
+				},
+				new ProjectResource
+				{
+					Id = 2,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					Task = "Pretends he does something",
+					ProjectId = 1,
+					ResourceName = "Beépített Benedek",
+					ResourceType = "Subcontractor",
+					Cost = 7000,
+					HoursAll = 50,
+					HoursDone = 50,
+					HoursRemaining = 0,
+					OvertimeAll = 0,
+					OvertimeDone = 0,
+					OvertimeRemaining = 0,
+					Revenue = 8000
+				}); // TODO ha resourcetype == Other, akkor ne dropdown legyen a View-ban
 
 			// Set relations
 			modelBuilder.Entity<EmployeeFinancial>()
