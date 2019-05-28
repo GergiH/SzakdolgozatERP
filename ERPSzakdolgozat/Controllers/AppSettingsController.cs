@@ -58,7 +58,7 @@ namespace ERPSzakdolgozat.Controllers
 
 					TempData["Toast"] = Toasts.Saved;
 
-					LogicAfterSaveAsync(setting);
+					await LogicAfterSaveAsync(setting);
 				}
 				catch (DbUpdateConcurrencyException)
 				{
@@ -102,8 +102,8 @@ namespace ERPSzakdolgozat.Controllers
 						"Value", "Text", setting.SettingValue);
 					break;
 				case "Default - Overtime Multiplier":
-					double[] multipliers = new double[20];
-					for (int i = 0; i < 20; i++)
+					double[] multipliers = new double[21];
+					for (int i = 0; i < 21; i++)
 					{
 						multipliers[i] = 1 + (i / 10.0);
 					}
@@ -119,13 +119,14 @@ namespace ERPSzakdolgozat.Controllers
 		{
 			switch (setting.SettingName)
 			{
+				// set the new default currency's multiplier to 1
 				case "Default - Currency":
 					var curr = _context.Currencies
 						.Where(c => c.CurrencyName == setting.SettingValue && c.InYear == DateTime.Now.Year)
 						.FirstOrDefault();
 					if (curr != null)
 					{
-						curr.ExchangeValue = 1; // set the new default currency's multiplier to 1
+						curr.ExchangeValue = 1;
 
 						_context.Update(curr);
 						await _context.SaveChangesAsync();

@@ -1,15 +1,18 @@
 ﻿@model IEnumerable<ERPSzakdolgozat.Models.Risk>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Risks - List";
 }
 
-<h2>Index</h2>
+<h2>Risks</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<div class="col-md-12 margin-bottom-sm pr-sm">
+	<a asp-action="Create" class="btn btn-success btn-sm pull-right" data-toggle="tooltip" data-placement="top" title="" data-original-title="Create New">
+		<i class="glyphicon glyphicon-plus"></i>
+	</a>
+</div>
+
+<table class="table table-hover">
     <thead>
         <tr>
             <th>
@@ -17,12 +20,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RiskWeight)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifiedDate)
             </th>
             <th></th>
         </tr>
@@ -36,17 +33,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.RiskWeight)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
+			<td class="col-md-2 text-right">
+				<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+					<i class="glyphicon glyphicon-pencil"></i>
+				</a>
+				<a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="right" title="" data-original-title="Delete">
+					<i class="glyphicon glyphicon-remove"></i>
+				</a>
+			</td>
         </tr>
 }
     </tbody>

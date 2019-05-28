@@ -56,12 +56,32 @@ namespace ERPSzakdolgozat.Models
 					Id = 1,
 					CreatedDate = DateTime.Now,
 					ModifiedDate = DateTime.Now,
-					ADName = "CORP\\ghorvath", // Work UserName
-											   //ADName = "NyomdNekiNyuszi\\Horváth Gergely", // Home UserName
-											   //ADName = User.Identity.Name, // This would be best for debugging, but doesn't work
+					//ADName = "CORP\\ghorvath", // Work UserName
+					ADName = "NYOMDNEKINYUSZI\\Horváth Gergely",
+					//ADName = User.Identity.Name, // This would be best for debugging, but doesn't work
 					Email = "van@denincs.com",
 					Mobile = "+36901234567",
 					DisplayName = "Horváth Gergely"
+				},
+				new AppUser
+				{
+					Id = 2,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					ADName = "CORP\\UndefinedUser",
+					Email = "van@denincs.com",
+					Mobile = "+36901234567",
+					DisplayName = "Not Available"
+				},
+				new AppUser
+				{
+					Id = 3,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					ADName = "CORP\\Ghost",
+					Email = "van@denincs.com",
+					Mobile = "+36901234567",
+					DisplayName = "Ghost in the Dark"
 				});
 
 			modelBuilder.Entity<AppRole>().HasData(

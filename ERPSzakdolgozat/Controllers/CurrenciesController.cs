@@ -45,7 +45,6 @@ namespace ERPSzakdolgozat.Controllers
 		public IActionResult Create()
 		{
 			Currency currency = new Currency();
-
 			return View(currency);
 		}
 

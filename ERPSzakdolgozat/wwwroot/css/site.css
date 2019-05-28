@@ -1,7 +1,11 @@
 ﻿body {
-	padding-top: 62px;
+	padding-top: 50px;
 	padding-bottom: 20px;
 	font-family: Roboto, sans-serif !important;
+}
+
+td {
+	vertical-align: middle !important;
 }
 
 .body-content {
@@ -11,10 +15,6 @@
 
 .nav-tabs {
 	margin-bottom: 10px;
-}
-
-.navbar-default .navbar-nav > li > a {
-	color: #b7b6ae;
 }
 
 .list-group-item {
@@ -44,7 +44,7 @@
 }
 
 .dropdown-header {
-	color: #79a738;
+	color: #6d94bf;
 	text-shadow: 2px 2px 2px rgba(140, 140, 140, 0.5);
 }
 /* Set a different color for it because the navbar is dark blue */

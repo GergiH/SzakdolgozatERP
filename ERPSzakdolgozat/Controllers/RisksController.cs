@@ -1,12 +1,14 @@
-﻿using ERPSzakdolgozat.Models;
+﻿using ERPSzakdolgozat.Helpers;
+using ERPSzakdolgozat.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ERPSzakdolgozat.Controllers
 {
-	public class RisksController : Controller
+	public class RisksController : MyController
 	{
 		private readonly ERPDBContext _context;
 
@@ -18,7 +20,6 @@ namespace ERPSzakdolgozat.Controllers
 		// GET: Risks
 		public async Task<IActionResult> Index()
 		{
-			// TODO átírni a view-okat és a metódusokat itt
 			return View(await _context.Risks.OrderBy(r => r.RiskName).ToListAsync());
 		}
 
@@ -43,7 +44,8 @@ namespace ERPSzakdolgozat.Controllers
 		// GET: Risks/Create
 		public IActionResult Create()
 		{
-			return View();
+			Risk risk = new Risk();
+			return View(risk);
 		}
 
 		// POST: Risks/Create
@@ -53,8 +55,14 @@ namespace ERPSzakdolgozat.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+				risk.CreatedDate = DateTime.Now;
+				risk.ModifiedDate = DateTime.Now;
+				risk.Id = _context.Risks.Max(c => c.Id) + 1;
+
 				_context.Add(risk);
 				await _context.SaveChangesAsync();
+
+				TempData["Toast"] = Toasts.Created;
 				return RedirectToAction(nameof(Index));
 			}
 			return View(risk);
@@ -92,6 +100,8 @@ namespace ERPSzakdolgozat.Controllers
 				{
 					_context.Update(risk);
 					await _context.SaveChangesAsync();
+
+					TempData["Toast"] = Toasts.Saved;
 				}
 				catch (DbUpdateConcurrencyException)
 				{
@@ -135,6 +145,8 @@ namespace ERPSzakdolgozat.Controllers
 			var risk = await _context.Risks.FindAsync(id);
 			_context.Risks.Remove(risk);
 			await _context.SaveChangesAsync();
+
+			TempData["Toast"] = Toasts.Deleted;
 			return RedirectToAction(nameof(Index));
 		}
 

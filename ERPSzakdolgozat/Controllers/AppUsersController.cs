@@ -137,22 +137,18 @@ namespace ERPSzakdolgozat.Controllers
 					_context.Update(userEditVM.AppUser);
 					await _context.SaveChangesAsync();
 
-					_userID = _context.AppUsers
-						.Where(u => u.ADName == User.Identity.Name)
-						.Select(u => u.Id)
-						.FirstOrDefault();
-
 					// handle the change of roles
 					List<AppRole> allRoles = await _context.AppRoles.OrderBy(a => a.RoleName).ToListAsync();
 					for (int i = 0; i < allRoles.Count; i++)
 					{
-						bool alreadyHasRole = _context.UserRoles.Any(u => u.RoleID == allRoles[i].Id && u.UserID == _userID);
+						bool alreadyHasRole = _context.UserRoles
+							.Any(u => u.RoleID == allRoles[i].Id && u.UserID == userEditVM.AppUser.Id);
 						if (userEditVM.HasRole[i] && !alreadyHasRole) // add new role
 						{
 							UserRoles ur = new UserRoles
 							{
 								RoleID = allRoles[i].Id,
-								UserID = _userID
+								UserID = userEditVM.AppUser.Id
 							};
 							await _context.UserRoles.AddAsync(ur);
 						}
@@ -161,7 +157,7 @@ namespace ERPSzakdolgozat.Controllers
 							UserRoles ur = new UserRoles
 							{
 								RoleID = allRoles[i].Id,
-								UserID = _userID
+								UserID = userEditVM.AppUser.Id
 							};
 							_context.UserRoles.Remove(ur);
 						}
