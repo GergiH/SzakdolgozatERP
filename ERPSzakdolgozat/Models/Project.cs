@@ -25,11 +25,14 @@ namespace ERPSzakdolgozat.Models
 		public string Description { get; set; }
 
 		[Required]
+		[DataType(DataType.Date)]
 		public DateTime StartDate { get; set; }
 
+		[DataType(DataType.Date)]
 		public DateTime? EndDate { get; set; }
 
 		[Required]
+		[DataType(DataType.Date)]
 		public DateTime EstimatedEndDate { get; set; }
 
 		public double ContractValue { get; set; }

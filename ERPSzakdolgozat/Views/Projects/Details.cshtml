@@ -1,0 +1,204 @@
+﻿@model ERPSzakdolgozat.Models.Project
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Project</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProjectName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Contract)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contract)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectManager)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProjectManager)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EstimatedEndDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EstimatedEndDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ContractValue)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ContractValue)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HoursAll)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HoursAll)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OvertimeAll)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OvertimeAll)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HoursDone)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HoursDone)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OvertimeDone)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OvertimeDone)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HoursRemaining)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HoursRemaining)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OvertimeRemaining)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OvertimeRemaining)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ResourcesCost)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ResourcesCost)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ResourcesRevenue)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ResourcesRevenue)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ResourcesCostSpent)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ResourcesCostSpent)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ResourcesCostRemaining)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ResourcesCostRemaining)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RiskCost)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RiskCost)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RiskRevenue)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RiskRevenue)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RiskCostSpent)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RiskCostSpent)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RiskCostRemaining)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RiskCostRemaining)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalCost)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TotalCost)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalRevenue)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TotalRevenue)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalCostSpent)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TotalCostSpent)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalCostRemaining)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TotalCostRemaining)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Client)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Client.ClientId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
