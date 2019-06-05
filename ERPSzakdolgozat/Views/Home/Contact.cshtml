@@ -1,17 +1,23 @@
 ﻿@{
-    ViewData["Title"] = "Contact";
+    ViewData["Title"] = "Support";
+	List<string> emails = (List<string>)ViewData["AdminEmails"];
 }
+
 <h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
+
+<hr />
 
 <address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+    <strong>Technical, bug-reports, change-requests:</strong>
+	<ul>
+		<li><a href="mailto:gergelyzsolt.hrv@gmail.com">gergelyzsolt.hrv@gmail.com</a></li>
+	</ul>
 
-<address>
-    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+    <strong>Administration, user-issues:</strong>
+	<ul>
+		@foreach (string em in emails)
+		{
+			<li><a href="mailto:@(em)">@(em)</a></li>
+		}
+	</ul>
 </address>

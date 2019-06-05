@@ -15,5 +15,9 @@ namespace ERPSzakdolgozat.Models
 		public string FieldName { get; set; }
 		public string OriginalValue { get; set; }
 		public string NewValue { get; set; }
+		[Required]
+		[ForeignKey("AppUser")]
+		public int UserId { get; set; }
+		public AppUser AppUser { get; set; }
 	}
 }

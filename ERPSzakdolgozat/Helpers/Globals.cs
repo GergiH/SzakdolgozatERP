@@ -7,6 +7,6 @@ namespace ERPSzakdolgozat.Helpers
 {
 	public static class Globals
 	{
-		public static bool IsAppUser = false;
+		//public static bool IsAppUser = false;
 	}
 }

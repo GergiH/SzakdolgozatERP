@@ -15,10 +15,9 @@ namespace ERPSzakdolgozat.Controllers
 {
 	public class AppUsersController : MyController
 	{
-		private readonly ERPDBContext _context;
 		private int _userID = 0;
 
-		public AppUsersController(ERPDBContext context)
+		public AppUsersController(ERPDBContext context) : base(context)
 		{
 			_context = context;
 		}

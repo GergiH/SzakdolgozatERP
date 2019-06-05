@@ -10,6 +10,11 @@ namespace ERPSzakdolgozat.Models
 		[Required]
 		public string ProjectName { get; set; }
 
+		public string CustomId { get; set; }
+		[ForeignKey("Currency")]
+		public int CurrencyId { get; set; }
+		public Currency Currency { get; set; }
+
 		[Required]
 		public string Status { get; set; }
 

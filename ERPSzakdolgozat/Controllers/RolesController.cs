@@ -12,9 +12,7 @@ namespace ERPSzakdolgozat.Controllers
 	[Authorize(Policy = "Admin")]
 	public class RolesController : MyController
 	{
-		private readonly ERPDBContext _context;
-
-		public RolesController(ERPDBContext context)
+		public RolesController(ERPDBContext context) : base(context)
 		{
 			_context = context;
 		}

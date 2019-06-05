@@ -423,6 +423,8 @@ namespace ERPSzakdolgozat.Models
 					ClientId = 1,
 					Contract = "Signed",
 					ContractValue = 2800000,
+					CurrencyId = 2,
+					CustomId = "PRJ001",
 					Description = "Nagyon szuper projekt, ami mindenkinek örömet okoz.",
 					EstimatedEndDate = DateTime.Now.AddMonths(6),
 					HoursAll = 200,
@@ -447,7 +449,7 @@ namespace ERPSzakdolgozat.Models
 					TotalCostRemaining = 500000,
 					TotalCostSpent = 1300000,
 					TotalRevenue = 2800000,
-					Type = "Fixed price"
+					Type = "Fixed price",
 				});
 
 			modelBuilder.Entity<ProjectLog>().HasData(
@@ -459,7 +461,30 @@ namespace ERPSzakdolgozat.Models
 					FieldName = "HoursDone",
 					OriginalValue = "100",
 					NewValue = "150",
-					ProjectId = 1
+					ProjectId = 1,
+					UserId = 1
+				},
+				new ProjectLog
+				{
+					Id = 2,
+					CreatedDate = DateTime.Now.AddMinutes(10),
+					ModifiedDate = DateTime.Now.AddMinutes(10),
+					FieldName = "Type",
+					OriginalValue = "Time and material",
+					NewValue = "Fixed price",
+					ProjectId = 1,
+					UserId = 2
+				},
+				new ProjectLog
+				{
+					Id = 3,
+					CreatedDate = DateTime.Now.AddMinutes(34),
+					ModifiedDate = DateTime.Now.AddMinutes(34),
+					FieldName = "HoursRemaining",
+					OriginalValue = "88",
+					NewValue = "50",
+					ProjectId = 1,
+					UserId = 1
 				});
 
 			modelBuilder.Entity<ProjectRisk>().HasData(
@@ -508,8 +533,8 @@ namespace ERPSzakdolgozat.Models
 					ModifiedDate = DateTime.Now,
 					Task = "Doesn't do anything",
 					ProjectId = 1,
+					ResourceEmployee = 1,
 					ResourceName = "Kis Kutya",
-					ResourceType = "Employee",
 					Cost = 5000,
 					HoursAll = 150,
 					HoursDone = 100,
@@ -526,8 +551,8 @@ namespace ERPSzakdolgozat.Models
 					ModifiedDate = DateTime.Now,
 					Task = "Pretends he does something",
 					ProjectId = 1,
-					ResourceName = "Beépített Benedek",
-					ResourceType = "Subcontractor",
+					ResourceSubcontractor = 1,
+					ResourceName = "Külsős Kálmán",
 					Cost = 7000,
 					HoursAll = 50,
 					HoursDone = 50,

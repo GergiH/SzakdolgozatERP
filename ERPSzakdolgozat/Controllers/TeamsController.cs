@@ -11,9 +11,7 @@ namespace ERPSzakdolgozat.Controllers
 {
 	public class TeamsController : MyController
 	{
-		private readonly ERPDBContext _context;
-
-		public TeamsController(ERPDBContext context)
+		public TeamsController(ERPDBContext context) : base(context)
 		{
 			_context = context;
 		}

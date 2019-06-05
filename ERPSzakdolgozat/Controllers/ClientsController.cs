@@ -10,9 +10,7 @@ namespace ERPSzakdolgozat.Controllers
 {
 	public class ClientsController : MyController
 	{
-		private readonly ERPDBContext _context;
-
-		public ClientsController(ERPDBContext context)
+		public ClientsController(ERPDBContext context) : base(context)
 		{
 			_context = context;
 		}

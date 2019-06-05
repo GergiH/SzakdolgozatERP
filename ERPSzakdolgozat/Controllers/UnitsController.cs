@@ -12,9 +12,7 @@ namespace ERPSzakdolgozat.Controllers
 	[Authorize(Policy = "Admin")]
 	public class UnitsController : MyController
 	{
-		private readonly ERPDBContext _context;
-
-		public UnitsController(ERPDBContext context)
+		public UnitsController(ERPDBContext context) : base(context)
 		{
 			_context = context;
 		}

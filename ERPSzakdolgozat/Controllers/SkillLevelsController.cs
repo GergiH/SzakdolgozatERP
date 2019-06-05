@@ -10,9 +10,7 @@ namespace ERPSzakdolgozat.Controllers
 {
 	public class SkillLevelsController : MyController
 	{
-		private readonly ERPDBContext _context;
-
-		public SkillLevelsController(ERPDBContext context)
+		public SkillLevelsController(ERPDBContext context) : base(context)
 		{
 			_context = context;
 		}

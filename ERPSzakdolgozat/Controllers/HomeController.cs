@@ -1,11 +1,20 @@
-﻿using ERPSzakdolgozat.Models;
+﻿using ERPSzakdolgozat.Helpers;
+using ERPSzakdolgozat.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Linq;
 
 namespace ERPSzakdolgozat.Controllers
 {
-	public class HomeController : Controller
+	public class HomeController : MyController
 	{
+		public HomeController(ERPDBContext context) : base(context)
+		{
+			_context = context;
+		}
+
 		public IActionResult Index()
 		{
 			return View();
@@ -20,7 +29,11 @@ namespace ERPSzakdolgozat.Controllers
 
 		public IActionResult Contact()
 		{
-			ViewData["Message"] = "Your contact page.";
+			ViewData["AdminEmails"] = _context.AppUsers
+				.AsNoTracking()
+				.Where(u => u.Roles.Any(r => r.RoleID == 1) == true)
+				.Select(u => u.Email)
+				.ToList();
 
 			return View();
 		}

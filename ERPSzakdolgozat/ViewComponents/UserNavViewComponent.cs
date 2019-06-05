@@ -20,7 +20,7 @@ namespace ERPSzakdolgozat.ViewComponents
 		public async Task<IViewComponentResult> InvokeAsync(string username)
 		{
 			AppUser user = await GetUserAsync(username);
-			Globals.IsAppUser = user == null ? false : true;
+			//Globals.IsAppUser = user == null ? false : true;
 			return View("UserNav", user);
 		}
 

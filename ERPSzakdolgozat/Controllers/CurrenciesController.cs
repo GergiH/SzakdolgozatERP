@@ -10,9 +10,7 @@ namespace ERPSzakdolgozat.Controllers
 {
 	public class CurrenciesController : MyController
 	{
-		private readonly ERPDBContext _context;
-
-		public CurrenciesController(ERPDBContext context)
+		public CurrenciesController(ERPDBContext context) : base(context)
 		{
 			_context = context;
 		}

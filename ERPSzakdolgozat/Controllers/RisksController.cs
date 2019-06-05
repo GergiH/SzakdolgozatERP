@@ -10,9 +10,7 @@ namespace ERPSzakdolgozat.Controllers
 {
 	public class RisksController : MyController
 	{
-		private readonly ERPDBContext _context;
-
-		public RisksController(ERPDBContext context)
+		public RisksController(ERPDBContext context) : base(context)
 		{
 			_context = context;
 		}

@@ -1,5 +1,4 @@
-﻿@using System.Security.Claims
-@using ERPSzakdolgozat.Helpers
+﻿@using ERPSzakdolgozat.Helpers
 
 <!DOCTYPE html>
 <html>
@@ -21,7 +20,7 @@
 	</environment>
 </head>
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
+	<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -33,53 +32,7 @@
 				<a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">ERPSzakdolgozat</a>
 			</div>
 			<div class="navbar-collapse collapse">
-				@if (Globals.IsAppUser)
-				{
-					<ul class="nav navbar-nav">
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Resources <span class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu">
-								<li class="dropdown-header">Employees</li>
-								<li><a asp-area="" asp-controller="Employees" asp-action="Index">List</a></li>
-								<li class="divider"></li>
-								<li class="dropdown-header">Subcontractors</li>
-								<li><a asp-area="" asp-controller="Subcontractors" asp-action="Index">List</a></li>
-								<li><a asp-area="" asp-controller="Employees" asp-action="Statistics">Statistics</a></li>
-							</ul>
-						</li>
-
-						<li><a asp-area="" asp-controller="Clients" asp-action="Index">Clients</a></li>
-						<li><a asp-area="" asp-controller="Projects" asp-action="Index">Projects</a></li>
-						<li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-					</ul>
-				}
-
-				<ul class="nav navbar-nav navbar-right">
-					@await Component.InvokeAsync("UserNav", new { username = User.Identity.Name })
-
-					@if (User.HasClaim(ClaimTypes.Role, "Admin"))
-					{
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-								<i class="glyphicon glyphicon-cog"></i>
-								<span class="caret"></span>
-							</a>
-							<ul class="dropdown-menu" role="menu">
-								<li class="dropdown-header">Admin Tools</li>
-								<li><a asp-area="" asp-controller="AppSettings" asp-action="Index">Application Settings</a></li>
-								<li class="divider"></li>
-								<li><a asp-area="" asp-controller="Currencies" asp-action="Index">Currencies</a></li>
-								<li><a asp-area="" asp-controller="Risks" asp-action="Index">Risks (for Projects)</a></li>
-								<li><a asp-area="" asp-controller="Roles" asp-action="Index">Roles</a></li>
-								<li><a asp-area="" asp-controller="SkillLevels" asp-action="Index">Skill Levels</a></li>
-								<li><a asp-area="" asp-controller="Teams" asp-action="Index">Teams</a></li>
-								<li><a asp-area="" asp-controller="Units" asp-action="Index">Units</a></li>
-								<li class="divider"></li>
-								<li><a asp-area="" asp-controller="AppUsers" asp-action="Index">Users</a></li>
-							</ul>
-						</li>
-					}
-				</ul>
+				@await Component.InvokeAsync("UserNav", new { username = User.Identity.Name })
 			</div>
 		</div>
 	</nav>

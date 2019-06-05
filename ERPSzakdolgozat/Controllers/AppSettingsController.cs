@@ -11,9 +11,7 @@ namespace ERPSzakdolgozat.Controllers
 {
 	public class AppSettingsController : MyController
 	{
-		private readonly ERPDBContext _context;
-
-		public AppSettingsController(ERPDBContext context)
+		public AppSettingsController(ERPDBContext context) : base(context)
 		{
 			_context = context;
 		}

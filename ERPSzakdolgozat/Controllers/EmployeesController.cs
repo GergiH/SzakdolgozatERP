@@ -14,11 +14,10 @@ namespace ERPSzakdolgozat.Controllers
 {
 	public class EmployeesController : MyController
 	{
-		private readonly ERPDBContext _context;
 		private Dictionary<int, string> _employeeNames;
 		private Dictionary<int, string> _teamNames;
 
-		public EmployeesController(ERPDBContext context)
+		public EmployeesController(ERPDBContext context) : base(context)
 		{
 			_context = context;
 			_employeeNames = _context.Employees

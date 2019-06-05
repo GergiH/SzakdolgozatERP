@@ -20,7 +20,6 @@ namespace ERPSzakdolgozat.ViewComponents
 		public async Task<IViewComponentResult> InvokeAsync(string username)
 		{
 			AppUser user = await GetUserAsync(username);
-			Globals.IsAppUser = user == null ? false : true;
 			ViewData["AdministratorNames"] = _context.AppUsers
 				.Where(u => u.Roles.Any(r => r.RoleID == 1))
 				.Select(u => u.DisplayName)

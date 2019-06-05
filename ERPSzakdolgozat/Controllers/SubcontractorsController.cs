@@ -12,10 +12,8 @@ namespace ERPSzakdolgozat.Controllers
 {
     public class SubcontractorsController : MyController
     {
-        private readonly ERPDBContext _context;
-
-        public SubcontractorsController(ERPDBContext context)
-        {
+        public SubcontractorsController(ERPDBContext context) : base(context)
+		{
             _context = context;
         }
 
