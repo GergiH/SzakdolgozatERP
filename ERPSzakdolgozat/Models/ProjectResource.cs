@@ -11,15 +11,13 @@ namespace ERPSzakdolgozat.Models
 		[ForeignKey("Project")]
 		public int ProjectId { get; set; }
 		public virtual Project Project { get; set; }
-		[Required]
-		public string Task { get; set; }
+		public string ResourceTask { get; set; }
 		[ForeignKey("Employee")]
 		public int? ResourceEmployee { get; set; }
 		public virtual Employee Employee { get; set; }
 		[ForeignKey("Subcontractor")]
 		public int? ResourceSubcontractor { get; set; }
 		public virtual Subcontractor Subcontractor { get; set; }
-		[Required]
 		public string ResourceName { get; set; }
 		public double HoursAll { get; set; }
 		public double OvertimeAll { get; set; }

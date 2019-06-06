@@ -48,6 +48,7 @@ namespace ERPSzakdolgozat.Models
 		public double HoursRemaining { get; set; }
 		public double OvertimeRemaining { get; set; }
 		public double ResourcesCost { get; set; }
+		public double ResourcesRevenueGained { get; set; }
 		public double ResourcesRevenue { get; set; }
 		public double ResourcesCostSpent { get; set; }
 		public double ResourcesCostRemaining { get; set; }
