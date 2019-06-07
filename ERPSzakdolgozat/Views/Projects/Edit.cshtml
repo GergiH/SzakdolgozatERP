@@ -18,6 +18,7 @@
 				<li class="active"><a href="#general" data-toggle="tab" aria-expanded="true">General</a></li>
 				<li class=""><a href="#financials" data-toggle="tab" aria-expanded="false">Financials</a></li>
 				<li class=""><a href="#resources" data-toggle="tab" aria-expanded="false">Resources</a></li>
+				<li class=""><a href="#risks" data-toggle="tab" aria-expanded="false">Risks</a></li>
 				<li class=""><a href="#log" data-toggle="tab" aria-expanded="false">Log</a></li>
 			</ul>
 
@@ -182,14 +183,14 @@
 							<div class="form-group row">
 								<div class="col-lg-6">
 									<label asp-for="Project.RiskCostSpent" class="control-label"></label>
-									<input asp-for="Project.RiskCostSpent" class="form-control" readonly />
+									<input asp-for="Project.RiskCostSpent" class="form-control calcFin" />
 									<span asp-validation-for="Project.RiskCostSpent" class="text-danger"></span>
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-lg-6">
 									<label asp-for="Project.RiskCostRemaining" class="control-label"></label>
-									<input asp-for="Project.RiskCostRemaining" class="form-control" readonly />
+									<input asp-for="Project.RiskCostRemaining" class="form-control calcFin" />
 									<span asp-validation-for="Project.RiskCostRemaining" class="text-danger"></span>
 								</div>
 							</div>
@@ -201,7 +202,7 @@
 								</div>
 								<div class="col-lg-6">
 									<label asp-for="Project.RiskRevenue" class="control-label"></label>
-									<input asp-for="Project.RiskRevenue" class="form-control" readonly />
+									<input asp-for="Project.RiskRevenue" class="form-control calcFin" />
 									<span asp-validation-for="Project.RiskRevenue" class="text-danger"></span>
 								</div>
 							</div>
@@ -253,6 +254,25 @@
 				<!-- Resources tab -->
 				@{ string resTypeValue = ""; }
 				<div class="tab-pane fade" id="resources">
+					<div id="deleteResourceModal" class="modal">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title">Are you sure to delete the Resource?</h4>
+								</div>
+								<div class="modal-footer">
+									<div class="col-md-8">
+										<label class="text-warning">This will reload the page (save your other changes beforehand).</label>
+									</div>
+
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									<button type="button" id="" class="btn btn-danger deleteResouceModalButton">Delete</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
 					<div class="form-group row mb-sm">
 						@for (int i = 0; i < Model.Project.Resources.Count; i++)
 						{
@@ -279,6 +299,10 @@
 											</div>
 											<div class="col-lg-6 pt-md">
 												<label>Modified at: </label> @(Model.Project.Resources[i].CreatedDate)
+
+												<button id="dR@(i.ToString())" type="button" class="btn btn-danger pull-right deleteResource" data-toggle="modal" data-target="#deleteResourceModal">
+													<i class="glyphicon glyphicon-remove"></i>
+												</button>
 											</div>
 										</div>
 										<div class="form-group mb-sm resNameFields">
@@ -420,11 +444,46 @@
 										<label class="text-warning">Saving this will reload the page (save your other changes beforehand).</label>
 									</div>
 
-									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									<button type="button" id="CloseNewResource" class="btn btn-default" data-dismiss="modal">Close</button>
 									<button type="button" id="SaveNewResource" class="btn btn-primary">Save</button>
 								</div>
 							</div>
 						</div>
+					</div>
+				</div>
+
+				<!-- Risks tab -->
+				<div class="tab-pane fade" id="risks">
+					<div class="col-lg-6 col-lg-offset-3">
+						<ul id="riskList" class="list-group">
+							@for (int i = 0; i < Model.Project.Risks.Count; i++)
+							{
+								<li class="list-group-item">
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" asp-for="@Model.Project.Risks[i].IsSelected" id="rc@(i.ToString())" class="riskCheck"> <span id="riskCheckNum@(i.ToString())" class="span-bolder text-warning">@Model.Project.Risks[i].Risk.RiskWeight</span> <strong>@Model.Project.Risks[i].Risk.RiskName</strong>
+										</label>
+									</div>
+
+									<input asp-for="@Model.Project.Risks[i].Id" type="hidden" />
+									<input asp-for="@Model.Project.Risks[i].CreatedDate" type="hidden" />
+									<input asp-for="@Model.Project.Risks[i].ModifiedDate." type="hidden" />
+									<input asp-for="@Model.Project.Risks[i].ProjectId" type="hidden" />
+									<input asp-for="@Model.Project.Risks[i].RiskId" type="hidden" />
+								</li>
+							}
+
+							<li class="list-group-item" style="background-color: #eee">
+								<strong>Final risk weight: </strong>
+								@{
+									int selectedWeight = (int)ViewData["SelectedWeight"];
+									int totalWeight = (int)ViewData["TotalWeight"];
+									double ratio = selectedWeight * 1.0 / totalWeight * 1.0;
+								}
+								<span id="riskValue" class="span-bolder @(ratio <= 0.5 ? "text-success" : ratio >= 0.8 ? "text-danger" : "text-warning")">@(ViewData["SelectedWeight"])</span>
+								<span class="span-bolder"> / @(ViewData["TotalWeight"])</span>
+							</li>
+						</ul>
 					</div>
 				</div>
 
@@ -489,5 +548,8 @@
 
 @section Scripts {
 	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	<script>
+		var totalRiskValue = @(ViewData["TotalWeight"]);
+	</script>
 	<script type="text/javascript" src="~/js/project/project_edit.js"></script>
 }

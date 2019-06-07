@@ -380,3 +380,8 @@ input[type="radio"],
 .has-warning .form-control {
 	border-color: #c19344;
 }
+
+.span-bolder {
+	font-weight: 800;
+	font-size: 1.2em;
+}

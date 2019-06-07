@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ERPSzakdolgozat.Helpers;
+using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace ERPSzakdolgozat.Models
@@ -31,7 +32,6 @@ namespace ERPSzakdolgozat.Models
 		// Seeding the DB
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			// Add at least one record of every Model
 			modelBuilder.Entity<AppSetting>().HasData(
 				new AppSetting
 				{
@@ -40,14 +40,6 @@ namespace ERPSzakdolgozat.Models
 					ModifiedDate = DateTime.Now,
 					SettingName = "Default - Currency",
 					SettingValue = "HUF"
-				},
-				new AppSetting
-				{
-					Id = 2,
-					CreatedDate = DateTime.Now,
-					ModifiedDate = DateTime.Now,
-					SettingName = "Default - Overtime Multiplier",
-					SettingValue = "1,4"
 				});
 
 			modelBuilder.Entity<AppUser>().HasData(
@@ -57,8 +49,8 @@ namespace ERPSzakdolgozat.Models
 					CreatedDate = DateTime.Now,
 					ModifiedDate = DateTime.Now,
 					ADName = "CORP\\ghorvath", // Work UserName
-					//ADName = "NYOMDNEKINYUSZI\\Horváth Gergely",
-					//ADName = User.Identity.Name, // This would be best for debugging, but doesn't work
+											   //ADName = "NYOMDNEKINYUSZI\\Horváth Gergely",
+											   //ADName = User.Identity.Name, // This would be best for debugging, but doesn't work
 					Email = "van@denincs.com",
 					Mobile = "+36901234567",
 					DisplayName = "Horváth Gergely"
@@ -83,6 +75,22 @@ namespace ERPSzakdolgozat.Models
 					Mobile = "+36901234567",
 					DisplayName = "Ghost in the Dark"
 				});
+
+			// random AppUsers
+			for (int i = 0; i < 5; i++)
+			{
+				modelBuilder.Entity<AppUser>().HasData(
+					new AppUser
+					{
+						Id = 4 + i,
+						CreatedDate = DateTime.Now,
+						ModifiedDate = DateTime.Now,
+						ADName = "CORP\\" + Globals.GenerateRandomString(7),
+						Email = Globals.GenerateRandomString(5) + "@provider.address",
+						Mobile = "+36901234567",
+						DisplayName = Globals.GenerateRandomString(6) + " " + Globals.GenerateRandomString(8)
+					});
+			}
 
 			modelBuilder.Entity<AppRole>().HasData(
 				new AppRole
@@ -128,6 +136,21 @@ namespace ERPSzakdolgozat.Models
 				{
 					UserID = 1,
 					RoleID = 1
+				},
+				new UserRoles
+				{
+					UserID = 2,
+					RoleID = 3
+				},
+				new UserRoles
+				{
+					UserID = 2,
+					RoleID = 4
+				},
+				new UserRoles
+				{
+					UserID = 3,
+					RoleID = 2
 				});
 
 			modelBuilder.Entity<Employee>().HasData(
@@ -179,6 +202,50 @@ namespace ERPSzakdolgozat.Models
 					IsLeader = true,
 					RoleId = 2
 				});
+
+			// random Employees and EmployeeFinancials
+			for (int i = 0; i < 20; i++)
+			{
+				modelBuilder.Entity<Employee>().HasData(
+					new Employee
+					{
+						Id = 3 + i,
+						CreatedDate = DateTime.Now,
+						ModifiedDate = DateTime.Now,
+						Active = i % 2 == 0 ? true : false,
+						CompanyIdentifier = Globals.GenerateRandomString(5).ToUpper(),
+						DateOfBirth = new DateTime(1990, 12, 26),
+						Email = Globals.GenerateRandomString(5) + "@corgik.hu",
+						LeaderId = 2,
+						Mobile = "+36901234567",
+						JoinedOn = DateTime.Now.AddYears(-1),
+						EmployeeName = Globals.GenerateRandomString(7) + " " + Globals.GenerateRandomString(5),
+						TeamId = i < 10 ? 1 : 2,
+						SameAddress = false,
+						HomeZIP = "2400",
+						HomeCountry = "Magyarország",
+						HomeCity = "Dunaújváros",
+						HomeStreet = Globals.GenerateRandomString(11) + " u." + (i + 2).ToString() + ".",
+						IsLeader = false,
+						RoleId = i < 5 ? 1 : i < 10 ? 2 : 3,
+						SkillLevelId = i < 5 ? 1 : i < 19 ? 2 : 3
+					});
+
+				modelBuilder.Entity<EmployeeFinancial>().HasData(
+					new EmployeeFinancial
+					{
+						Id = 4 + i,
+						CreatedDate = DateTime.Now,
+						ModifiedDate = DateTime.Now,
+						ActiveFrom = DateTime.Now.AddMonths(-2),
+						Bonus = Globals.GenerateRandomNumber(0, 25000),
+						Cafeteria = Globals.GenerateRandomNumber(1000, 9000),
+						CurrencyId = i < 16 ? 1 : 2,
+						EmployeeId = 3 + i,
+						GrossSalary = Globals.GenerateRandomNumber(40000, 600000),
+						WorkHours = Globals.GenerateRandomNumber(4, 8)
+					});
+			}
 
 			modelBuilder.Entity<EmployeeFinancial>().HasData(
 				new EmployeeFinancial
@@ -316,6 +383,33 @@ namespace ERPSzakdolgozat.Models
 					UnitName = "Best Unit Ever"
 				});
 
+			// random Teams and Units
+			for (int i = 0; i < 5; i++)
+			{
+				modelBuilder.Entity<Team>().HasData(
+					new Team
+					{
+						Id = 2 + i,
+						CreatedDate = DateTime.Now,
+						ModifiedDate = DateTime.Now,
+						Active = i < 4 ? true : false,
+						TeamCode = Globals.GenerateRandomString(4),
+						TeamName = Globals.GenerateRandomString(7) + " Team",
+						UnitId = i % 2 == 0 ? 1 : i % 3 == 0 ? 2 : 3
+					});
+
+				modelBuilder.Entity<Unit>().HasData(
+					new Unit
+					{
+						Id = 2 + i,
+						CreatedDate = DateTime.Now,
+						ModifiedDate = DateTime.Now,
+						Active = i < 4 ? true : false,
+						UnitCode = Globals.GenerateRandomString(3),
+						UnitName = Globals.GenerateRandomString(5) + " Unit"
+					});
+			}
+
 			modelBuilder.Entity<Client>().HasData(
 				new Client
 				{
@@ -354,7 +448,31 @@ namespace ERPSzakdolgozat.Models
 					ZIP = "4321"
 				});
 
-			modelBuilder.Entity<Risk>().HasData( // TODO admin felület risk-nek
+			// random Clients
+			for (int i = 0; i < 15; i++)
+			{
+				modelBuilder.Entity<Client>().HasData(
+				new Client
+				{
+					Id = 3 + i,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					Active = i < 11 ? true : false,
+					ClientId = Globals.GenerateRandomString(5).ToUpper(),
+					City = "Nagykun" + Globals.GenerateRandomString(6),
+					ClientName = Globals.GenerateRandomString(4) + " " + Globals.GenerateRandomString(5),
+					ContactName = "Helybenjáró " + Globals.GenerateRandomString(6),
+					Country = "Mexikó",
+					Email = Globals.GenerateRandomString(5) + "@itt.hu",
+					Mobile = "06901112222",
+					Phone = "061987987",
+					Street = "Nagymama u. " + Globals.GenerateRandomNumber(1, 99).ToString() + ".",
+					TaxNumber = "554-" + Globals.GenerateRandomNumber(10000, 99999).ToString() + "-222",
+					ZIP = Globals.GenerateRandomNumber(1000, 9999).ToString()
+				});
+			}
+
+			modelBuilder.Entity<Risk>().HasData(
 				new Risk
 				{
 					Id = 1,
@@ -388,7 +506,7 @@ namespace ERPSzakdolgozat.Models
 					RiskWeight = 6
 				});
 
-			modelBuilder.Entity<Subcontractor>().HasData( // TODO subcontractoroknak menü (resources alatt employees és subcontractors)
+			modelBuilder.Entity<Subcontractor>().HasData(
 				new Subcontractor
 				{
 					Id = 1,
@@ -414,7 +532,21 @@ namespace ERPSzakdolgozat.Models
 					IsActive = true
 				});
 
-			modelBuilder.Entity<Project>().HasData( // TODO projekteknek felület és controller hegyek (+ chart.js a log alapján a risk és total costra és revenuera)
+			// random Subcontractors
+			for (int i = 0; i < 20; i++)
+			{
+				modelBuilder.Entity<Subcontractor>().HasData(
+				new Subcontractor
+				{
+					Id = 4 + i,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					SubcontractorName = Globals.GenerateRandomString(5) + " " + Globals.GenerateRandomString(6),
+					IsActive = true
+				});
+			}
+
+			modelBuilder.Entity<Project>().HasData(
 				new Project
 				{
 					Id = 1,
@@ -451,6 +583,62 @@ namespace ERPSzakdolgozat.Models
 					TotalRevenue = 2800000,
 					Type = "Fixed price",
 				});
+
+			// random Projects
+			for (int i = 0; i < 30; i++)
+			{
+				modelBuilder.Entity<Project>().HasData(
+					new Project
+					{
+						Id = 2 + i,
+						CreatedDate = DateTime.Now,
+						ModifiedDate = DateTime.Now,
+						ClientId = i < 10 ? 1 : i < 20 ? 2 : 3,
+						Contract = i < 10 ? "Signed" : i < 20 ? "Not started" : "In progress",
+						ContractValue = Globals.GenerateRandomNumber(200000, 4500000),
+						CurrencyId = 2,
+						CustomId = Globals.GenerateRandomString(5).ToUpper(),
+						EstimatedEndDate = DateTime.Now.AddMonths(6),
+						HoursAll = Globals.GenerateRandomNumber(0, 300),
+						HoursDone = Globals.GenerateRandomNumber(0, 150),
+						HoursRemaining = Globals.GenerateRandomNumber(0, 150),
+						OvertimeAll = Globals.GenerateRandomNumber(0, 100),
+						OvertimeDone = Globals.GenerateRandomNumber(0, 50),
+						OvertimeRemaining = Globals.GenerateRandomNumber(0, 50),
+						ProjectManager = "CORP\\ghorvath",
+						ProjectName = i < 10 ? Globals.GenerateRandomString(7) : i < 20 ? Globals.GenerateRandomString(10) : Globals.GenerateRandomString(15),
+						ResourcesCost = Globals.GenerateRandomNumber(100000, 4000000),
+						ResourcesRevenue = Globals.GenerateRandomNumber(200000, 4500000),
+						ResourcesCostRemaining = Globals.GenerateRandomNumber(50000, 2000000),
+						ResourcesCostSpent = Globals.GenerateRandomNumber(50000, 2000000),
+						RiskCost = Globals.GenerateRandomNumber(50000, 2000000),
+						RiskCostRemaining = Globals.GenerateRandomNumber(25000, 1000000),
+						RiskCostSpent = Globals.GenerateRandomNumber(25000, 1000000),
+						RiskRevenue = Globals.GenerateRandomNumber(200000, 4500000),
+						StartDate = DateTime.Now,
+						Status = i < 5 ? "Executing" : i < 10 ? "Not started" : i < 20 ? "Failed" : "Finished",
+						TotalCost = Globals.GenerateRandomNumber(200000, 4500000),
+						TotalCostRemaining = Globals.GenerateRandomNumber(100000, 4000000),
+						TotalCostSpent = Globals.GenerateRandomNumber(100000, 4000000),
+						TotalRevenue = Globals.GenerateRandomNumber(200000, 4500000),
+						Type = i < 20 ? "Fixed price" : "Time and material",
+					});
+
+				// TODO this is not working yet...
+				for (int j = 0; i < 4; i++)
+				{
+					modelBuilder.Entity<ProjectRisk>().HasData(
+						new ProjectRisk
+						{
+							Id = 5 + j + i*4,
+							CreatedDate = DateTime.Now,
+							ModifiedDate = DateTime.Now,
+							RiskId = 1 + j,
+							ProjectId = 2 + i,
+							IsSelected = j < 2 ? true : false
+						});
+				}
+			}
 
 			modelBuilder.Entity<ProjectLog>().HasData(
 				new ProjectLog

@@ -3,6 +3,7 @@ using ERPSzakdolgozat.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -57,7 +58,25 @@ namespace ERPSzakdolgozat.Controllers
 				risk.ModifiedDate = DateTime.Now;
 				risk.Id = _context.Risks.Max(c => c.Id) + 1;
 
-				_context.Add(risk);
+				await _context.AddAsync(risk);
+				await _context.SaveChangesAsync();
+
+				// create ProjectRisk for all Projects
+				List<Project> projects = await _context.Projects.ToListAsync();
+				foreach (Project proj in projects)
+				{
+					ProjectRisk newPR = new ProjectRisk()
+					{
+						CreatedDate = DateTime.Now,
+						ModifiedDate = DateTime.Now,
+						Id = _context.ProjectRisks.Max(r => r.Id) + 1,
+						IsSelected = false,
+						ProjectId = proj.Id,
+						RiskId = risk.Id
+					};
+
+					await _context.AddAsync(newPR);
+				}
 				await _context.SaveChangesAsync();
 
 				TempData["Toast"] = Toasts.Created;
@@ -142,6 +161,19 @@ namespace ERPSzakdolgozat.Controllers
 		{
 			var risk = await _context.Risks.FindAsync(id);
 			_context.Risks.Remove(risk);
+			await _context.SaveChangesAsync();
+
+			// remove ProjectRisk for all Projects
+			List<Project> projects = await _context.Projects.ToListAsync();
+			foreach (Project proj in projects)
+			{
+				ProjectRisk pr = _context.ProjectRisks.Where(r => r.ProjectId == proj.Id && r.RiskId == id).FirstOrDefault();
+
+				if (pr != null)
+				{
+					_context.Remove(pr);
+				}
+			}
 			await _context.SaveChangesAsync();
 
 			TempData["Toast"] = Toasts.Deleted;

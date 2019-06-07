@@ -1,6 +1,7 @@
 ﻿using ERPSzakdolgozat.Helpers;
 using ERPSzakdolgozat.Models;
 using ERPSzakdolgozat.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -21,13 +22,15 @@ namespace ERPSzakdolgozat.Controllers
 		// GET: Projects
 		public async Task<IActionResult> Index()
 		{
-			var eRPDBContext = _context.Projects
+			// TODO search, active-inactive (end date past now)
+			var projects = _context.Projects
 				.Include(p => p.Client)
 				.OrderBy(p => p.ProjectName);
-			return View(await eRPDBContext.ToListAsync());
+			return View(await projects.ToListAsync());
 		}
 
 		// GET: Projects/Details/5
+		[Authorize(Policy = "ProjectManager")]
 		public async Task<IActionResult> Details(int? id)
 		{
 			if (id == null)
@@ -37,6 +40,9 @@ namespace ERPSzakdolgozat.Controllers
 
 			var project = await _context.Projects
 				.Include(p => p.Client)
+				.Include(p => p.Currency)
+				.Include(p => p.Resources)
+				.Include(p => p.Risks)
 				.FirstOrDefaultAsync(m => m.Id == id);
 			if (project == null)
 			{
@@ -47,16 +53,24 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Projects/Create
-		public IActionResult Create()
+		[Authorize(Policy = "ProjectManager")]
+		public async Task<IActionResult> Create()
 		{
-			Project proj = new Project();
-			ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "ClientId");
+			Project proj = new Project
+			{
+				StartDate = DateTime.Now,
+				EstimatedEndDate = DateTime.Now.AddDays(30)
+			};
+
+			await FillDropdownLists(proj);
+			ViewData["ClientId"] = new SelectList(_context.Clients.OrderBy(c => c.ClientName), "Id", "ClientName");
 			return View(proj);
 		}
 
 		// POST: Projects/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "ProjectManager")]
 		public async Task<IActionResult> Create(Project project)
 		{
 			if (ModelState.IsValid)
@@ -68,14 +82,32 @@ namespace ERPSzakdolgozat.Controllers
 				_context.Add(project);
 				await _context.SaveChangesAsync();
 
+				List<Risk> allRisks = await _context.Risks.ToListAsync();
+				foreach (Risk risk in allRisks)
+				{
+					ProjectRisk newPR = new ProjectRisk
+					{
+						CreatedDate = DateTime.Now,
+						ModifiedDate = DateTime.Now,
+						IsSelected = false,
+						ProjectId = project.Id,
+						RiskId = risk.Id,
+						Id = _context.ProjectRisks.Max(r => r.Id) + 1
+					};
+
+					await _context.AddAsync(newPR);
+					await _context.SaveChangesAsync();
+				}
+
 				TempData["Toast"] = Toasts.Created;
 				return RedirectToAction(nameof(Index));
 			}
-			ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "ClientId", project.ClientId);
+			ViewData["ClientId"] = new SelectList(_context.Clients.OrderBy(c => c.ClientName), "Id", "ClientName", project.ClientId);
 			return View(project);
 		}
 
 		// GET: Projects/Edit/5
+		[Authorize(Policy = "ProjectManager")]
 		public async Task<IActionResult> Edit(int? id)
 		{
 			if (id == null)
@@ -89,6 +121,7 @@ namespace ERPSzakdolgozat.Controllers
 				return NotFound();
 			}
 
+			// fill Project's entity lists
 			project.Resources = await _context.ProjectResources
 				.Where(r => r.ProjectId == project.Id)
 				.OrderByDescending(r => r.CreatedDate)
@@ -101,9 +134,14 @@ namespace ERPSzakdolgozat.Controllers
 			project.Risks = await _context.ProjectRisks
 				.Where(r => r.ProjectId == project.Id)
 				.ToListAsync();
+			
+			foreach (var pr in project.Risks)
+			{
+				pr.Risk = await _context.Risks.FindAsync(pr.RiskId);
+			}
 
 			await FillDropdownLists(project);
-			ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "ClientName", project.ClientId);
+			ViewData["ClientId"] = new SelectList(_context.Clients.OrderBy(c => c.ClientName), "Id", "ClientName", project.ClientId);
 
 			Project_Edit peVM = new Project_Edit
 			{
@@ -122,6 +160,7 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: Projects/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "ProjectManager")]
 		public async Task<IActionResult> Edit(int id, Project_Edit peVM)
 		{
 			if (id != peVM.Project.Id)
@@ -159,12 +198,13 @@ namespace ERPSzakdolgozat.Controllers
 			}
 
 			await FillDropdownLists(peVM.Project);
-			ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "ClientName", peVM.Project.ClientId);
+			ViewData["ClientId"] = new SelectList(_context.Clients.OrderBy(c => c.ClientName), "Id", "ClientName", peVM.Project.ClientId);
 
 			return View(peVM);
 		}
 
 		// GET: Projects/Delete/5
+		[Authorize(Policy = "ProjectManager")]
 		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null)
@@ -186,6 +226,7 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: Projects/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "ProjectManager")]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
 			var project = await _context.Projects.FindAsync(id);
@@ -264,7 +305,9 @@ namespace ERPSzakdolgozat.Controllers
 
 			ViewData["ProjectManagers"] = new SelectList(projMans.OrderBy(p => p.Text), "Value", "Text");
 
-			ViewData["LogUsers"] = new SelectList(proj.Logs
+			if (proj.Logs != null)
+			{
+				ViewData["LogUsers"] = new SelectList(proj.Logs
 				.GroupBy(l => l.UserId)
 				.Select(l => l.FirstOrDefault())
 				.Select(l => new SelectListItem
@@ -274,6 +317,14 @@ namespace ERPSzakdolgozat.Controllers
 				})
 				.OrderBy(l => l.Text)
 				.ToList(), "Value", "Text");
+			}
+
+			// risk stuff
+			if (proj.Risks != null)
+			{
+				ViewData["SelectedWeight"] = proj.Risks.Where(r => r.IsSelected == true).Sum(r => r.Risk.RiskWeight);
+				ViewData["TotalWeight"] = proj.Risks.Sum(r => r.Risk.RiskWeight);
+			}
 		}
 
 		public JsonResult CalculateFinancials(Project_Edit peVM)
@@ -284,26 +335,26 @@ namespace ERPSzakdolgozat.Controllers
 				oRem = 0,
 				cs = 0,
 				cr = 0,
-				rs = 0,
-				rr = 0,
 				resRevGained = 0,
-				resRev = 0,
-				riskRev = 0;
+				resRev = 0;
 
 			// recalculate all resources
-			foreach (ProjectResource res in peVM.Project.Resources)
+			if (peVM.Project.Resources != null)
 			{
-				hDone += res.HoursDone;
-				hRem += res.HoursRemaining;
-				oDone += res.OvertimeDone;
-				oRem += res.OvertimeRemaining;
-				cs += res.HoursDone * res.Cost;
-				cr += res.HoursRemaining * res.Cost;
-				resRevGained += Globals.CalculateRevenue(res.HoursDone, res.OvertimeDone, res.Cost);
-				resRev += Globals.CalculateRevenue((res.HoursDone + res.HoursRemaining), (res.OvertimeDone + res.OvertimeRemaining), res.Cost);
-			}
+				foreach (ProjectResource res in peVM.Project.Resources)
+				{
+					hDone += res.HoursDone;
+					hRem += res.HoursRemaining;
+					oDone += res.OvertimeDone;
+					oRem += res.OvertimeRemaining;
+					cs += res.HoursDone * res.Cost;
+					cr += res.HoursRemaining * res.Cost;
+					resRevGained += Globals.CalculateRevenue(res.HoursDone, res.OvertimeDone, res.Cost);
+					resRev += Globals.CalculateRevenue((res.HoursDone + res.HoursRemaining), (res.OvertimeDone + res.OvertimeRemaining), res.Cost);
 
-			// TODO add risk calculations
+					res.Revenue = Globals.CalculateRevenue(res.HoursDone, res.OvertimeDone, res.Cost);
+				}
+			}
 
 			peVM.Project.HoursDone = hDone;
 			peVM.Project.HoursRemaining = hRem;
@@ -314,17 +365,19 @@ namespace ERPSzakdolgozat.Controllers
 			peVM.Project.ResourcesCostSpent = cs;
 			peVM.Project.ResourcesCostRemaining = cr;
 			peVM.Project.ResourcesCost = cs + cr;
-			peVM.Project.RiskCostSpent = rs;
-			peVM.Project.RiskCostRemaining = rr;
-			peVM.Project.RiskCost = rs + rr;
+			peVM.Project.RiskCost = peVM.Project.RiskCostSpent + peVM.Project.RiskCostRemaining;
 			peVM.Project.ResourcesRevenueGained = resRevGained;
 			peVM.Project.ResourcesRevenue = resRev;
-			peVM.Project.RiskRevenue = riskRev;
+			peVM.Project.TotalCostSpent = cs + peVM.Project.RiskCostSpent;
+			peVM.Project.TotalCostRemaining = cr + peVM.Project.RiskCostRemaining;
+			peVM.Project.TotalCost = cs + cr + peVM.Project.RiskCostSpent + peVM.Project.RiskCostRemaining;
+			peVM.Project.TotalRevenue = resRev + peVM.Project.RiskRevenue;
 
 			return Json(peVM);
 		}
 
-		public async Task<IActionResult> AddResource(
+		[Authorize(Policy = "ProjectManager")]
+		public JsonResult AddResource(
 			int id,
 			string resName,
 			int? resEmp,
@@ -363,11 +416,24 @@ namespace ERPSzakdolgozat.Controllers
 				};
 
 				_context.Add(newPR);
-				await _context.SaveChangesAsync();
+				_context.SaveChanges();
 			}
 			
 			// TODO controller authorize
-			return RedirectToAction("Edit", id);
+			return Json(null);
+		}
+
+		[Authorize(Policy = "ProjectManager")]
+		public JsonResult DeleteResource(int id)
+		{
+			if (id != 0)
+			{
+				ProjectResource pr = _context.ProjectResources.Find(id);
+				_context.Remove(pr);
+				_context.SaveChanges();
+			}
+
+			return Json(null);
 		}
 	}
 }

@@ -59,10 +59,6 @@ namespace ERPSzakdolgozat.Controllers
 			{
 				employeeVMList = employeeVMList.Where(e => e.Active == true);
 			}
-			else
-			{
-				employeeVMList = employeeVMList.Where(e => e.Active == false);
-			}
 
 			employeeVMList = employeeVMList.OrderBy(e => e.EmployeeName);
 

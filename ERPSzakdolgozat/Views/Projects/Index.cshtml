@@ -33,10 +33,10 @@
 				@Html.DisplayNameFor(model => model.StartDate)
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.EndDate)
+				@Html.DisplayNameFor(model => model.EstimatedEndDate)
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.EstimatedEndDate)
+				@Html.DisplayNameFor(model => model.EndDate)
 			</th>
 
 			<th></th>
@@ -59,6 +59,9 @@
 				case "Starting":
 					statusLabel = "label label-primary";
 					break;
+				case "Failed":
+					statusLabel = "label label-danger";
+					break;
 				default:
 					break;
 			}
@@ -68,7 +71,7 @@
 					contractLabel = "label label-success";
 					break;
 				case "Rejected":
-					contractLabel = "label label-error";
+					contractLabel = "label label-danger";
 					break;
 				case "Not yet Signed":
 					contractLabel = "label label-warning";
@@ -77,44 +80,44 @@
 					break;
 			}
 
-			<tr>
-				<td>
-					@Html.DisplayFor(modelItem => item.ProjectName)
-				</td>
-				<td>
-					<span class="@(statusLabel)">@Html.DisplayFor(modelItem => item.Status)</span>
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Type)
-				</td>
-				<td>
-					<span class="@(contractLabel)">@Html.DisplayFor(modelItem => item.Contract)</span>
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.ProjectManager)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.StartDate)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.EndDate)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.EstimatedEndDate)
-				</td>
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.ProjectName)
+			</td>
+			<td>
+				<span class="@(statusLabel)">@Html.DisplayFor(modelItem => item.Status)</span>
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Type)
+			</td>
+			<td>
+				<span class="@(contractLabel)">@Html.DisplayFor(modelItem => item.Contract)</span>
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.ProjectManager)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.StartDate)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.EstimatedEndDate)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.EndDate)
+			</td>
 
-				<td class="col-md-2 text-right text-nowrap">
-					<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
-						<i class="glyphicon glyphicon-pencil"></i>
-					</a>
-					<a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Details">
-						<i class="glyphicon glyphicon-list"></i>
-					</a>
-					<a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="right" title="" data-original-title="Delete">
-						<i class="glyphicon glyphicon-remove"></i>
-					</a>
-				</td>
-			</tr>
+			<td class="col-md-2 text-right text-nowrap">
+				<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+					<i class="glyphicon glyphicon-pencil"></i>
+				</a>
+				<a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Details">
+					<i class="glyphicon glyphicon-list"></i>
+				</a>
+				<a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="right" title="" data-original-title="Delete">
+					<i class="glyphicon glyphicon-remove"></i>
+				</a>
+			</td>
+		</tr>
 		}
 	</tbody>
 </table>
