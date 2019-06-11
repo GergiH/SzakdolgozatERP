@@ -48,8 +48,8 @@ namespace ERPSzakdolgozat.Models
 					Id = 1,
 					CreatedDate = DateTime.Now,
 					ModifiedDate = DateTime.Now,
-					ADName = "CORP\\ghorvath", // Work UserName
-											   //ADName = "NYOMDNEKINYUSZI\\Horváth Gergely",
+					//ADName = "CORP\\ghorvath", // Work UserName
+											   ADName = "NYOMDNEKINYUSZI\\Horváth Gergely",
 											   //ADName = User.Identity.Name, // This would be best for debugging, but doesn't work
 					Email = "van@denincs.com",
 					Mobile = "+36901234567",

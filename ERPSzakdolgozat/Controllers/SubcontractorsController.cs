@@ -18,9 +18,23 @@ namespace ERPSzakdolgozat.Controllers
         }
 
         // GET: Subcontractors
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search, bool active = true)
         {
-            return View(await _context.Subcontractors.OrderBy(s => s.SubcontractorName).ToListAsync());
+			IQueryable<Subcontractor> subs = _context.Subcontractors;
+
+			if (!string.IsNullOrEmpty(search))
+			{
+				subs = subs.Where(s => s.SubcontractorName.ToLower().Contains(search.ToLower()));
+			}
+			if (active)
+			{
+				subs = subs.Where(s => s.IsActive);
+			}
+
+			ViewData["search"] = search;
+			ViewData["active"] = active;
+
+			return View(await subs.OrderBy(s => s.SubcontractorName).ToListAsync());
         }
 
         // GET: Subcontractors/Details/5

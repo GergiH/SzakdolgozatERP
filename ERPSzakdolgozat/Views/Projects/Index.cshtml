@@ -7,36 +7,43 @@
 <h2>Projects</h2>
 
 <div class="col-md-12 margin-bottom-sm pr-sm">
-	<form asp-action="Index" class="form-inline" method="get">
-		<label class="control-label pull-left pt-sm">
-			<strong>Name / Type / Project M.</strong>
-		</label>
+	<form asp-action="Index" class="form-horizontal" method="get">
+		<div class="form-group">
+			<div class="col-sm-4">
+				<label class="control-label">
+					<strong>Name / Type / Project M.</strong>
+				</label>
 
-		<div class="input-group col-sm-3 pull-left">
-			<input name="search" type="text" class="form-control" value="@(ViewData["search"])">
-			<span class="input-group-btn">
-				<button class="btn btn-primary" type="submit">
-					<i class="glyphicon glyphicon-search"></i>
-				</button>
-			</span>
+				<div class="input-group">
+					<input name="search" type="text" class="form-control" value="@(ViewData["search"])">
+					<span class="input-group-btn">
+						<button class="btn btn-primary" type="submit">
+							<i class="glyphicon glyphicon-search"></i>
+						</button>
+					</span>
+				</div>
+			</div>
+
+			<div class="col-sm-3">
+				<label class="control-label">
+					<strong>StartDate</strong>
+				</label>
+
+				<input name="started" type="date" asp-format="{0:MM/dd/yyyy}" class="form-control" onchange="this.form.submit();" value="@(ViewData["started"])" />
+			</div>
+
+			<div class="col-sm-2 pt-lg">
+				<div class="checkbox">
+					<label>
+						@Html.CheckBox("active", (bool)ViewData["active"], new { onchange = "$(this.form).submit()" }) Active
+					</label>
+				</div>
+			</div>
+
+			<a asp-action="Create" class="btn btn-success btn-sm pull-right mt-lg" data-toggle="tooltip" data-placement="top" title="" data-original-title="Create New">
+				<i class="glyphicon glyphicon-plus"></i>
+			</a>
 		</div>
-
-		<label class="control-label pull-left pt-sm">
-			<strong>StartDate</strong>
-		</label>
-		<div class="col-sm-2 pull-left">
-			<input name="started" type="date" class="form-control" onchange="this.form.submit();" format="MM/dd/yyyy" value="@(ViewData["started"])" />
-		</div>
-
-		<div class="checkbox" style="margin-left:10px">
-			<label>
-				@Html.CheckBox("active", (bool)ViewData["active"], new { onchange = "$(this.form).submit()" }) Active
-			</label>
-		</div>
-
-		<a asp-action="Create" class="btn btn-success btn-sm pull-right" data-toggle="tooltip" data-placement="top" title="" data-original-title="Create New">
-			<i class="glyphicon glyphicon-plus"></i>
-		</a>
 	</form>
 </div>
 

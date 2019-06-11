@@ -35,7 +35,6 @@ namespace ERPSzakdolgozat
 				options.MinimumSameSitePolicy = SameSiteMode.None;
 			});
 
-			// To use in-memory Database for better demoing
 			services.AddDbContext<ERPDBContext>(opt => opt.UseInMemoryDatabase("ERPDB"));
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -48,6 +47,7 @@ namespace ERPSzakdolgozat
 					options.AccessDeniedPath = "/auth/accessdenied";
 				});
 
+			// Setting up policies for authorization
 			services.AddAuthorization(options =>
 			{
 				options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));

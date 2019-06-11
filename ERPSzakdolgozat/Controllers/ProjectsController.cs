@@ -22,16 +22,18 @@ namespace ERPSzakdolgozat.Controllers
 		// GET: Projects
 		public async Task<IActionResult> Index(string search, DateTime? started, bool active = true)
 		{
-			// TODO search, active-inactive (end date past now)
 			IQueryable<Project> projects = _context.Projects.Include(p => p.Client);
 
 			if (!string.IsNullOrEmpty(search))
 			{
-				projects = projects.Where(p => p.ProjectName.ToLower().Contains(search.ToLower()) || p.Type.ToLower().Contains(search.ToLower()) || p.ProjectManager.ToLower().Contains(search.ToLower()));
+				projects = projects
+					.Where(p => p.ProjectName.ToLower().Contains(search.ToLower())
+						|| p.Type.ToLower().Contains(search.ToLower())
+						|| p.ProjectManager.ToLower().Contains(search.ToLower()));
 			}
 			if (started != null)
 			{
-				projects = projects.Where(p => p.StartDate >= started); // TODO view doesn't get back the selected date...
+				projects = projects.Where(p => p.StartDate >= started);
 			}
 			if (active)
 			{
@@ -39,7 +41,7 @@ namespace ERPSzakdolgozat.Controllers
 			}
 
 			ViewData["search"] = search;
-			ViewData["started"] = started;
+			ViewData["started"] = started?.ToString("yyyy-MM-dd");
 			ViewData["active"] = active;
 
 			return View(await projects.OrderBy(p => p.ProjectName).ToListAsync());
