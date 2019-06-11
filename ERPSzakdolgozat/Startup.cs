@@ -5,11 +5,13 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Globalization;
 using System.Security.Claims;
 
 namespace ERPSzakdolgozat
@@ -70,6 +72,21 @@ namespace ERPSzakdolgozat
 				app.UseExceptionHandler("/Home/Error");
 				app.UseHsts();
 			}
+
+			// globalization bit of numbers and such
+			var supportedCultures = new[]
+			{
+				new CultureInfo("hu")
+			};
+
+			app.UseRequestLocalization(new RequestLocalizationOptions
+			{
+				DefaultRequestCulture = new RequestCulture("en-US"),
+				// Formatting numbers, dates, etc.
+				SupportedCultures = supportedCultures,
+				// UI strings that we have localized.
+				SupportedUICultures = supportedCultures
+			});
 
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();

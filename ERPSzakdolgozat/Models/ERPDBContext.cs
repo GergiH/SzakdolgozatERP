@@ -584,7 +584,7 @@ namespace ERPSzakdolgozat.Models
 					Type = "Fixed price",
 				});
 
-			// random Projects
+			// random Projects, ProjectRisks, ProjectResources
 			for (int i = 0; i < 30; i++)
 			{
 				modelBuilder.Entity<Project>().HasData(
@@ -624,8 +624,7 @@ namespace ERPSzakdolgozat.Models
 						Type = i < 20 ? "Fixed price" : "Time and material",
 					});
 
-				// TODO this is not working yet...
-				for (int j = 0; i < 4; i++)
+				for (int j = 0; j < 4; j++)
 				{
 					modelBuilder.Entity<ProjectRisk>().HasData(
 						new ProjectRisk
@@ -636,6 +635,29 @@ namespace ERPSzakdolgozat.Models
 							RiskId = 1 + j,
 							ProjectId = 2 + i,
 							IsSelected = j < 2 ? true : false
+						});
+				}
+
+				for (int k = 0; k < 5; k++)
+				{
+					modelBuilder.Entity<ProjectResource>().HasData(
+						new ProjectResource
+						{
+							Id = 3 + k + i*5,
+							CreatedDate = DateTime.Now,
+							ModifiedDate = DateTime.Now,
+							ResourceTask = Globals.GenerateRandomString(14),
+							ProjectId = 2 + i,
+							ResourceEmployee = Globals.GenerateRandomNumber(1, 22),
+							ResourceName = Globals.GenerateRandomString(10),
+							Cost = Globals.GenerateRandomNumber(1000, 15000),
+							HoursAll = Globals.GenerateRandomNumber(10, 400),
+							HoursDone = Globals.GenerateRandomNumber(0, 100),
+							HoursRemaining = Globals.GenerateRandomNumber(0, 100),
+							OvertimeAll = Globals.GenerateRandomNumber(10, 50),
+							OvertimeDone = Globals.GenerateRandomNumber(0, 20),
+							OvertimeRemaining = Globals.GenerateRandomNumber(0, 20),
+							Revenue = Globals.GenerateRandomNumber(4000, 25000)
 						});
 				}
 			}
@@ -749,7 +771,7 @@ namespace ERPSzakdolgozat.Models
 					OvertimeDone = 0,
 					OvertimeRemaining = 0,
 					Revenue = 8000
-				}); // TODO ha resourcetype == Other, akkor ne dropdown legyen a View-ban
+				});
 
 			// Set relations
 			modelBuilder.Entity<EmployeeFinancial>()
