@@ -54,16 +54,19 @@
 				@Html.DisplayNameFor(model => model.ProjectName)
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Status)
+				@Html.DisplayNameFor(model => model.Type)
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Type)
+				@Html.DisplayNameFor(model => model.Status)
 			</th>
 			<th>
 				@Html.DisplayNameFor(model => model.Contract)
 			</th>
 			<th>
 				@Html.DisplayNameFor(model => model.ProjectManager)
+			</th>
+			<th>
+				Risk Ratio
 			</th>
 			<th>
 				@Html.DisplayNameFor(model => model.StartDate)
@@ -109,28 +112,41 @@
 				case "Rejected":
 					contractLabel = "label label-danger";
 					break;
-				case "Not yet Signed":
+				case "In progress":
 					contractLabel = "label label-warning";
 					break;
 				default:
 					break;
 			}
+			int risksValue = 0;
+			int risksTotal = 0;
 
 			<tr>
 				<td>
 					@Html.DisplayFor(modelItem => item.ProjectName)
 				</td>
 				<td>
-					<span class="@(statusLabel)">@Html.DisplayFor(modelItem => item.Status)</span>
+					@Html.DisplayFor(modelItem => item.Type)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Type)
+					<span class="@(statusLabel)">@Html.DisplayFor(modelItem => item.Status)</span>
 				</td>
 				<td>
 					<span class="@(contractLabel)">@Html.DisplayFor(modelItem => item.Contract)</span>
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.ProjectManager)
+				</td>
+				<td>
+					@foreach (var rk in item.Risks)
+					{
+						if (rk.IsSelected == true)
+						{
+							risksValue += rk.Risk.RiskWeight;
+						}
+						risksTotal += rk.Risk.RiskWeight;
+					}
+					@(risksValue) / @(risksTotal)
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.StartDate)

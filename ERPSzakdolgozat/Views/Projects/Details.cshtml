@@ -1,231 +1,460 @@
-﻿@model ERPSzakdolgozat.Models.Project
+﻿@model ERPSzakdolgozat.ViewModels.Project_Edit
 
 @{
-	ViewData["Title"] = "Details";
+	ViewData["Title"] = "Project - Details";
 }
 
 <h2>Details</h2>
 
-<div>
-	<h4>Project</h4>
-	<hr />
-	<dl class="dl-horizontal">
-		<dt>
-			@Html.DisplayNameFor(model => model.ProjectName)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.ProjectName)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.CustomId)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.CustomId)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.ProjectManager)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.ProjectManager)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.Client)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.Client.ClientName)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.Type)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.Type)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.Status)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.Status)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.Contract)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.Contract)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.Description)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.Description)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.StartDate)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.StartDate)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.EstimatedEndDate)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.EstimatedEndDate)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.EndDate)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.EndDate)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.CurrencyId)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.Currency.CurrencyName)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.ContractValue)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.ContractValue)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.HoursAll)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.HoursAll)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.OvertimeAll)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.OvertimeAll)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.HoursDone)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.HoursDone)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.OvertimeDone)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.OvertimeDone)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.HoursRemaining)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.HoursRemaining)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.OvertimeRemaining)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.OvertimeRemaining)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.ResourcesCost)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.ResourcesCost)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.ResourcesRevenueGained)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.ResourcesRevenueGained)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.ResourcesRevenue)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.ResourcesRevenue)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.ResourcesCostSpent)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.ResourcesCostSpent)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.ResourcesCostRemaining)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.ResourcesCostRemaining)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.RiskCost)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.RiskCost)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.RiskRevenue)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.RiskRevenue)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.RiskCostSpent)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.RiskCostSpent)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.RiskCostRemaining)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.RiskCostRemaining)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.TotalCost)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.TotalCost)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.TotalRevenue)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.TotalRevenue)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.TotalCostSpent)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.TotalCostSpent)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.TotalCostRemaining)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.TotalCostRemaining)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.CreatedDate)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.CreatedDate)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.ModifiedDate)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.ModifiedDate)
-		</dd>
-	</dl>
+<h4>Project</h4>
+<hr />
+<div class="row">
+	<div class="col-lg-12">
+		<ul class="nav nav-tabs row">
+			<li class="active"><a href="#general" data-toggle="tab" aria-expanded="true">General</a></li>
+			<li class=""><a href="#financials" data-toggle="tab" aria-expanded="false">Financials</a></li>
+			<li class=""><a href="#resources" data-toggle="tab" aria-expanded="false">Resources</a></li>
+			<li class=""><a href="#risks" data-toggle="tab" aria-expanded="false">Risks</a></li>
+			<li class=""><a href="#log" data-toggle="tab" aria-expanded="false">Log</a></li>
+		</ul>
 
-	@*<h4>Resource</h4>
-	<dl>
-		@foreach  (var res in Model.Resources)
-		{
-			<dt></dt>
-			<dd>@res.</dd>
-		}
-	</dl>*@
+		<div id="myTabContent" class="tab-content">
+			<!-- General tab -->
+			<div class="tab-pane fade active in" id="general">
+				<div class="col-lg-10">
+					<div class="form-group row">
+						<input asp-for="Project.Id" type="hidden" />
+						<input asp-for="Project.CreatedDate" type="hidden" readonly />
+						<input asp-for="Project.ModifiedDate" type="hidden" />
+
+						<div class="col-lg-6">
+							<label asp-for="Project.ProjectName" class="control-label"></label>
+							<input asp-for="Project.ProjectName" class="form-control" readonly />
+							<span asp-validation-for="Project.ProjectName" class="text-danger"></span>
+						</div>
+						<div class="col-lg-3">
+							<label asp-for="Project.CustomId" class="control-label"></label>
+							<input asp-for="Project.CustomId" class="form-control" readonly />
+							<span asp-validation-for="Project.CustomId" class="text-danger"></span>
+						</div>
+						<div class="col-lg-3">
+							<label asp-for="Project.ProjectManager" class="control-label"></label>
+							<select asp-for="Project.ProjectManager" asp-items="@((SelectList)ViewData["ProjectManagers"])" class="form-control" disabled></select>
+							<span asp-validation-for="Project.ProjectManager" class="text-danger"></span>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-lg-4">
+							<label asp-for="Project.ClientId" class="control-label"></label>
+							<select asp-for="Project.ClientId" class="form-control" asp-items="ViewBag.ClientId" disabled></select>
+							<span asp-validation-for="Project.ClientId" class="text-danger"></span>
+						</div>
+						<div class="col-lg-3">
+							<label asp-for="Project.Type" class="control-label"></label>
+							<select asp-for="Project.Type" asp-items="@((SelectList)ViewData["Types"])" class="form-control" disabled></select>
+							<span asp-validation-for="Project.Type" class="text-danger"></span>
+						</div>
+						<div class="col-lg-3">
+							<label asp-for="Project.Status" class="control-label"></label>
+							<select asp-for="Project.Status" asp-items="@((SelectList)ViewData["ProjectStatuses"])" class="form-control" disabled></select>
+							<span asp-validation-for="Project.Status" class="text-danger"></span>
+						</div>
+						<div class="col-lg-2">
+							<label asp-for="Project.Contract" class="control-label"></label>
+							<select asp-for="Project.Contract" asp-items="@((SelectList)ViewData["ContractStatuses"])" class="form-control" disabled></select>
+							<span asp-validation-for="Project.Contract" class="text-danger"></span>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-lg-12">
+							<label asp-for="Project.Description" class="control-label"></label>
+							<textarea asp-for="Project.Description" class="form-control" rows="7" readonly></textarea>
+							<span asp-validation-for="Project.Description" class="text-danger"></span>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-2 border-left-soft">
+					<div class="form-group">
+						<label asp-for="Project.StartDate" class="control-label"></label>
+						<input asp-for="Project.StartDate" class="form-control" readonly />
+						<span asp-validation-for="Project.StartDate" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="Project.EstimatedEndDate" class="control-label"></label>
+						<input asp-for="Project.EstimatedEndDate" class="form-control" readonly />
+						<span asp-validation-for="Project.EstimatedEndDate" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="Project.EndDate" class="control-label"></label>
+						<input asp-for="Project.EndDate" class="form-control" readonly />
+						<span asp-validation-for="Project.EndDate" class="text-danger"></span>
+					</div>
+				</div>
+			</div>
+
+			<!-- Financials tab -->
+			<div class="tab-pane fade" id="financials">
+				<div class="form-group row">
+					<div class="col-lg-3">
+						<div class="form-group row border-bottom-soft">
+							<h4 class="col-lg-12">Hours</h4>
+						</div>
+
+						<div class="form-group row">
+							<div class="col-lg-6">
+								<label asp-for="Project.HoursDone" class="control-label"></label>
+								<input asp-for="Project.HoursDone" class="form-control" readonly />
+								<span asp-validation-for="Project.HoursDone" class="text-danger"></span>
+							</div>
+							<div class="col-lg-6">
+								<label asp-for="Project.OvertimeDone" class="control-label"></label>
+								<input asp-for="Project.OvertimeDone" class="form-control" readonly />
+								<span asp-validation-for="Project.OvertimeDone" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-lg-6">
+								<label asp-for="Project.HoursRemaining" class="control-label"></label>
+								<input asp-for="Project.HoursRemaining" class="form-control" readonly />
+								<span asp-validation-for="Project.HoursRemaining" class="text-danger"></span>
+							</div>
+							<div class="col-lg-6">
+								<label asp-for="Project.OvertimeRemaining" class="control-label"></label>
+								<input asp-for="Project.OvertimeRemaining" class="form-control" readonly />
+								<span asp-validation-for="Project.OvertimeRemaining" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-lg-6">
+								<label asp-for="Project.HoursAll" class="control-label"></label>
+								<input asp-for="Project.HoursAll" class="form-control" readonly />
+								<span asp-validation-for="Project.HoursAll" class="text-danger"></span>
+							</div>
+							<div class="col-lg-6">
+								<label asp-for="Project.OvertimeAll" class="control-label"></label>
+								<input asp-for="Project.OvertimeAll" class="form-control" readonly />
+								<span asp-validation-for="Project.OvertimeAll" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-6 border-left-soft">
+						<div class="form-group row border-bottom-soft">
+							<h4 class="col-lg-6">Costs</h4>
+							<h4 class="col-lg-6">Revenues</h4>
+						</div>
+
+						<div class="form-group row">
+							<div class="col-lg-6">
+								<label asp-for="Project.ResourcesCostSpent" class="control-label"></label>
+								<input asp-for="Project.ResourcesCostSpent" class="form-control" readonly />
+								<span asp-validation-for="Project.ResourcesCostSpent" class="text-danger"></span>
+							</div>
+							<div class="col-lg-6">
+								<label asp-for="Project.ResourcesRevenueGained" class="control-label"></label>
+								<input asp-for="Project.ResourcesRevenueGained" class="form-control" readonly />
+								<span asp-validation-for="Project.ResourcesRevenueGained" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-lg-6">
+								<label asp-for="Project.ResourcesCostRemaining" class="control-label"></label>
+								<input asp-for="Project.ResourcesCostRemaining" class="form-control" readonly />
+								<span asp-validation-for="Project.ResourcesCostRemaining" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-lg-6">
+								<label asp-for="Project.ResourcesCost" class="control-label"></label>
+								<input asp-for="Project.ResourcesCost" class="form-control" readonly />
+								<span asp-validation-for="Project.ResourcesCost" class="text-danger"></span>
+							</div>
+							<div class="col-lg-6">
+								<label asp-for="Project.ResourcesRevenue" class="control-label"></label>
+								<input asp-for="Project.ResourcesRevenue" class="form-control" readonly />
+								<span asp-validation-for="Project.ResourcesRevenue" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-lg-6">
+								<label asp-for="Project.RiskCostSpent" class="control-label"></label>
+								<input asp-for="Project.RiskCostSpent" class="form-control calcFin" readonly />
+								<span asp-validation-for="Project.RiskCostSpent" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-lg-6">
+								<label asp-for="Project.RiskCostRemaining" class="control-label"></label>
+								<input asp-for="Project.RiskCostRemaining" class="form-control" readonly />
+								<span asp-validation-for="Project.RiskCostRemaining" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-lg-6">
+								<label asp-for="Project.RiskCost" class="control-label"></label>
+								<input asp-for="Project.RiskCost" class="form-control" readonly />
+								<span asp-validation-for="Project.RiskCost" class="text-danger"></span>
+							</div>
+							<div class="col-lg-6">
+								<label asp-for="Project.RiskRevenue" class="control-label"></label>
+								<input asp-for="Project.RiskRevenue" class="form-control" readonly />
+								<span asp-validation-for="Project.RiskRevenue" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-3">
+						<div class="form-group row border-bottom-soft">
+							<h4 class="col-lg-12">Totals</h4>
+						</div>
+
+						<div class="form-group row">
+							<div class="col-lg-6">
+								<label asp-for="Project.CurrencyId" class="control-label"></label>
+								<select asp-for="Project.CurrencyId" asp-items="@((SelectList)ViewData["Currencies"])" class="form-control" disabled></select>
+								<span asp-validation-for="Project.CurrencyId" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="well well-sm">
+							<div class="form-group">
+								<label asp-for="Project.ContractValue" class="control-label"></label>
+								<input asp-for="Project.ContractValue" class="form-control" type="number" readonly />
+								<span asp-validation-for="Project.ContractValue" class="text-danger"></span>
+							</div>
+							<div class="form-group">
+								<label asp-for="Project.TotalCostSpent" class="control-label"></label>
+								<input asp-for="Project.TotalCostSpent" class="form-control" readonly />
+								<span asp-validation-for="Project.TotalCostSpent" class="text-danger"></span>
+							</div>
+							<div class="form-group">
+								<label asp-for="Project.TotalCostRemaining" class="control-label"></label>
+								<input asp-for="Project.TotalCostRemaining" class="form-control" readonly />
+								<span asp-validation-for="Project.TotalCostRemaining" class="text-danger"></span>
+							</div>
+							<div class="form-group">
+								<label asp-for="Project.TotalCost" class="control-label"></label>
+								<input asp-for="Project.TotalCost" class="form-control" readonly />
+								<span asp-validation-for="Project.TotalCost" class="text-danger"></span>
+							</div>
+							<div class="form-group">
+								<label asp-for="Project.TotalRevenue" class="control-label"></label>
+								<input asp-for="Project.TotalRevenue" class="form-control" readonly />
+								<span asp-validation-for="Project.TotalRevenue" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Resources tab -->
+			@{ string resTypeValue = ""; }
+			<div class="tab-pane fade" id="resources">
+				<div id="deleteResourceModal" class="modal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h4 class="modal-title">Are you sure to delete the Resource?</h4>
+							</div>
+							<div class="modal-footer">
+								<div class="col-md-8">
+									<label class="text-warning">This will reload the page (save your other changes beforehand).</label>
+								</div>
+
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								<button type="button" id="" class="btn btn-danger deleteResouceModalButton">Delete</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group row mb-sm">
+					@for (int i = 0; i < Model.Project.Resources.Count; i++)
+					{
+						<div class="col-lg-4">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<div class="form-group row mb-sm">
+										<div class="col-lg-6">
+											<label class="control-label">ResourceType</label>
+
+											@if (Model.Project.Resources[i].ResourceEmployee != null)
+											{
+												resTypeValue = "Employee";
+											}
+											else if (Model.Project.Resources[i].ResourceSubcontractor != null)
+											{
+												resTypeValue = "Subcontractor";
+											}
+											else
+											{
+												resTypeValue = "Other";
+											}
+											<select name="resType@(i.ToString())" asp-items="@(new SelectList((List<SelectListItem>)ViewData["ResourceTypes"], "Value", "Text", resTypeValue))" class="resType form-control" disabled></select>
+										</div>
+										<div class="col-lg-6 pt-md">
+											<label>Modified at: </label> @(Model.Project.Resources[i].CreatedDate)
+										</div>
+									</div>
+									<div class="form-group mb-sm resNameFields">
+										<label class="control-label">Name</label>
+										<select asp-for="@Model.Project.Resources[i].ResourceEmployee" asp-items="@(Model.EmployeeSelectList)" class="resEmpSelect form-control @(Model.Project.Resources[i].ResourceEmployee == null ? "hidden" : "")" disabled>
+											<option value=""></option>
+										</select>
+										<select asp-for="@Model.Project.Resources[i].ResourceSubcontractor" asp-items="@(Model.SubSelectList)" class="resSubSelect form-control @(Model.Project.Resources[i].ResourceSubcontractor == null ? "hidden" : "")" disabled>
+											<option value=""></option>
+										</select>
+										<input asp-for="@Model.Project.Resources[i].ResourceName" class="resNameInput form-control @((Model.Project.Resources[i].ResourceEmployee == null && Model.Project.Resources[i].ResourceSubcontractor == null) ? "" : "hidden")" readonly />
+
+										<span asp-validation-for="@Model.Project.Resources[i].ResourceName" class="text-danger"></span>
+									</div>
+								</div>
+								<div class="panel-body row">
+									<input asp-for="@Model.Project.Resources[i].CreatedDate" type="hidden" />
+									<input asp-for="@Model.Project.Resources[i].ModifiedDate" type="hidden" />
+									<input asp-for="@Model.Project.Resources[i].Id" type="hidden" />
+									<input asp-for="@Model.Project.Resources[i].ProjectId" type="hidden" />
+
+									<div class="col-lg-12">
+										<label class="control-label">Task</label>
+										<input asp-for="@Model.Project.Resources[i].ResourceTask" class="form-control" readonly />
+										<span asp-validation-for="@Model.Project.Resources[i].ResourceTask" class="text-danger"></span>
+									</div>
+									<div class="col-lg-6">
+										<label class="control-label">HoursDone</label>
+										<input asp-for="@Model.Project.Resources[i].HoursDone" class="form-control" type="number" readonly />
+										<span asp-validation-for="@Model.Project.Resources[i].HoursDone" class="text-danger"></span>
+									</div>
+									<div class="col-lg-6">
+										<label class="control-label">OvertimeDone</label>
+										<input asp-for="@Model.Project.Resources[i].OvertimeDone" class="form-control" type="number" readonly />
+										<span asp-validation-for="@Model.Project.Resources[i].OvertimeDone" class="text-danger"></span>
+									</div>
+									<div class="col-lg-6">
+										<label class="control-label">HoursRemaining</label>
+										<input asp-for="@Model.Project.Resources[i].HoursRemaining" class="form-control" type="number" readonly />
+										<span asp-validation-for="@Model.Project.Resources[i].HoursRemaining" class="text-danger"></span>
+									</div>
+									<div class="col-lg-6">
+										<label class="control-label">OvertimeRemaining</label>
+										<input asp-for="@Model.Project.Resources[i].OvertimeRemaining" class="form-control" type="number" readonly />
+										<span asp-validation-for="@Model.Project.Resources[i].OvertimeRemaining" class="text-danger"></span>
+									</div>
+									<div class="col-lg-12">
+										<label class="control-label">Cost</label>
+										<input asp-for="@Model.Project.Resources[i].Cost" class="form-control" type="number" readonly />
+										<span asp-validation-for="@Model.Project.Resources[i].Cost" class="text-danger"></span>
+									</div>
+									<div class="col-lg-12">
+										<label class="control-label">Revenue</label>
+										<input asp-for="@Model.Project.Resources[i].Revenue" class="form-control" type="number" readonly />
+										<span asp-validation-for="@Model.Project.Resources[i].Revenue" class="text-danger"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					}
+				</div>
+			</div>
+
+			<!-- Risks tab -->
+			<div class="tab-pane fade" id="risks">
+				<div class="col-lg-6 col-lg-offset-3">
+					<ul id="riskList" class="list-group">
+						@for (int i = 0; i < Model.Project.Risks.Count; i++)
+						{
+							<li class="list-group-item">
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" asp-for="@Model.Project.Risks[i].IsSelected" id="rc@(i.ToString())" class="riskCheck" disabled> <span id="riskCheckNum@(i.ToString())" class="span-bolder text-warning">@Model.Project.Risks[i].Risk.RiskWeight</span> <strong>@Model.Project.Risks[i].Risk.RiskName</strong>
+									</label>
+								</div>
+
+								<input asp-for="@Model.Project.Risks[i].Id" type="hidden" />
+								<input asp-for="@Model.Project.Risks[i].CreatedDate" type="hidden" />
+								<input asp-for="@Model.Project.Risks[i].ModifiedDate." type="hidden" />
+								<input asp-for="@Model.Project.Risks[i].ProjectId" type="hidden" />
+								<input asp-for="@Model.Project.Risks[i].RiskId" type="hidden" />
+							</li>
+						}
+
+						<li class="list-group-item" style="background-color: #eee">
+							<strong>Final risk weight: </strong>
+							@{
+								int selectedWeight = (int)ViewData["SelectedWeight"];
+								int totalWeight = (int)ViewData["TotalWeight"];
+								double ratio = selectedWeight * 1.0 / totalWeight * 1.0;
+							}
+							<span id="riskValue" class="span-bolder @(ratio <= 0.5 ? "text-success" : ratio >= 0.8 ? "text-danger" : "text-warning")">@(ViewData["SelectedWeight"])</span>
+							<span class="span-bolder"> / @(ViewData["TotalWeight"])</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<!-- Log tab -->
+			<div class="tab-pane fade" id="log">
+				<div class="form-group row">
+					<div class="col-lg-6 col-lg-offset-3">
+						<label class="control-label">User</label>
+						<select id="logUser" name="logUser" asp-items="@((SelectList)ViewData["LogUsers"])" class="form-control">
+							<option value=""></option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-lg-6 col-lg-offset-3">
+						<div class="input-group">
+							<span class="input-group-addon">
+								<i class="glyphicon glyphicon-search"></i>
+							</span>
+							<input id="logSearch" name="logSearch" placeholder="Search..." type="text" class="form-control" />
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-lg-6 col-lg-offset-3">
+						<div id="logList" class="list-group">
+							@foreach (ProjectLog log in Model.Project.Logs)
+							{
+								<div href="#" class="list-group-item">
+									<!-- prob not needed -->
+									<input asp-for="@log.Id" type="hidden" />
+									<input asp-for="@log.CreatedDate" type="hidden" />
+									<input asp-for="@log.ModifiedDate" type="hidden" />
+									<input asp-for="@log.ProjectId" type="hidden" />
+									<input asp-for="@log.UserId" type="hidden" />
+									<input asp-for="@log.OriginalValue" type="hidden" />
+									<input asp-for="@log.NewValue" type="hidden" />
+
+									<h4 class="list-group-item-heading">
+										@(log.CreatedDate) - by <span class="text-primary">@(log.AppUser.DisplayName)</span>
+									</h4>
+									<p class="list-group-item-text">
+										<strong class="text-info">@(log.FieldName)</strong> has been changed: <strong class="text-warning">@(log.OriginalValue)</strong> => <strong class="text-success">@(log.NewValue).</strong>
+									</p>
+								</div>
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<a asp-action="Index" class="btn btn-default">Back to List</a>
+
+		<a asp-action="Edit" asp-route-id="@Model.Project.Id" class="btn btn-primary pull-right">Edit</a>
+	</div>
 </div>
-<div>
-	<a asp-action="Index" class="btn btn-default">Back to List</a>
-	<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
-</div>
+
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	<script>
+		var totalRiskValue = @(ViewData["TotalWeight"]);
+	</script>
+	<script type="text/javascript" src="~/js/project/project_edit.js"></script>
+}

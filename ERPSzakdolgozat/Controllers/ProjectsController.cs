@@ -22,7 +22,10 @@ namespace ERPSzakdolgozat.Controllers
 		// GET: Projects
 		public async Task<IActionResult> Index(string search, DateTime? started, bool active = true)
 		{
-			IQueryable<Project> projects = _context.Projects.Include(p => p.Client);
+			IQueryable<Project> projects = _context.Projects
+				.Include(p => p.Client)
+				.Include(p => p.Risks)
+				.AsNoTracking();
 
 			if (!string.IsNullOrEmpty(search))
 			{
@@ -44,7 +47,18 @@ namespace ERPSzakdolgozat.Controllers
 			ViewData["started"] = started?.ToString("yyyy-MM-dd");
 			ViewData["active"] = active;
 
-			return View(await projects.OrderBy(p => p.ProjectName).ToListAsync());
+			List<Project> prList = await projects.OrderBy(p => p.ProjectName).ToListAsync();
+
+			// fill Risks
+			foreach (Project pr in prList)
+			{
+				foreach (var rk in pr.Risks)
+				{
+					rk.Risk = await _context.Risks.FindAsync(rk.RiskId);
+				}
+			}
+
+			return View(prList);
 		}
 
 		// GET: Projects/Details/5
@@ -56,18 +70,46 @@ namespace ERPSzakdolgozat.Controllers
 				return NotFound();
 			}
 
-			var project = await _context.Projects
-				.Include(p => p.Client)
-				.Include(p => p.Currency)
-				.Include(p => p.Resources)
-				.Include(p => p.Risks)
-				.FirstOrDefaultAsync(m => m.Id == id);
+			var project = await _context.Projects.FirstOrDefaultAsync(m => m.Id == id);
 			if (project == null)
 			{
 				return NotFound();
 			}
 
-			return View(project);
+			// fill Project's entity lists
+			project.Resources = await _context.ProjectResources
+				.Where(r => r.ProjectId == project.Id)
+				.OrderByDescending(r => r.CreatedDate)
+				.ToListAsync();
+			project.Logs = await _context.ProjectLogs
+				.Include("AppUser")
+				.Where(l => l.ProjectId == project.Id)
+				.OrderByDescending(l => l.CreatedDate)
+				.ToListAsync();
+			project.Risks = await _context.ProjectRisks
+				.Where(r => r.ProjectId == project.Id)
+				.ToListAsync();
+
+			foreach (var pr in project.Risks)
+			{
+				pr.Risk = await _context.Risks.FindAsync(pr.RiskId);
+			}
+
+			await FillDropdownLists(project);
+			ViewData["ClientId"] = new SelectList(_context.Clients.OrderBy(c => c.ClientName), "Id", "ClientName", project.ClientId);
+
+			Project_Edit peVM = new Project_Edit
+			{
+				Project = project,
+				NewProjectResource = new ProjectResource(),
+				EmployeeSelectList = new SelectList(_context.Employees, "Id", "EmployeeName"),
+				SubSelectList = new SelectList(_context.Subcontractors, "Id", "SubcontractorName")
+			};
+
+			CalculateFinancials(peVM);
+			await _context.SaveChangesAsync();
+
+			return View(peVM);
 		}
 
 		// GET: Projects/Create

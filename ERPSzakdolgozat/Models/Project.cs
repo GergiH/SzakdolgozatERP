@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ERPSzakdolgozat.Helpers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -41,25 +42,70 @@ namespace ERPSzakdolgozat.Models
 		public DateTime EstimatedEndDate { get; set; }
 
 		public double ContractValue { get; set; }
-		public double HoursAll { get; set; }
-		public double OvertimeAll { get; set; }
+		public double HoursAll {
+			get {
+				return HoursDone + HoursRemaining;
+			}
+			set { }
+		}
+		public double OvertimeAll {
+			get {
+				return OvertimeDone + OvertimeRemaining;
+			}
+			set { }
+		}
 		public double HoursDone { get; set; }
 		public double OvertimeDone { get; set; }
 		public double HoursRemaining { get; set; }
 		public double OvertimeRemaining { get; set; }
-		public double ResourcesCost { get; set; }
-		public double ResourcesRevenueGained { get; set; }
+		public double ResourcesCost {
+			get {
+				return ResourcesCostSpent + ResourcesCostRemaining;
+			}
+			set { }
+		}
+		public double ResourcesRevenueGained {
+			get {
+				return Globals.CalculateRevenue(HoursDone, OvertimeDone, TotalCostSpent);
+			}
+			set { }
+		}
 		public double ResourcesRevenue { get; set; }
 		public double ResourcesCostSpent { get; set; }
 		public double ResourcesCostRemaining { get; set; }
-		public double RiskCost { get; set; }
+		public double RiskCost {
+			get {
+				return RiskCostSpent + RiskCostRemaining;
+			}
+			set { }
+		}
 		public double RiskRevenue { get; set; }
 		public double RiskCostSpent { get; set; }
 		public double RiskCostRemaining { get; set; }
-		public double TotalCost { get; set; }
-		public double TotalRevenue { get; set; }
-		public double TotalCostSpent { get; set; }
-		public double TotalCostRemaining { get; set; }
+		public double TotalCost {
+			get {
+				return ResourcesCost + RiskCost;
+			}
+			set { }
+		}
+		public double TotalRevenue {
+			get {
+				return ResourcesRevenue + RiskRevenue;
+			}
+			set { }
+		}
+		public double TotalCostSpent {
+			get {
+				return ResourcesCostSpent + RiskCostSpent;
+			}
+			set { }
+		}
+		public double TotalCostRemaining {
+			get {
+				return ResourcesCostRemaining + RiskCostRemaining;
+			}
+			set { }
+		}
 
 		[ForeignKey("Client")]
 		public int ClientId { get; set; }

@@ -48,8 +48,8 @@ namespace ERPSzakdolgozat.Models
 					Id = 1,
 					CreatedDate = DateTime.Now,
 					ModifiedDate = DateTime.Now,
-					//ADName = "CORP\\ghorvath", // Work UserName
-											   ADName = "NYOMDNEKINYUSZI\\Horváth Gergely",
+					ADName = "CORP\\ghorvath", // Work UserName
+											   //ADName = "NYOMDNEKINYUSZI\\Horváth Gergely",
 											   //ADName = User.Identity.Name, // This would be best for debugging, but doesn't work
 					Email = "van@denincs.com",
 					Mobile = "+36901234567",
@@ -592,17 +592,17 @@ namespace ERPSzakdolgozat.Models
 					{
 						Id = 2 + i,
 						CreatedDate = DateTime.Now,
-						ModifiedDate = DateTime.Now,
+						ModifiedDate = DateTime.Now.AddMonths(Globals.GenerateRandomNumber(-1, 11)),
 						ClientId = i < 10 ? 1 : i < 20 ? 2 : 3,
 						Contract = i < 10 ? "Signed" : i < 20 ? "Not started" : "In progress",
 						ContractValue = Globals.GenerateRandomNumber(200000, 4500000),
 						CurrencyId = 2,
 						CustomId = Globals.GenerateRandomString(5).ToUpper(),
 						EstimatedEndDate = DateTime.Now.AddMonths(6),
-						HoursAll = Globals.GenerateRandomNumber(0, 300),
 						HoursDone = Globals.GenerateRandomNumber(0, 150),
 						HoursRemaining = Globals.GenerateRandomNumber(0, 150),
-						OvertimeAll = Globals.GenerateRandomNumber(0, 100),
+						//HoursAll = this.HoursDone ,
+						//OvertimeAll = Globals.GenerateRandomNumber(0, 100),
 						OvertimeDone = Globals.GenerateRandomNumber(0, 50),
 						OvertimeRemaining = Globals.GenerateRandomNumber(0, 50),
 						ProjectManager = "CORP\\ghorvath",
@@ -617,10 +617,10 @@ namespace ERPSzakdolgozat.Models
 						RiskRevenue = Globals.GenerateRandomNumber(200000, 4500000),
 						StartDate = DateTime.Now,
 						Status = i < 5 ? "Executing" : i < 10 ? "Not started" : i < 20 ? "Failed" : "Finished",
-						TotalCost = Globals.GenerateRandomNumber(200000, 4500000),
-						TotalCostRemaining = Globals.GenerateRandomNumber(100000, 4000000),
-						TotalCostSpent = Globals.GenerateRandomNumber(100000, 4000000),
-						TotalRevenue = Globals.GenerateRandomNumber(200000, 4500000),
+						//TotalCost = Globals.GenerateRandomNumber(200000, 4500000),
+						//TotalCostRemaining = Globals.GenerateRandomNumber(100000, 4000000),
+						//TotalCostSpent = Globals.GenerateRandomNumber(100000, 4000000),
+						//TotalRevenue = Globals.GenerateRandomNumber(200000, 4500000),
 						Type = i < 20 ? "Fixed price" : "Time and material",
 					});
 
