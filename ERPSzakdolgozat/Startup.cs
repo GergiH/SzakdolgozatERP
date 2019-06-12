@@ -76,7 +76,8 @@ namespace ERPSzakdolgozat
 			// globalization bit of numbers and such
 			var supportedCultures = new[]
 			{
-				new CultureInfo("hu")
+				//new CultureInfo("hu")
+				new CultureInfo("en-US")
 			};
 
 			app.UseRequestLocalization(new RequestLocalizationOptions

@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 	if ($('#isDetails').val() === "true") {
-		// TODO add hiddens to view if disabled values are needed
+
 		$('input, option').prop('readonly', true);
 		$(':checkbox').prop('disabled', true);
 		$('select').prop('disabled', true);

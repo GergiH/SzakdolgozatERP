@@ -478,8 +478,7 @@ namespace ERPSzakdolgozat.Controllers
 				_context.Add(newPR);
 				_context.SaveChanges();
 			}
-			
-			// TODO controller authorize
+
 			return Json(null);
 		}
 

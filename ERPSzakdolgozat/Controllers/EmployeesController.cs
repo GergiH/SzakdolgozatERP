@@ -208,8 +208,6 @@ namespace ERPSzakdolgozat.Controllers
 					}
 				}
 
-				// TODO if leave date is on, active should be false
-
 				return RedirectToAction(nameof(Index));
 			}
 			return View(employee);

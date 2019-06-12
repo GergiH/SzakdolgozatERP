@@ -4,8 +4,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace ERPSzakdolgozat.Controllers
 {
@@ -27,34 +30,72 @@ namespace ERPSzakdolgozat.Controllers
 			double[] revenue = new double[12];
 			double[] revenueGained = new double[12];
 
+			bool isAdmin = User.HasClaim(ClaimTypes.Role, "Admin");
+			bool isHR = User.HasClaim(ClaimTypes.Role, "HR");
+			bool isPM = User.HasClaim(ClaimTypes.Role, "ProjectManager");
+
+			List<Employee> employees = new List<Employee>();
+			if (isAdmin || isHR)
+			{
+				 employees = _context.Employees
+					.Include(e => e.EmployeeFinancials)
+					.AsNoTracking()
+					.ToList();
+			}
+			
 			for (int i = 0; i < 12; i++)
 			{
-				salaries[i] = _context.EmployeeFinancials.Where(e => e.ActiveFrom.Month == i + 1).DefaultIfEmpty().Average(e => e.GrossSalary);
+				if (isAdmin || isHR)
+				{
+					double grossesForMonth = 0;
+					double countOfGrosses = 0;
+					double actualGross = 0;
+					foreach (Employee emp in employees)
+					{
+						actualGross += emp.EmployeeFinancials
+							.Where(f => f.ActiveFrom.Month == i + 1)
+							.Select(f => f.GrossSalary)
+							.FirstOrDefault(); // TODO if multiple records are present for the same month, a random one is selected (should get the latest of the month)
+						countOfGrosses += actualGross == 0 ? 1 : 0;
+						grossesForMonth += actualGross;
+					}
 
-				hoursDone[i] = _context.Projects.Where(p => p.ModifiedDate.Month == i + 1).Sum(p => p.HoursDone);
-				hoursTotal[i] = _context.Projects.Where(p => p.ModifiedDate.Month == i + 1).Sum(p => p.HoursAll);
+					salaries[i] = countOfGrosses == 0 ? 0 : grossesForMonth / countOfGrosses;
+				}
 
-				cost[i] = _context.Projects.Where(p => p.ModifiedDate.Month == i + 1).Sum(p => p.TotalCost);
-				revenue[i] = _context.Projects.Where(p => p.ModifiedDate.Month == i + 1).Sum(p => p.TotalRevenue);
-				revenueGained[i] = _context.Projects.Where(p => p.ModifiedDate.Month == i + 1).Sum(p => p.ResourcesRevenueGained);
+				if (isAdmin || isPM)
+				{
+					hoursDone[i] = _context.Projects.Where(p => p.ModifiedDate.Month == i + 1).Sum(p => p.HoursDone);
+					hoursTotal[i] = _context.Projects.Where(p => p.ModifiedDate.Month == i + 1).Sum(p => p.HoursAll);
+
+					cost[i] = _context.Projects.Where(p => p.ModifiedDate.Month == i + 1).Sum(p => p.TotalCost);
+					revenue[i] = _context.Projects.Where(p => p.ModifiedDate.Month == i + 1).Sum(p => p.TotalRevenue);
+					revenueGained[i] = _context.Projects.Where(p => p.ModifiedDate.Month == i + 1).Sum(p => p.ResourcesRevenueGained);
+				}
 			}
 
-			// Employees
-			ViewData["Salaries"] = salaries;
+			if (isAdmin || isHR)
+			{
+				// Employees
+				ViewData["Salaries"] = salaries;
+			}
 
-			// Projects
-			// 1st chart
-			ViewData["HoursDone"] = hoursDone;
-			ViewData["HoursTotal"] = hoursTotal;
+			if (isAdmin || isPM)
+			{
+				// Projects
+				// 1st chart
+				ViewData["HoursDone"] = hoursDone;
+				ViewData["HoursTotal"] = hoursTotal;
 
-			// 2nd chart
-			ViewData["HoursRemaining"] = _context.Projects.Sum(p => p.HoursRemaining);
-			ViewData["HoursAll"] = _context.Projects.Sum(p => p.HoursAll);
+				// 2nd chart
+				ViewData["HoursRemaining"] = _context.Projects.Sum(p => p.HoursRemaining);
+				ViewData["HoursAll"] = _context.Projects.Sum(p => p.HoursAll);
 
-			// 3rd chart
-			ViewData["Cost"] = cost;
-			ViewData["Revenue"] = revenue;
-			ViewData["RevenueGained"] = revenueGained;
+				// 3rd chart
+				ViewData["Cost"] = cost;
+				ViewData["Revenue"] = revenue;
+				ViewData["RevenueGained"] = revenueGained;
+			}
 
 			return View();
 		}

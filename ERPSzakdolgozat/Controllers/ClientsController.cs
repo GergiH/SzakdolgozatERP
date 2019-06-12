@@ -16,9 +16,25 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Clients
-		public async Task<IActionResult> Index()
+		public async Task<IActionResult> Index(string search, bool active = true)
 		{
-			return View(await _context.Clients.OrderBy(c => c.ClientName).ToListAsync());
+			IQueryable<Client> clients = _context.Clients.AsNoTracking();
+
+			if (!string.IsNullOrEmpty(search))
+			{
+				clients = clients.Where(c => c.ClientId.ToLower().Contains(search.ToLower())
+					|| c.ClientName.ToLower().Contains(search.ToLower())
+					|| c.ContactName.ToLower().Contains(search.ToLower()));
+			}
+			if (active)
+			{
+				clients = clients.Where(c => c.Active);
+			}
+
+			ViewData["search"] = search;
+			ViewData["active"] = active;
+
+			return View(await clients.OrderBy(c => c.ClientName).ToListAsync());
 		}
 
 		// GET: Clients/Details/5

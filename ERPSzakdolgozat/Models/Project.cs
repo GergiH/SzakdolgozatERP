@@ -70,7 +70,12 @@ namespace ERPSzakdolgozat.Models
 			}
 			set { }
 		}
-		public double ResourcesRevenue { get; set; }
+		public double ResourcesRevenue {
+			get {
+				return Globals.CalculateRevenue(HoursAll, OvertimeAll, TotalCost);
+			}
+			set { }
+		}
 		public double ResourcesCostSpent { get; set; }
 		public double ResourcesCostRemaining { get; set; }
 		public double RiskCost {
@@ -115,7 +120,5 @@ namespace ERPSzakdolgozat.Models
 		public List<ProjectResource> Resources { get; set; }
 		public List<ProjectLog> Logs { get; set; }
 		public List<ProjectRisk> Risks { get; set; }
-
-		// TODO progressbar for risk weights (selected weight / all weight, in percentage)
 	}
 }

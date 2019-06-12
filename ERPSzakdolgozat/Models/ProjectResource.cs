@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ERPSzakdolgozat.Helpers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -19,13 +20,28 @@ namespace ERPSzakdolgozat.Models
 		public int? ResourceSubcontractor { get; set; }
 		public virtual Subcontractor Subcontractor { get; set; }
 		public string ResourceName { get; set; }
-		public double HoursAll { get; set; }
-		public double OvertimeAll { get; set; }
+		public double HoursAll {
+			get {
+				return HoursDone + HoursRemaining;
+			}
+			set { }
+		}
+		public double OvertimeAll {
+			get {
+				return OvertimeDone + OvertimeRemaining;
+			}
+			set { }
+		}
 		public double HoursDone { get; set; }
 		public double OvertimeDone { get; set; }
 		public double HoursRemaining { get; set; }
 		public double OvertimeRemaining { get; set; }
 		public double Cost { get; set; }
-		public double Revenue { get; set; }
+		public double Revenue {
+			get {
+				return Globals.CalculateRevenue(HoursAll, OvertimeAll, Cost);
+			}
+			set { }
+		}
 	}
 }
