@@ -1,0 +1,147 @@
+﻿@model IEnumerable<ERPSzakdolgozat.Models.ForecastWeek>
+
+@{
+	ViewData["Title"] = "Forecasts - List";
+}
+
+<h2>Forecasts</h2>
+
+<form asp-action="Index" class="form-horizontal" method="get">
+	<div class="form-group">
+		<div class="col-md-4">
+			<label class="control-label">
+				<strong>Employee</strong>
+			</label>
+
+			<select name="employee" asp-items="@((SelectList)ViewData["Employees"])" class="form-control">
+				<option value=""></option>
+			</select>
+		</div>
+
+		<div class="col-md-3">
+			<label class="control-label">
+				<strong>Team</strong>
+			</label>
+
+			<select name="team" asp-items="@((SelectList)ViewData["Teams"])" class="form-control">
+				<option value=""></option>
+			</select>
+		</div>
+
+		<div class="col-md-3">
+			<label class="control-label">
+				<strong>Week</strong>
+			</label>
+
+			<select name="weekNumber" asp-items="@((SelectList)ViewData["Weeks"])" class="form-control"></select>
+		</div>
+
+		<a asp-action="Create" class="btn btn-success btn-sm pull-right mt-lg" data-toggle="tooltip" data-placement="top" title="" data-original-title="Create New">
+			<i class="glyphicon glyphicon-plus"></i>
+		</a>
+	</div>
+</form>
+
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>
+				WeekNo
+			</th>
+			<th>
+				Week Start
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Employee)
+			</th>
+			<th>
+				Proj.
+			</th>
+			<th>
+				Vac.
+			</th>
+			<th>
+				Sick.
+			</th>
+			<th>
+				Train.
+			</th>
+			<th>
+				Bench
+			</th>
+			<th>
+				Registered / Available
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.WeekNumber)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.WeekStart)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Employee.EmployeeName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.ProjectHours)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.VacationHours)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.SicknessHours)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.TrainingHours)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.BenchHours)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.HoursAll) /
+					@Html.DisplayFor(modelItem => item.HoursAvailable)
+				</td>
+
+				<td class="col-md-2 text-right text-nowrap">
+					<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+						<i class="glyphicon glyphicon-pencil"></i>
+					</a>
+					<a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Details">
+						<i class="glyphicon glyphicon-list"></i>
+					</a>
+				</td>
+			</tr>
+		}
+
+		<tr style="background-color:#fcf8e3;">
+			<td colspan="3" class="text-right">
+				<h4>Totals</h4>
+			</td>
+			<td>
+				@(Model.Sum(f => f.ProjectHours))
+			</td>
+			<td>
+				@(Model.Sum(f => f.VacationHours))
+			</td>
+			<td>
+				@(Model.Sum(f => f.SicknessHours))
+			</td>
+			<td>
+				@(Model.Sum(f => f.TrainingHours))
+			</td>
+			<td>
+				@(Model.Sum(f => f.BenchHours))
+			</td>
+			<td>
+				@(Model.Sum(f => f.HoursAll)) / @(Model.Sum(f => f.HoursAvailable))
+			</td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>

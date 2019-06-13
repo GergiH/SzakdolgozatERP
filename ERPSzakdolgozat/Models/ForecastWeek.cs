@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,6 +11,7 @@ namespace ERPSzakdolgozat.Models
 		[ForeignKey("Employee")]
 		public int EmployeeId { get; set; }
 		public virtual Employee Employee { get; set; }
+		[DataType(DataType.Date)]
 		public DateTime WeekStart { get; set; }
 		public int WeekNumber { get; set; }
 		public double ProjectHours { get; set; }
@@ -22,6 +24,9 @@ namespace ERPSzakdolgozat.Models
 			get {
 				return ProjectHours + VacationHours + SicknessHours + TrainingHours + BenchHours;
 			}
-			set { } }
+			set { }
+		}
+
+		public List<Forecast> Forecasts { get; set; }
 	}
 }

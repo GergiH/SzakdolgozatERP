@@ -1,6 +1,7 @@
 ﻿using ERPSzakdolgozat.Helpers;
 using Microsoft.EntityFrameworkCore;
 using System;
+using ERPSzakdolgozat.Models;
 
 namespace ERPSzakdolgozat.Models
 {
@@ -28,6 +29,8 @@ namespace ERPSzakdolgozat.Models
 		public DbSet<ProjectLog> ProjectLogs { get; set; }
 		public DbSet<ProjectRisk> ProjectRisks { get; set; }
 		public DbSet<Subcontractor> Subcontractors { get; set; }
+		public DbSet<Forecast> Forecast { get; set; }
+		public DbSet<ForecastWeek> ForecastWeeks { get; set; }
 
 		// Seeding the DB
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -771,6 +774,37 @@ namespace ERPSzakdolgozat.Models
 					OvertimeDone = 0,
 					OvertimeRemaining = 0,
 					Revenue = 8000
+				});
+
+			modelBuilder.Entity<Forecast>().HasData(
+				new Forecast
+				{
+					Id = 1,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					EmployeeId = 1,
+					ForecastType = "Project",
+					ForecastWeekId = 1,
+					Hours = 40,
+					ProjectID = 1
+				});
+
+			modelBuilder.Entity<ForecastWeek>().HasData(
+				new ForecastWeek
+				{
+					Id = 1,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					BenchHours = 0,
+					EmployeeId = 1,
+					HoursAll = 40,
+					HoursAvailable = 40,
+					ProjectHours = 40,
+					SicknessHours = 0,
+					TrainingHours = 0,
+					VacationHours = 0,
+					WeekNumber = 24,
+					WeekStart = new DateTime(2019, 6, 10)
 				});
 
 			// Set relations
