@@ -37,12 +37,12 @@ namespace ERPSzakdolgozat.Controllers
 			List<Employee> employees = new List<Employee>();
 			if (isAdmin || isHR)
 			{
-				 employees = _context.Employees
-					.Include(e => e.EmployeeFinancials)
-					.AsNoTracking()
-					.ToList();
+				employees = _context.Employees
+				   .Include(e => e.EmployeeFinancials)
+				   .AsNoTracking()
+				   .ToList();
 			}
-			
+
 			for (int i = 0; i < 12; i++)
 			{
 				if (isAdmin || isHR)
@@ -74,15 +74,15 @@ namespace ERPSzakdolgozat.Controllers
 				}
 			}
 
+			// Employees
 			if (isAdmin || isHR)
 			{
-				// Employees
 				ViewData["Salaries"] = salaries;
 			}
 
+			// Projects
 			if (isAdmin || isPM)
 			{
-				// Projects
 				// 1st chart
 				ViewData["HoursDone"] = hoursDone;
 				ViewData["HoursTotal"] = hoursTotal;
