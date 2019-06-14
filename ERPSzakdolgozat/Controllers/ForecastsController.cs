@@ -34,6 +34,7 @@ namespace ERPSzakdolgozat.Controllers
 					.ToListAsync();
 			}
 
+			// get the current week number
 			CultureInfo culture = CultureInfo.CurrentCulture;
 			int currentWeekNumber = culture.Calendar.GetWeekOfYear(DateTime.Today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
 			weekNumber = weekNumber ?? currentWeekNumber;
@@ -54,7 +55,7 @@ namespace ERPSzakdolgozat.Controllers
 					})
 					.OrderBy(e => e.Text)
 					.ToList(),
-				"Value", "Text");
+				"Value", "Text", employee);
 			ViewData["Teams"] = new SelectList(
 				_context.Teams
 					.Select(t => new SelectListItem
@@ -64,7 +65,7 @@ namespace ERPSzakdolgozat.Controllers
 					})
 					.OrderBy(t => t.Text)
 					.ToList(),
-				"Value", "Text");
+				"Value", "Text", team);
 			ViewData["Weeks"] = new SelectList(
 				_context.ForecastWeeks
 					.Select(w => new SelectListItem
@@ -74,7 +75,7 @@ namespace ERPSzakdolgozat.Controllers
 					})
 					.OrderBy(w => w.Text)
 					.ToList(),
-				"Value", "Text");
+				"Value", "Text", weekNumber);
 
             return View(await forecastWeeks.ToListAsync());
         }

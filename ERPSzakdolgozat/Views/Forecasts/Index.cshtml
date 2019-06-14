@@ -13,7 +13,7 @@
 				<strong>Employee</strong>
 			</label>
 
-			<select name="employee" asp-items="@((SelectList)ViewData["Employees"])" class="form-control">
+			<select name="employee" asp-items="@((SelectList)ViewData["Employees"])" class="form-control" onchange="this.form.submit();">
 				<option value=""></option>
 			</select>
 		</div>
@@ -23,7 +23,7 @@
 				<strong>Team</strong>
 			</label>
 
-			<select name="team" asp-items="@((SelectList)ViewData["Teams"])" class="form-control">
+			<select name="team" asp-items="@((SelectList)ViewData["Teams"])" class="form-control" onchange="this.form.submit();">
 				<option value=""></option>
 			</select>
 		</div>
