@@ -7,15 +7,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ERPSzakdolgozat.Models;
 using System.Globalization;
+using ERPSzakdolgozat.Helpers;
 
 namespace ERPSzakdolgozat.Controllers
 {
-    public class ForecastsController : Controller
+    public class ForecastsController : MyController
     {
-        private readonly ERPDBContext _context;
-
-        public ForecastsController(ERPDBContext context)
-        {
+        public ForecastsController(ERPDBContext context) : base(context)
+		{
             _context = context;
         }
 
@@ -46,26 +45,8 @@ namespace ERPSzakdolgozat.Controllers
 			if (weekNumber != null) // probably redundant but good to be sure
 				forecastWeeks = forecastWeeks.Where(f => f.WeekNumber == weekNumber);
 
-			ViewData["Employees"] = new SelectList(
-				_context.Employees
-					.Select(e => new SelectListItem
-					{
-						Value = e.Id.ToString(),
-						Text = e.EmployeeName
-					})
-					.OrderBy(e => e.Text)
-					.ToList(),
-				"Value", "Text", employee);
-			ViewData["Teams"] = new SelectList(
-				_context.Teams
-					.Select(t => new SelectListItem
-					{
-						Value = t.Id.ToString(),
-						Text = t.TeamName
-					})
-					.OrderBy(t => t.Text)
-					.ToList(),
-				"Value", "Text", team);
+			ViewData["Employees"] = new SelectList(_context.Employees, "Id", "EmployeeName", employee);
+			ViewData["Teams"] = new SelectList(_context.Teams, "Id", "TeamName", team);
 			ViewData["Weeks"] = new SelectList(
 				_context.ForecastWeeks
 					.Select(w => new SelectListItem
@@ -77,7 +58,7 @@ namespace ERPSzakdolgozat.Controllers
 					.ToList(),
 				"Value", "Text", weekNumber);
 
-            return View(await forecastWeeks.ToListAsync());
+			return View(await forecastWeeks.ToListAsync());
         }
 
         // GET: Forecasts/Details/5
@@ -111,11 +92,9 @@ namespace ERPSzakdolgozat.Controllers
         }
 
         // POST: Forecasts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmployeeId,ForecastWeekId,ProjectID,ForecastType,Hours,Id,CreatedDate,ModifiedDate")] Forecast forecast)
+        public async Task<IActionResult> Create(Forecast forecast)
         {
             if (ModelState.IsValid)
             {
@@ -123,7 +102,8 @@ namespace ERPSzakdolgozat.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "CompanyIdentifier", forecast.EmployeeId);
+
+			ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "CompanyIdentifier", forecast.EmployeeId);
             ViewData["ForecastWeekId"] = new SelectList(_context.Set<ForecastWeek>(), "Id", "Id", forecast.ForecastWeekId);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "Contract", forecast.ProjectID);
             return View(forecast);
@@ -137,54 +117,66 @@ namespace ERPSzakdolgozat.Controllers
                 return NotFound();
             }
 
-            var forecast = await _context.Forecast.FindAsync(id);
-            if (forecast == null)
-            {
-                return NotFound();
-            }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "CompanyIdentifier", forecast.EmployeeId);
-            ViewData["ForecastWeekId"] = new SelectList(_context.Set<ForecastWeek>(), "Id", "Id", forecast.ForecastWeekId);
-            ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "Contract", forecast.ProjectID);
-            return View(forecast);
+			var forecastWeek = await _context.ForecastWeeks.FindAsync(id);
+			if (forecastWeek == null)
+			{
+				return NotFound();
+			}
+
+			var forecasts = await _context.Forecast.Where(f => f.ForecastWeekId == id).ToListAsync();
+			FillViewData(forecastWeek);
+
+            return View(forecasts);
         }
 
-        // POST: Forecasts/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EmployeeId,ForecastWeekId,ProjectID,ForecastType,Hours,Id,CreatedDate,ModifiedDate")] Forecast forecast)
+		// POST: Forecasts/Edit/5
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Edit(List<Forecast> forecasts)
         {
-            if (id != forecast.Id)
-            {
-                return NotFound();
-            }
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					foreach (var item in forecasts)
+					{
+						_context.Update(item);
+					}
+					await _context.SaveChangesAsync();
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(forecast);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ForecastExists(forecast.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "CompanyIdentifier", forecast.EmployeeId);
-            ViewData["ForecastWeekId"] = new SelectList(_context.Set<ForecastWeek>(), "Id", "Id", forecast.ForecastWeekId);
-            ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "Contract", forecast.ProjectID);
-            return View(forecast);
+					TempData["Toast"] = Toasts.Saved;
+
+					return RedirectToAction("Edit");
+				}
+				catch (DbUpdateConcurrencyException) { throw; }
+			}
+
+			return View(forecasts);
         }
+
+		public void FillViewData(ForecastWeek forecastWeek)
+		{
+			ViewData["ForecastTypes"] = new SelectList(new List<SelectListItem>
+			{
+				new SelectListItem { Value = "Vacation", Text = "Vacation" },
+				new SelectListItem { Value = "Sickness", Text = "Sickness" },
+				new SelectListItem { Value = "Training", Text = "Training" },
+				new SelectListItem { Value = "Bench", Text = "Bench" }
+			}, "Value", "Text");
+			ViewData["Projects"] = new SelectList(_context.Projects.OrderBy(p => p.ProjectName), "Id", "ProjectName");
+
+			ViewData["NewForecast"] = new Forecast
+			{
+				CreatedDate = DateTime.Now,
+				EmployeeId = forecastWeek.EmployeeId,
+				ForecastType = "Project",
+				ForecastWeekId = forecastWeek.Id,
+				ModifiedDate = DateTime.Now,
+				Hours = 0
+			};
+		}
+
+		// TODO deleteforecast, savenewforecast, generate weeks, details page
 
         // GET: Forecasts/Delete/5
         public async Task<IActionResult> Delete(int? id)

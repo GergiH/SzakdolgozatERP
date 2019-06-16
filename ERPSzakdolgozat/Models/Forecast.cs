@@ -18,6 +18,11 @@ namespace ERPSzakdolgozat.Models
 		public virtual Project Project { get; set; }
 
 		public string ForecastType { get; set; }
+
+		public string LeaveName { get; set; }
+
 		public double Hours { get; set; }
+
+		public string Comment { get; set; }
 	}
 }

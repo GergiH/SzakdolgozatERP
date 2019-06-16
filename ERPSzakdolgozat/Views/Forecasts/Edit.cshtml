@@ -1,7 +1,8 @@
-﻿@model ERPSzakdolgozat.Models.Forecast
+﻿@model IEnumerable<ERPSzakdolgozat.Models.Forecast>
 
 @{
-    ViewData["Title"] = "Edit";
+	ViewData["Title"] = "Forecast - Edit";
+	Forecast fc = (Forecast)ViewData["NewForecast"];
 }
 
 <h2>Edit</h2>
@@ -9,56 +10,133 @@
 <h4>Forecast</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="EmployeeId" class="control-label"></label>
-                <select asp-for="EmployeeId" class="form-control" asp-items="ViewBag.EmployeeId"></select>
-                <span asp-validation-for="EmployeeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ForecastWeekId" class="control-label"></label>
-                <select asp-for="ForecastWeekId" class="form-control" asp-items="ViewBag.ForecastWeekId"></select>
-                <span asp-validation-for="ForecastWeekId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProjectID" class="control-label"></label>
-                <select asp-for="ProjectID" class="form-control" asp-items="ViewBag.ProjectID"></select>
-                <span asp-validation-for="ProjectID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ForecastType" class="control-label"></label>
-                <input asp-for="ForecastType" class="form-control" />
-                <span asp-validation-for="ForecastType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Hours" class="control-label"></label>
-                <input asp-for="Hours" class="form-control" />
-                <span asp-validation-for="Hours" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedDate" class="control-label"></label>
-                <input asp-for="ModifiedDate" class="form-control" />
-                <span asp-validation-for="ModifiedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
-    </div>
-</div>
+	<div class="col-md-12">
+		<form asp-action="Edit">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+			<ul class="list-group">
+				<li class="list-group-item row">
+					<label class="col-md-2 control-label">ForecastType</label>
+					<label class="col-md-3 control-label">Project</label>
+					<label class="col-md-2 control-label">Hours</label>
+					<label class="col-md-5 control-label">Comment</label>
+				</li>
+
+				@foreach (var item in Model)
+				{
+					<li class="list-group-item row">
+						<input type="hidden" asp-for="@item.Id" />
+						<input type="hidden" asp-for="@item.CreatedDate" />
+						<input type="hidden" asp-for="@item.ModifiedDate" />
+						<input type="hidden" asp-for="@item.ForecastWeekId" />
+						<input type="hidden" asp-for="@item.EmployeeId" />
+
+						<div class="form-group">
+							<div class="col-md-2">
+								<select asp-for="@item.ForecastType" class="form-control forecastType" asp-items="@((SelectList)ViewData["ForecastTypes"])"></select>
+								<span asp-validation-for="@item.ForecastType" class="text-danger"></span>
+							</div>
+							@if (item.ForecastType == "Project")
+							{
+								<div class="col-md-3 projectSelect">
+									<select asp-for="@item.ProjectID" class="form-control" asp-items="@((SelectList)ViewData["Projects"])"></select>
+									<span asp-validation-for="@item.ProjectID" class="text-danger"></span>
+								</div>
+								<div class="col-md-3 hidden leaveName">
+									<input asp-for="@item.LeaveName" class="form-control" readonly />
+								</div>
+							}
+							else
+							{
+								<div class="col-md-3 hidden projectSelect">
+									<select asp-for="@item.ProjectID" class="form-control" asp-items="@((SelectList)ViewData["Projects"])"></select>
+									<span asp-validation-for="@item.ProjectID" class="text-danger"></span>
+								</div>
+								<div class="col-md-3 leaveName">
+									<input asp-for="@item.LeaveName" class="form-control" readonly />
+								</div>
+							}
+							<div class="col-md-2">
+								<input asp-for="@item.Hours" class="form-control" />
+								<span asp-validation-for="@item.Hours" class="text-danger"></span>
+							</div>
+							<div class="col-md-5">
+								<input asp-for="@item.Comment" class="form-control" />
+								<span asp-validation-for="@item.Comment" class="text-danger"></span>
+							</div>
+						</div>
+					</li>
+				}
+			</ul>
+
+			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#newForecastModal">
+				<i class="glyphicon glyphicon-plus"></i>
+			</button>
+
+			<div class="modal" id="newForecastModal">
+				<div class="modal-dialog" style="width:80%;">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modal-title">Add new Forecast</h4>
+						</div>
+						<div class="modal-body">
+							<ul class="list-group">
+								<li class="list-group-item row">
+									<label class="col-md-2 control-label">ForecastType</label>
+									<label class="col-md-3 control-label">Project</label>
+									<label class="col-md-2 control-label">Hours</label>
+									<label class="col-md-5 control-label">Comment</label>
+								</li>
+
+								<li class="list-group-item row">
+									<input type="hidden" asp-for="@fc.Id" />
+									<input type="hidden" asp-for="@fc.CreatedDate" />
+									<input type="hidden" asp-for="@fc.ModifiedDate" />
+									<input type="hidden" asp-for="@fc.ForecastWeekId" />
+									<input type="hidden" asp-for="@fc.EmployeeId" />
+
+									<div class="form-group">
+										<div class="col-md-2">
+											<select asp-for="@fc.ForecastType" class="form-control forecastType" asp-items="@((SelectList)ViewData["ForecastTypes"])"></select>
+											<span asp-validation-for="@fc.ForecastType" class="text-danger"></span>
+										</div>
+										<div class="col-md-3 projectSelect">
+											<select asp-for="@fc.ProjectID" class="form-control" asp-items="@((SelectList)ViewData["Projects"])"></select>
+											<span asp-validation-for="@fc.ProjectID" class="text-danger"></span>
+										</div>
+										<div class="col-md-3 hidden leaveName">
+											<input asp-for="@fc.LeaveName" class="form-control" readonly />
+										</div>
+										<div class="col-md-2">
+											<input asp-for="@fc.Hours" class="form-control" />
+											<span asp-validation-for="@fc.Hours" class="text-danger"></span>
+										</div>
+										<div class="col-md-5">
+											<input asp-for="@fc.Comment" class="form-control" />
+											<span asp-validation-for="@fc.Comment" class="text-danger"></span>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-success" id="addNewForecast">Create</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group mt-lg">
+				<a asp-action="Index" class="btn btn-default">Back to List</a>
+
+				<input type="submit" value="Save" class="btn btn-primary pull-right" />
+			</div>
+		</form>
+	</div>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
