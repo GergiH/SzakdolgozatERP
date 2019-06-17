@@ -43,6 +43,14 @@ namespace ERPSzakdolgozat.Models
 					ModifiedDate = DateTime.Now,
 					SettingName = "Default - Currency",
 					SettingValue = "HUF"
+				},
+				new AppSetting
+				{
+					Id = 2,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					SettingName = "Forecast - Generate Weeks",
+					SettingValue = "6"
 				});
 
 			modelBuilder.Entity<AppUser>().HasData(

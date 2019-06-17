@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ERPSzakdolgozat.Models.Forecast>
+﻿@model List<ERPSzakdolgozat.Models.Forecast>
 
 @{
 	ViewData["Title"] = "Forecast - Edit";
@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
 	<div class="col-md-12">
-		<form asp-action="Edit">
+		<form asp-action="Edit" method="post">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 			<ul class="list-group">
@@ -22,51 +22,57 @@
 					<label class="col-md-5 control-label">Comment</label>
 				</li>
 
-				@foreach (var item in Model)
+				@for (int i = 0; i < Model.Count; i++)
 				{
 					<li class="list-group-item row">
-						<input type="hidden" asp-for="@item.Id" />
-						<input type="hidden" asp-for="@item.CreatedDate" />
-						<input type="hidden" asp-for="@item.ModifiedDate" />
-						<input type="hidden" asp-for="@item.ForecastWeekId" />
-						<input type="hidden" asp-for="@item.EmployeeId" />
+						<input type="hidden" asp-for="@Model[i].Id" />
+						<input type="hidden" asp-for="@Model[i].CreatedDate" />
+						<input type="hidden" asp-for="@Model[i].ModifiedDate" />
+						<input type="hidden" asp-for="@Model[i].ForecastWeekId" />
+						<input type="hidden" asp-for="@Model[i].EmployeeId" />
 
 						<div class="form-group">
 							<div class="col-md-2">
-								<select asp-for="@item.ForecastType" class="form-control forecastType" asp-items="@((SelectList)ViewData["ForecastTypes"])"></select>
-								<span asp-validation-for="@item.ForecastType" class="text-danger"></span>
+								<select asp-for="@Model[i].ForecastType" class="form-control forecastType" asp-items="@((SelectList)ViewData["ForecastTypes"])"></select>
+								<span asp-validation-for="@Model[i].ForecastType" class="text-danger"></span>
 							</div>
-							@if (item.ForecastType == "Project")
+							@if (Model[i].ForecastType == "Project")
 							{
 								<div class="col-md-3 projectSelect">
-									<select asp-for="@item.ProjectID" class="form-control" asp-items="@((SelectList)ViewData["Projects"])"></select>
-									<span asp-validation-for="@item.ProjectID" class="text-danger"></span>
+									<select asp-for="@Model[i].ProjectID" class="form-control" asp-items="@((SelectList)ViewData["Projects"])"></select>
+									<span asp-validation-for="@Model[i].ProjectID" class="text-danger"></span>
 								</div>
 								<div class="col-md-3 hidden leaveName">
-									<input asp-for="@item.LeaveName" class="form-control" readonly />
+									<input asp-for="@Model[i].LeaveName" class="form-control leaveNameInput" readonly />
 								</div>
 							}
 							else
 							{
 								<div class="col-md-3 hidden projectSelect">
-									<select asp-for="@item.ProjectID" class="form-control" asp-items="@((SelectList)ViewData["Projects"])"></select>
-									<span asp-validation-for="@item.ProjectID" class="text-danger"></span>
+									<select asp-for="@Model[i].ProjectID" class="form-control" asp-items="@((SelectList)ViewData["Projects"])"></select>
+									<span asp-validation-for="@Model[i].ProjectID" class="text-danger"></span>
 								</div>
 								<div class="col-md-3 leaveName">
-									<input asp-for="@item.LeaveName" class="form-control" readonly />
+									<input asp-for="@Model[i].LeaveName" class="form-control leaveNameInput" readonly />
 								</div>
 							}
 							<div class="col-md-2">
-								<input asp-for="@item.Hours" class="form-control" />
-								<span asp-validation-for="@item.Hours" class="text-danger"></span>
+								<input asp-for="@Model[i].Hours" class="form-control" />
+								<span asp-validation-for="@Model[i].Hours" class="text-danger"></span>
 							</div>
 							<div class="col-md-5">
-								<input asp-for="@item.Comment" class="form-control" />
-								<span asp-validation-for="@item.Comment" class="text-danger"></span>
+								<input asp-for="@Model[i].Comment" class="form-control" />
+								<span asp-validation-for="@Model[i].Comment" class="text-danger"></span>
 							</div>
 						</div>
 					</li>
 				}
+				<li class="list-group-item row">
+					<h4 class="col-md-1 col-md-offset-4 control-label">Total</h4>
+					<label class="col-md-2 control-label">
+						<input name="total" value="40" class="form-control" readonly />
+					</label>
+				</li>
 			</ul>
 
 			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#newForecastModal">
@@ -139,4 +145,5 @@
 
 @section Scripts {
 	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	<script src="~/js/forecast/forecast_edit.js" type="text/javascript"></script>
 }

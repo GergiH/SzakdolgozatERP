@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,6 +30,12 @@ namespace ERPSzakdolgozat.Helpers
 		public static double CalculateRevenue(double hours, double overtime, double cost)
 		{
 			return hours * cost + overtime * cost * 1.5;
+		}
+
+		public static int GetCurrentWeekNumber()
+		{
+			CultureInfo culture = CultureInfo.CurrentCulture;
+			return culture.Calendar.GetWeekOfYear(DateTime.Today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
 		}
 	}
 }

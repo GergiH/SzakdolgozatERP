@@ -1,19 +1,21 @@
 ﻿$(document).ready(function () {
 	$('.forecastType').on("change", function () {
-		var value = $(this).val();
+		var value = $('option:selected', this).text();
 
 		if (value === "Project") {
-			if ($(this).parent().parent().next().find('.leaveName').hasClass('hidden') === false) {
-				$(this).parent().parent().next().find('.leaveName').addClass('hidden');
+			if ($(this).parent().next().parent().find('.leaveName').hasClass('hidden') === false) {
+				$(this).parent().next().parent().find('.leaveName').addClass('hidden');
 			}
-			$(this).parent().parent().next().find('.leaveName').val('');
-			$(this).parent().parent().next().find('.projectSelect').removeClass('hidden');
+
+			$(this).parent().next().next().find('.leaveNameInput').val('');
+			$(this).parent().next().parent().find('.projectSelect').removeClass('hidden');
 		} else {
-			if ($(this).parent().parent().next().find('.projectSelect').hasClass('hidden') === false) {
-				$(this).parent().parent().next().find('.projectSelect').addClass('hidden');
+			if ($(this).parent().next().parent().find('.projectSelect').hasClass('hidden') === false) {
+				$(this).parent().next().parent().find('.projectSelect').addClass('hidden');
 			}
-			$(this).parent().parent().next().find('.leaveName').val(value);
-			$(this).parent().parent().next().find('.leaveName').removeClass('hidden');
+
+			$(this).parent().next().next().find('.leaveNameInput').val(value);
+			$(this).parent().next().parent().find('.leaveName').removeClass('hidden');
 		}
 	});
 
