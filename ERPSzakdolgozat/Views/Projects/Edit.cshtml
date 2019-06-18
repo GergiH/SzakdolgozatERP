@@ -300,7 +300,7 @@
 											<div class="col-lg-6 pt-md">
 												<label>Modified at: </label> @(Model.Project.Resources[i].CreatedDate)
 
-												<button id="dR@(i.ToString())" type="button" class="btn btn-danger pull-right deleteResource" data-toggle="modal" data-target="#deleteResourceModal">
+												<button id="dR@(Model.Project.Resources[i].Id.ToString())" type="button" class="btn btn-danger pull-right deleteResource" data-toggle="modal" data-target="#deleteResourceModal">
 													<i class="glyphicon glyphicon-remove"></i>
 												</button>
 											</div>

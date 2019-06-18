@@ -483,16 +483,16 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		[Authorize(Policy = "ProjectManager")]
-		public JsonResult DeleteResource(int id)
+		public async Task<string> DeleteResource(int id)
 		{
 			if (id != 0)
 			{
-				ProjectResource pr = _context.ProjectResources.Find(id);
+				ProjectResource pr = await _context.ProjectResources.FindAsync(id);
 				_context.Remove(pr);
-				_context.SaveChanges();
+				await _context.SaveChangesAsync();
 			}
 
-			return Json(null);
+			return null;
 		}
 	}
 }

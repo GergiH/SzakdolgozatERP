@@ -19,25 +19,17 @@
 		}
 	});
 
-
-	// TODO ajax create-delete
-
-
 	$('#addNewForecast').click(function () {
 		$.ajax({
-			url: '../AddResource',
+			url: '../AddForecast',
 			type: 'POST',
 			data: {
-				id: $('#Project_Id').val(),
-				resName: $('#NewProjectResource_ResourceName').val(),
-				resEmp: $('#NewProjectResource_ResourceEmployee').val(),
-				resSub: $('#NewProjectResource_ResourceSubcontractor').val(),
-				task: $('#NewProjectResource_ResourceTask').val(),
-				hDone: $('#NewProjectResource_HoursDone').val(),
-				hRem: $('#NewProjectResource_HoursRemaining').val(),
-				oDone: $('#NewProjectResource_OvertimeDone').val(),
-				oRem: $('#NewProjectResource_OvertimeRemaining').val(),
-				cost: $('#NewProjectResource_Cost').val()
+				fcType: $('#fc_ForecastType').val(),
+				fcProjectID: $('#fc_ProjectID').val(),
+				fcForecastWeekID: $('#fc_ForecastWeekId').val(),
+				fcEmployeeID: $('#fc_EmployeeId').val(),
+				fcHours: $('#fc_Hours').val(),
+				fcComment: $('#fc_Comment').val()
 			},
 			dataType: "json",
 			success: function () {
@@ -49,17 +41,17 @@
 		});
 	});
 
-	$('.deleteResource').click(function () {
+	$('.deleteForecast').click(function () {
 		var id = $(this).attr('id');
-		$('.deleteResouceModalButton').attr('id', id);
+		$('.deleteForecastModalButton').attr('id', id);
 	});
 
-	$('.deleteResouceModalButton').click(function () {
+	$('.deleteForecastModalButton').click(function () {
 		var id = $(this).attr('id');
 		var num = id.substring(2);
 
 		$.ajax({
-			url: '../DeleteResource',
+			url: '../DeleteForecast',
 			type: 'POST',
 			data: {
 				id: num

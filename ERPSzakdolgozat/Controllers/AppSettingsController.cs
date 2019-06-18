@@ -107,6 +107,14 @@ namespace ERPSzakdolgozat.Controllers
 					}
 					ViewData["SettingList"] = new SelectList(multipliers);
 					break;
+				case "Forecast - Generate Weeks":
+					int[] weeks = new int[20];
+					for (int i = 0; i < 20; i++)
+					{
+						weeks[i] = i + 1;
+					}
+					ViewData["SettingList"] = new SelectList(weeks);
+					break;
 				default:
 					ViewData["SettingList"] = null;
 					break;
@@ -119,9 +127,9 @@ namespace ERPSzakdolgozat.Controllers
 			{
 				// set the new default currency's multiplier to 1
 				case "Default - Currency":
-					var curr = _context.Currencies
+					var curr = await _context.Currencies
 						.Where(c => c.CurrencyName == setting.SettingValue && c.InYear == DateTime.Now.Year)
-						.FirstOrDefault();
+						.FirstOrDefaultAsync();
 					if (curr != null)
 					{
 						curr.ExchangeValue = 1;

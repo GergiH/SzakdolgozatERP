@@ -60,17 +60,21 @@
 								<input asp-for="@Model[i].Hours" class="form-control" />
 								<span asp-validation-for="@Model[i].Hours" class="text-danger"></span>
 							</div>
-							<div class="col-md-5">
+							<div class="col-md-4">
 								<input asp-for="@Model[i].Comment" class="form-control" />
 								<span asp-validation-for="@Model[i].Comment" class="text-danger"></span>
 							</div>
+
+							<button id="dF@(Model[i].Id.ToString())" type="button" class="btn btn-danger btn-sm pull-right deleteForecast" data-toggle="modal" data-target="#deleteForecastModal">
+								<i class="glyphicon glyphicon-remove"></i>
+							</button>
 						</div>
 					</li>
 				}
 				<li class="list-group-item row">
 					<h4 class="col-md-1 col-md-offset-4 control-label">Total</h4>
 					<label class="col-md-2 control-label">
-						<input name="total" value="40" class="form-control" readonly />
+						<input name="total" value="@(ViewData["Total"])" class="form-control" readonly />
 					</label>
 				</li>
 			</ul>
@@ -112,7 +116,7 @@
 											<span asp-validation-for="@fc.ProjectID" class="text-danger"></span>
 										</div>
 										<div class="col-md-3 hidden leaveName">
-											<input asp-for="@fc.LeaveName" class="form-control" readonly />
+											<input asp-for="@fc.LeaveName" class="form-control leaveNameInput" readonly />
 										</div>
 										<div class="col-md-2">
 											<input asp-for="@fc.Hours" class="form-control" />
@@ -129,6 +133,25 @@
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 							<button type="button" class="btn btn-success" id="addNewForecast">Create</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="deleteForecastModal" class="modal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modal-title">Are you sure to delete the Forecast?</h4>
+						</div>
+						<div class="modal-footer">
+							<div class="col-md-8">
+								<label class="text-warning">This will reload the page (save your other changes beforehand).</label>
+							</div>
+
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="button" id="" class="btn btn-danger deleteForecastModalButton">Delete</button>
 						</div>
 					</div>
 				</div>

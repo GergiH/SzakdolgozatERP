@@ -51,6 +51,12 @@
 			</a>
 		}
 
+		@if (Model.FirstOrDefault() != null)
+		{
+			<a asp-action="FixThisWeek" asp-route-fwId="@Model.FirstOrDefault().Id" class="btn btn-info btn-sm pull-right mt-lg">
+				Fix This Week
+			</a>
+		}
 	</div>
 </form>
 

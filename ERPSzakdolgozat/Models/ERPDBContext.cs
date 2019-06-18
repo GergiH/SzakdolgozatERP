@@ -138,6 +138,13 @@ namespace ERPSzakdolgozat.Models
 					CreatedDate = DateTime.Now,
 					ModifiedDate = DateTime.Now,
 					RoleName = "Assisstant"
+				},
+				new AppRole
+				{
+					Id = 6,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					RoleName = "TeamLeader"
 				});
 
 			modelBuilder.Entity<UserRoles>()

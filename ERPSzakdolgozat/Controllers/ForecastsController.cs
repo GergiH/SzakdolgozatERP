@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ERPSzakdolgozat.Models;
 using System.Globalization;
 using ERPSzakdolgozat.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ERPSzakdolgozat.Controllers
 {
@@ -25,6 +26,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Forecasts
+		[Authorize(Policy = "TeamLeader")]
 		public async Task<IActionResult> Index(int? team, int? employee, int? weekNumber)
 		{
 			IQueryable<ForecastWeek> forecastWeeks = _context.ForecastWeeks.Include(f => f.Employee);
@@ -83,6 +85,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Forecasts/Details/5
+		[Authorize(Policy = "TeamLeader")]
 		public async Task<IActionResult> Details(int? id)
 		{
 			if (id == null)
@@ -103,34 +106,8 @@ namespace ERPSzakdolgozat.Controllers
 			return View(forecast);
 		}
 
-		// GET: Forecasts/Create
-		public IActionResult Create()
-		{
-			ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "CompanyIdentifier");
-			ViewData["ForecastWeekId"] = new SelectList(_context.Set<ForecastWeek>(), "Id", "Id");
-			ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "Contract");
-			return View();
-		}
-
-		// POST: Forecasts/Create
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create(Forecast forecast)
-		{
-			if (ModelState.IsValid)
-			{
-				_context.Add(forecast);
-				await _context.SaveChangesAsync();
-				return RedirectToAction(nameof(Index));
-			}
-
-			ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "CompanyIdentifier", forecast.EmployeeId);
-			ViewData["ForecastWeekId"] = new SelectList(_context.Set<ForecastWeek>(), "Id", "Id", forecast.ForecastWeekId);
-			ViewData["ProjectID"] = new SelectList(_context.Projects, "Id", "Contract", forecast.ProjectID);
-			return View(forecast);
-		}
-
 		// GET: Forecasts/Edit/5
+		[Authorize(Policy = "TeamLeader")]
 		public async Task<IActionResult> Edit(int? id)
 		{
 			if (id == null)
@@ -153,6 +130,7 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: Forecasts/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "TeamLeader")]
 		public async Task<IActionResult> Edit(List<Forecast> forecasts)
 		{
 			if (ModelState.IsValid)
@@ -233,45 +211,14 @@ namespace ERPSzakdolgozat.Controllers
 			ViewData["Total"] = forecastWeek.HoursAll;
 		}
 
-		// TODO deleteforecast, savenewforecast, generate weeks, details page
-
-		// GET: Forecasts/Delete/5
-		public async Task<IActionResult> Delete(int? id)
-		{
-			if (id == null)
-			{
-				return NotFound();
-			}
-
-			var forecast = await _context.Forecast
-				.Include(f => f.Employee)
-				.Include(f => f.ForecastWeek)
-				.Include(f => f.Project)
-				.FirstOrDefaultAsync(m => m.Id == id);
-			if (forecast == null)
-			{
-				return NotFound();
-			}
-
-			return View(forecast);
-		}
-
-		// POST: Forecasts/Delete/5
-		[HttpPost, ActionName("Delete")]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> DeleteConfirmed(int id)
-		{
-			var forecast = await _context.Forecast.FindAsync(id);
-			_context.Forecast.Remove(forecast);
-			await _context.SaveChangesAsync();
-			return RedirectToAction(nameof(Index));
-		}
+		// TODO details page
 
 		private bool ForecastExists(int id)
 		{
 			return _context.Forecast.Any(e => e.Id == id);
 		}
 
+		[Authorize(Policy = "TeamLeader")]
 		public async Task<IActionResult> GenerateWeeks()
 		{
 			int plusWeeks = 6;
@@ -369,6 +316,135 @@ namespace ERPSzakdolgozat.Controllers
 					await _context.SaveChangesAsync();
 				}
 			}
+
+			return RedirectToAction("Index");
+		}
+
+		[Authorize(Policy = "TeamLeader")]
+		public async Task<string> AddForecast(
+			string fcType,
+			int? fcProjectID,
+			int? fcForecastWeekID,
+			int? fcEmployeeID,
+			double fcHours,
+			string fcComment)
+		{
+			// if anything important is missing, do nothing
+			if (string.IsNullOrEmpty(fcType) || fcProjectID == null || fcForecastWeekID == null || fcEmployeeID == null)
+				return null;
+
+			Forecast newFC = new Forecast
+			{
+				Comment = fcComment,
+				CreatedDate = DateTime.Now,
+				EmployeeId = fcEmployeeID.Value,
+				ForecastType = fcType,
+				ForecastWeekId = fcForecastWeekID.Value,
+				Hours = fcHours,
+				Id = _context.Forecast.Max(f => f.Id) + 1,
+				LeaveName = fcType == "Project" ? null : fcType,
+				ModifiedDate = DateTime.Now,
+				ProjectID = fcProjectID
+			};
+
+			ForecastWeek fw = await _context.ForecastWeeks.FindAsync(fcForecastWeekID);
+			switch (fcType)
+			{
+				case "Vacation":
+					fw.VacationHours += fcHours;
+					break;
+				case "Sickness":
+					fw.SicknessHours += fcHours;
+					break;
+				case "Training":
+					fw.TrainingHours += fcHours;
+					break;
+				case "Bench":
+					fw.BenchHours += fcHours;
+					break;
+				default:
+					fw.ProjectHours += fcHours;
+					break;
+			}
+			fw.HoursAll = fw.VacationHours + fw.SicknessHours + fw.TrainingHours + fw.BenchHours + fw.ProjectHours;
+			_context.Update(fw);
+
+			await _context.Forecast.AddAsync(newFC);
+			await _context.SaveChangesAsync();
+
+			return null;
+		}
+
+		[Authorize(Policy = "TeamLeader")]
+		public async Task<string> DeleteForecast(int id)
+		{
+			if (id != 0)
+			{
+				Forecast fc = await _context.Forecast.FindAsync(id);
+				ForecastWeek fw = await _context.ForecastWeeks.FindAsync(fc.ForecastWeekId);
+				switch (fc.ForecastType)
+				{
+					case "Vacation":
+						fw.VacationHours -= fc.Hours;
+						break;
+					case "Sickness":
+						fw.SicknessHours -= fc.Hours;
+						break;
+					case "Training":
+						fw.TrainingHours -= fc.Hours;
+						break;
+					case "Bench":
+						fw.BenchHours -= fc.Hours;
+						break;
+					default:
+						fw.ProjectHours -= fc.Hours;
+						break;
+				}
+				fw.HoursAll = fw.VacationHours + fw.SicknessHours + fw.TrainingHours + fw.BenchHours + fw.ProjectHours;
+				_context.Update(fw);
+				_context.Remove(fc);
+
+				await _context.SaveChangesAsync();
+			}
+
+			return null;
+		}
+
+		[Authorize(Policy = "TeamLeader")]
+		public async Task<IActionResult> FixThisWeek(int fwId)
+		{
+			ForecastWeek fw = await _context.ForecastWeeks.FindAsync(fwId);
+			List<ForecastWeek> fWeeks = await _context.ForecastWeeks
+				.Where(f => f.WeekStart == fw.WeekStart)
+				.ToListAsync();
+
+			int maxWeekId = _context.ForecastWeeks.Max(f => f.Id);
+			foreach (int id in _employeeIds)
+			{
+				if (!fWeeks.Any(f => f.EmployeeId == id))
+				{
+					maxWeekId++;
+					ForecastWeek newFW = new ForecastWeek
+					{
+						BenchHours = 0,
+						CreatedDate = DateTime.Now,
+						EmployeeId = id,
+						HoursAll = 0,
+						HoursAvailable = 40,
+						ModifiedDate = DateTime.Now,
+						ProjectHours = 0,
+						SicknessHours = 0,
+						TrainingHours = 0,
+						VacationHours = 0,
+						WeekNumber = fw.WeekNumber,
+						WeekStart = fw.WeekStart,
+						Id = maxWeekId
+					};
+
+					await _context.ForecastWeeks.AddAsync(newFW);
+				}
+			}
+			await _context.SaveChangesAsync();
 
 			return RedirectToAction("Index");
 		}
