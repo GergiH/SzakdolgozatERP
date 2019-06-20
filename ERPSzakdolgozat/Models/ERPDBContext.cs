@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using ERPSzakdolgozat.Models;
+using System.Linq;
 
 namespace ERPSzakdolgozat.Models
 {
@@ -59,8 +60,8 @@ namespace ERPSzakdolgozat.Models
 					Id = 1,
 					CreatedDate = DateTime.Now,
 					ModifiedDate = DateTime.Now,
-					//ADName = "CORP\\ghorvath", // Work UserName
-											   ADName = "NYOMDNEKINYUSZI\\Horváth Gergely",
+					ADName = "CORP\\ghorvath", // Work UserName
+											   //ADName = "NYOMDNEKINYUSZI\\Horváth Gergely",
 											   //ADName = User.Identity.Name, // This would be best for debugging, but doesn't work
 					Email = "van@denincs.com",
 					Mobile = "+36901234567",
@@ -838,22 +839,6 @@ namespace ERPSzakdolgozat.Models
 				.HasOne(u => u.AppRole)
 				.WithMany(u => u.UserRoles)
 				.HasForeignKey(u => u.RoleID);
-
-			//#region PostSeed
-			//modelBuilder.Entity<Post>().HasData(
-			//	new Post() { BlogId = 1, PostId = 1, Title = "First post", Content = "Test 1" });
-			//#endregion
-
-			//#region AnonymousPostSeed
-			//modelBuilder.Entity<Post>().HasData(
-			//	new { BlogId = 1, PostId = 2, Title = "Second post", Content = "Test 2" });
-			//#endregion
-
-			//#region OwnedTypeSeed
-			//modelBuilder.Entity<Post>().OwnsOne(p => p.AuthorName).HasData(
-			//	new { PostId = 1, First = "Andriy", Last = "Svyryd" },
-			//	new { PostId = 2, First = "Diego", Last = "Vega" });
-			//#endregion
 		}
 	}
 }

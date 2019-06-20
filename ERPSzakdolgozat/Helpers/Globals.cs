@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ERPSzakdolgozat.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -8,6 +10,8 @@ namespace ERPSzakdolgozat.Helpers
 {
 	public static class Globals
 	{
+		public static Dictionary<string, string> UserNames;
+
 		public static string GenerateRandomString(int len)
 		{
 			string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

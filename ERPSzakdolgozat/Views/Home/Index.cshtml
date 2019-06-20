@@ -8,10 +8,8 @@
 }
 
 <div class="row">
-	<h2 class="text-center">
-		<i class="glyphicon glyphicon-piggy-bank"></i>
-		Welcome to the application
-		<i class="glyphicon glyphicon-piggy-bank"></i>
+	<h2 class="text-center text-bold" style="text-decoration: underline;">
+		Good @ViewData["TimeOfDay"] @(ViewData["UserName"]).
 	</h2>
 	@await Component.InvokeAsync("UserStandardCheck", new { username = User.Identity.Name })
 

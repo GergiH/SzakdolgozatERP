@@ -11,7 +11,9 @@
 		<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
 		<link rel="stylesheet" href="~/lib/toastr.js/toastr.css" />
 		<link rel="stylesheet" href="~/lib/Chart.js/Chart.min.css" />
+		<link rel="stylesheet" href="~/css/localfonts.css" />
 		<link rel="stylesheet" href="~/css/site.css" />
+		<link rel="stylesheet" href="~/css/navbar.css" />
 	</environment>
 	<environment exclude="Development">
 		<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -30,7 +32,9 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">ERPSzakdolgozat</a>
+				<a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">
+					<img src="~/images/erp_3.svg" />
+				</a>
 			</div>
 			<div class="navbar-collapse collapse">
 				@await Component.InvokeAsync("UserNav", new { username = User.Identity.Name })

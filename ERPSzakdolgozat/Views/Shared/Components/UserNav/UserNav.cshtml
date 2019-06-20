@@ -30,15 +30,15 @@
 			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="padding-top: 10px !important; padding-bottom: 10px !important;">
 				@if (Model.ProfilePicture == null)
 				{
-					<img src="~/images/userdefault.png" height="30" style="background-color:lightgrey;" />
+					<img src="~/images/userdefault.png" height="30" style="background-color:lightgrey;" class="img-circle" />
 				}
 				else
 				{
 					string imageBase64 = Convert.ToBase64String(Model.ProfilePicture);
 					string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
-					<img src="@imageSrc" height="30" />
+					<img src="@imageSrc" height="30" class="img-circle" />
 				}
-				Hello, @Model.DisplayName <span class="caret"></span>
+				@Model.DisplayName <span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu" role="menu">
 				<li class="dropdown-header text-bold">@User.Identity.Name</li>

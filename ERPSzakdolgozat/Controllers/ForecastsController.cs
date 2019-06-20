@@ -9,6 +9,7 @@ using ERPSzakdolgozat.Models;
 using System.Globalization;
 using ERPSzakdolgozat.Helpers;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace ERPSzakdolgozat.Controllers
 {
@@ -41,25 +42,28 @@ namespace ERPSzakdolgozat.Controllers
 					.ToListAsync();
 			}
 
-			int currentWeekNumber = Globals.GetCurrentWeekNumber();
+			int? currentWeekNumber = TempData["WeekNumber"] == null ? null : (int?)TempData["WeekNumber"];
 			weekNumber = weekNumber ?? currentWeekNumber;
 
 			if (employee != null)
 				forecastWeeks = forecastWeeks.Where(f => f.Employee.Id == employee);
 			if (team != null)
 				forecastWeeks = forecastWeeks.Where(f => f.Employee.TeamId == team);
-			if (weekNumber != null) // probably redundant but good to be sure
+			if (weekNumber != null)
+			{
 				forecastWeeks = forecastWeeks.Where(f => f.WeekNumber == weekNumber);
+				TempData["WeekNumber"] = weekNumber;
+			}
 
-			ViewData["Employees"] = new SelectList(_context.Employees, "Id", "EmployeeName", employee);
-			ViewData["Teams"] = new SelectList(_context.Teams, "Id", "TeamName", team);
+			ViewData["Employees"] = new SelectList(_context.Employees.OrderBy(e => e.EmployeeName), "Id", "EmployeeName", employee);
+			ViewData["Teams"] = new SelectList(_context.Teams.OrderBy(t => t.TeamName), "Id", "TeamName", team);
 			ViewData["Weeks"] = new SelectList(
 				_context.ForecastWeeks
-					.GroupBy(w => w.WeekNumber)
+					.GroupBy(w => w.WeekStart)
 					.Select(w => new SelectListItem
 					{
-						Value = w.Key.ToString(),
-						Text = w.First().WeekNumber.ToString() + " - " + w.First().WeekStart.ToShortDateString()
+						Value = w.First().WeekNumber.ToString(),
+						Text = w.Key.ToString("yyyy-MM-dd") + " - " + w.First().WeekNumber.ToString()
 					})
 					.OrderBy(w => w.Text)
 					.ToList(),
@@ -81,7 +85,7 @@ namespace ERPSzakdolgozat.Controllers
 				? plusWeeks
 				: addedMaxWeek - lastWeekNo;
 
-			return View(await forecastWeeks.ToListAsync());
+			return View(await forecastWeeks.OrderBy(f => f.Employee.EmployeeName).ToListAsync());
 		}
 
 		// GET: Forecasts/Details/5

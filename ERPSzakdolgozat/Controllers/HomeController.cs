@@ -97,12 +97,29 @@ namespace ERPSzakdolgozat.Controllers
 				ViewData["RevenueGained"] = revenueGained;
 			}
 
-			return View();
-		}
+			// texts on the top
+			int currentHour = DateTime.Now.TimeOfDay.Hours;
+			if (currentHour >= 6 && currentHour <= 11)
+			{
+				ViewData["TimeOfDay"] = "morning";
+			}
+			else if (currentHour > 11 && currentHour <= 17)
+			{
+				ViewData["TimeOfDay"] = "afternoon";
+			}
+			else if (currentHour > 17 && currentHour <= 21)
+			{
+				ViewData["TimeOfDay"] = "evening";
+			}
+			else
+			{
+				ViewData["TimeOfDay"] = "night;";
+			}
 
-		public IActionResult About()
-		{
-			ViewData["Message"] = "Your application description page.";
+			ViewData["UserName"] = _context.AppUsers
+				.Where(a => a.ADName == User.Identity.Name)
+				.Select(a => a.DisplayName)
+				.FirstOrDefault();
 
 			return View();
 		}

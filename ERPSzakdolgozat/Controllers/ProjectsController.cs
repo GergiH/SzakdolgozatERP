@@ -238,8 +238,11 @@ namespace ERPSzakdolgozat.Controllers
 				try
 				{
 					CalculateFinancials(peVM);
+
+					await Logging(peVM.Project);
+
 					_context.Update(peVM.Project);
-					await _context.SaveChangesAsync();
+					await _context.SaveChangesAsync(true);
 
 					TempData["Toast"] = Toasts.Saved;
 				}
@@ -493,6 +496,36 @@ namespace ERPSzakdolgozat.Controllers
 			}
 
 			return null;
+		}
+
+		// TODO logging
+		private async Task Logging(Project proj)
+		{
+			proj.Client = await _context.Clients.FindAsync(proj.ClientId);
+			proj.Currency = await _context.Currencies.FindAsync(proj.CurrencyId);
+
+			Project originalProject = await _context.Projects
+				.Include(p => p.Client)
+				.Include(p => p.Currency)
+				.AsNoTracking()
+				.FirstOrDefaultAsync(p => p.Id == proj.Id);
+
+			await ProjectLogCheck(proj.Id, originalProject.Client.ClientName, proj.Client.ClientName, "Client");
+			await ProjectLogCheck(proj.Id, originalProject.Contract, proj.Contract, "Contract");
+			await ProjectLogCheck(proj.Id, originalProject.ContractValue, proj.ContractValue, "ContractValue");
+			await ProjectLogCheck(proj.Id, originalProject.Currency.CurrencyName, proj.Currency.CurrencyName, "Currency");
+			await ProjectLogCheck(proj.Id, originalProject.CustomId, proj.CustomId, "CustomId");
+			await ProjectLogCheck(proj.Id, originalProject.Description, proj.Description, "Description");
+			await ProjectLogCheck(proj.Id, originalProject.EndDate, proj.EndDate, "EndDate");
+			await ProjectLogCheck(proj.Id, originalProject.EstimatedEndDate, proj.EstimatedEndDate, "EstimatedEndDate");
+			await ProjectLogCheck(proj.Id, originalProject.ProjectManager, proj.ProjectManager, "ProjectManager");
+			await ProjectLogCheck(proj.Id, originalProject.ProjectName, proj.ProjectName, "ProjectName");
+			await ProjectLogCheck(proj.Id, originalProject.RiskCostSpent, proj.RiskCostSpent, "RiskCostSpent");
+			await ProjectLogCheck(proj.Id, originalProject.RiskCostRemaining, proj.RiskCostRemaining, "RiskCostRemaining");
+			await ProjectLogCheck(proj.Id, originalProject.RiskRevenue, proj.RiskRevenue, "RiskRevenue");
+			await ProjectLogCheck(proj.Id, originalProject.Type, proj.Type, "Type");
+			await ProjectLogCheck(proj.Id, originalProject.Status, proj.Status, "Status");
+			await ProjectLogCheck(proj.Id, originalProject.StartDate, proj.StartDate, "StartDate");
 		}
 	}
 }
