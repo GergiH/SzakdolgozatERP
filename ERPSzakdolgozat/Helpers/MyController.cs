@@ -28,7 +28,7 @@ namespace ERPSzakdolgozat.Helpers
 			public static string DeletedFail = "deleted-fail";
 		}
 
-		public async Task ProjectLogCheck<T>(int projId, T originalValue, T newValue, string field)
+		public async void ProjectLogCheck<T>(int projId, T originalValue, T newValue, string field)
 		{
 			// needed the double check because of strings
 			if (originalValue != null && newValue != null)
@@ -50,7 +50,7 @@ namespace ERPSzakdolgozat.Helpers
 					await _context.SaveChangesAsync();
 				}
 			}
-			else if (originalValue == null)
+			else if (originalValue == null && newValue != null)
 			{
 				ProjectLog log = new ProjectLog
 				{
@@ -66,7 +66,7 @@ namespace ERPSzakdolgozat.Helpers
 				await _context.ProjectLogs.AddAsync(log);
 				await _context.SaveChangesAsync();
 			}
-			else if (newValue == null)
+			else if (newValue == null && originalValue != null)
 			{
 				ProjectLog log = new ProjectLog
 				{
@@ -84,7 +84,7 @@ namespace ERPSzakdolgozat.Helpers
 			}
 		}
 
-		public async Task ProjectLogCheck<T>(int projId, T? originalValue, T? newValue, string field) where T : struct
+		public async void ProjectLogCheck<T>(int projId, T? originalValue, T? newValue, string field) where T : struct
 		{
 			if (originalValue == null)
 			{

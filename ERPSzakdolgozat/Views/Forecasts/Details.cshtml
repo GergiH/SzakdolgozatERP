@@ -1,60 +1,82 @@
-﻿@model ERPSzakdolgozat.Models.Forecast
+﻿@model List<ERPSzakdolgozat.Models.Forecast>
 
 @{
-    ViewData["Title"] = "Details";
+	ViewData["Title"] = "Details";
 }
 
 <h2>Details</h2>
 
-<div>
-    <h4>Forecast</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Employee)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Employee.CompanyIdentifier)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ForecastWeek)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ForecastWeek.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Project)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Project.Contract)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ForecastType)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ForecastType)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Hours)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Hours)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ModifiedDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ModifiedDate)
-        </dd>
-    </dl>
+<h4>Forecast</h4>
+<hr />
+<div class="row">
+	<div class="col-md-12">
+		<form asp-action="Edit" method="post">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+			<ul class="list-group">
+				<li class="list-group-item row">
+					<label class="col-md-2 control-label">ForecastType</label>
+					<label class="col-md-3 control-label">Project</label>
+					<label class="col-md-2 control-label">Hours</label>
+					<label class="col-md-5 control-label">Comment</label>
+				</li>
+
+				@for (int i = 0; i < Model.Count; i++)
+				{
+					<li class="list-group-item row">
+						<input type="hidden" asp-for="@Model[i].Id" />
+						<input type="hidden" asp-for="@Model[i].CreatedDate" />
+						<input type="hidden" asp-for="@Model[i].ModifiedDate" />
+						<input type="hidden" asp-for="@Model[i].ForecastWeekId" />
+						<input type="hidden" asp-for="@Model[i].EmployeeId" />
+
+						<div class="form-group">
+							<div class="col-md-2">
+								<select asp-for="@Model[i].ForecastType" class="form-control forecastType" asp-items="@((SelectList)ViewData["ForecastTypes"])" disabled></select>
+							</div>
+							@if (Model[i].ForecastType == "Project")
+							{
+								<div class="col-md-3 projectSelect">
+									<select asp-for="@Model[i].ProjectID" class="form-control" asp-items="@((SelectList)ViewData["Projects"])" disabled></select>
+								</div>
+								<div class="col-md-3 hidden leaveName">
+									<input asp-for="@Model[i].LeaveName" class="form-control leaveNameInput" readonly />
+								</div>
+							}
+							else
+							{
+								<div class="col-md-3 hidden projectSelect">
+									<select asp-for="@Model[i].ProjectID" class="form-control" asp-items="@((SelectList)ViewData["Projects"])" disabled></select>
+								</div>
+								<div class="col-md-3 leaveName">
+									<input asp-for="@Model[i].LeaveName" class="form-control leaveNameInput" readonly />
+								</div>
+							}
+							<div class="col-md-2">
+								<input asp-for="@Model[i].Hours" class="form-control" readonly />
+							</div>
+							<div class="col-md-5">
+								<input asp-for="@Model[i].Comment" class="form-control" readonly />
+							</div>
+						</div>
+					</li>
+				}
+				<li class="list-group-item row">
+					<h4 class="col-md-1 col-md-offset-4 control-label">Total</h4>
+					<label class="col-md-2 control-label">
+						<input name="total" value="@(ViewData["Total"])" class="form-control" readonly />
+					</label>
+				</li>
+			</ul>
+
+			<div class="form-group mt-lg">
+				<a asp-action="Index" class="btn btn-default">Back to List</a>
+			</div>
+		</form>
+	</div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	<script src="~/js/forecast/forecast_edit.js" type="text/javascript"></script>
+}

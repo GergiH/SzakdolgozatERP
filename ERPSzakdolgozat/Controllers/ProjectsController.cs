@@ -79,7 +79,7 @@ namespace ERPSzakdolgozat.Controllers
 			// fill Project's entity lists
 			project.Resources = await _context.ProjectResources
 				.Where(r => r.ProjectId == project.Id)
-				.OrderByDescending(r => r.CreatedDate)
+				.OrderBy(r => r.CreatedDate)
 				.ToListAsync();
 			project.Logs = await _context.ProjectLogs
 				.Include("AppUser")
@@ -184,7 +184,7 @@ namespace ERPSzakdolgozat.Controllers
 			// fill Project's entity lists
 			project.Resources = await _context.ProjectResources
 				.Where(r => r.ProjectId == project.Id)
-				.OrderByDescending(r => r.CreatedDate)
+				.OrderBy(r => r.CreatedDate)
 				.ToListAsync();
 			project.Logs = await _context.ProjectLogs
 				.Include("AppUser")
@@ -257,7 +257,7 @@ namespace ERPSzakdolgozat.Controllers
 						throw;
 					}
 				}
-				return RedirectToAction(nameof(Index));
+				return RedirectToAction("Edit", new { id = peVM.Project.Id });
 			}
 
 			await FillDropdownLists(peVM.Project);
@@ -510,22 +510,40 @@ namespace ERPSzakdolgozat.Controllers
 				.AsNoTracking()
 				.FirstOrDefaultAsync(p => p.Id == proj.Id);
 
-			await ProjectLogCheck(proj.Id, originalProject.Client.ClientName, proj.Client.ClientName, "Client");
-			await ProjectLogCheck(proj.Id, originalProject.Contract, proj.Contract, "Contract");
-			await ProjectLogCheck(proj.Id, originalProject.ContractValue, proj.ContractValue, "ContractValue");
-			await ProjectLogCheck(proj.Id, originalProject.Currency.CurrencyName, proj.Currency.CurrencyName, "Currency");
-			await ProjectLogCheck(proj.Id, originalProject.CustomId, proj.CustomId, "CustomId");
-			await ProjectLogCheck(proj.Id, originalProject.Description, proj.Description, "Description");
-			await ProjectLogCheck(proj.Id, originalProject.EndDate, proj.EndDate, "EndDate");
-			await ProjectLogCheck(proj.Id, originalProject.EstimatedEndDate, proj.EstimatedEndDate, "EstimatedEndDate");
-			await ProjectLogCheck(proj.Id, originalProject.ProjectManager, proj.ProjectManager, "ProjectManager");
-			await ProjectLogCheck(proj.Id, originalProject.ProjectName, proj.ProjectName, "ProjectName");
-			await ProjectLogCheck(proj.Id, originalProject.RiskCostSpent, proj.RiskCostSpent, "RiskCostSpent");
-			await ProjectLogCheck(proj.Id, originalProject.RiskCostRemaining, proj.RiskCostRemaining, "RiskCostRemaining");
-			await ProjectLogCheck(proj.Id, originalProject.RiskRevenue, proj.RiskRevenue, "RiskRevenue");
-			await ProjectLogCheck(proj.Id, originalProject.Type, proj.Type, "Type");
-			await ProjectLogCheck(proj.Id, originalProject.Status, proj.Status, "Status");
-			await ProjectLogCheck(proj.Id, originalProject.StartDate, proj.StartDate, "StartDate");
+			ProjectLogCheck(proj.Id, originalProject.Client.ClientName, proj.Client.ClientName, "Client");
+			ProjectLogCheck(proj.Id, originalProject.Contract, proj.Contract, "Contract");
+			ProjectLogCheck(proj.Id, originalProject.ContractValue, proj.ContractValue, "ContractValue");
+			ProjectLogCheck(proj.Id, originalProject.Currency.CurrencyName, proj.Currency.CurrencyName, "Currency");
+			ProjectLogCheck(proj.Id, originalProject.CustomId, proj.CustomId, "CustomId");
+			ProjectLogCheck(proj.Id, originalProject.Description, proj.Description, "Description");
+			ProjectLogCheck(proj.Id, originalProject.EndDate, proj.EndDate, "EndDate");
+			ProjectLogCheck(proj.Id, originalProject.EstimatedEndDate, proj.EstimatedEndDate, "EstimatedEndDate");
+			ProjectLogCheck(proj.Id, originalProject.ProjectManager, proj.ProjectManager, "ProjectManager");
+			ProjectLogCheck(proj.Id, originalProject.ProjectName, proj.ProjectName, "ProjectName");
+			ProjectLogCheck(proj.Id, originalProject.RiskCostSpent, proj.RiskCostSpent, "RiskCostSpent");
+			ProjectLogCheck(proj.Id, originalProject.RiskCostRemaining, proj.RiskCostRemaining, "RiskCostRemaining");
+			ProjectLogCheck(proj.Id, originalProject.RiskRevenue, proj.RiskRevenue, "RiskRevenue");
+			ProjectLogCheck(proj.Id, originalProject.Type, proj.Type, "Type");
+			ProjectLogCheck(proj.Id, originalProject.Status, proj.Status, "Status");
+			ProjectLogCheck(proj.Id, originalProject.StartDate, proj.StartDate, "StartDate");
+
+			List<ProjectResource> originalResources = await _context.ProjectResources
+				.AsNoTracking()
+				.Where(p => p.ProjectId == proj.Id)
+				.OrderBy(r => r.Id)
+				.ToListAsync();
+
+			proj.Resources = proj.Resources.OrderBy(r => r.Id).ToList();
+			for (int i = 0; i < proj.Resources.Count; i++)
+			{
+				ProjectLogCheck(proj.Id, originalResources[i].Cost, proj.Resources[i].Cost, "ResourceCost");
+				ProjectLogCheck(proj.Id, originalResources[i].HoursDone, proj.Resources[i].HoursDone, "ResourceHoursDone");
+				ProjectLogCheck(proj.Id, originalResources[i].HoursRemaining, proj.Resources[i].HoursRemaining, "ResourceHoursRemaining");
+				ProjectLogCheck(proj.Id, originalResources[i].OvertimeDone, proj.Resources[i].OvertimeDone, "ResourceOvertimeDone");
+				ProjectLogCheck(proj.Id, originalResources[i].OvertimeRemaining, proj.Resources[i].OvertimeRemaining, "ResourceOvertimeRemaining");
+				ProjectLogCheck(proj.Id, originalResources[i].ResourceName, proj.Resources[i].ResourceName, "ResourceName");
+				ProjectLogCheck(proj.Id, originalResources[i].ResourceTask, proj.Resources[i].ResourceTask, "ResourceTask");
+			}
 		}
 	}
 }

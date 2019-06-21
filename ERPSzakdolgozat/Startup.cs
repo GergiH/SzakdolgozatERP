@@ -56,6 +56,9 @@ namespace ERPSzakdolgozat
 				options.AddPolicy("Sales", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "Sales"));
 				options.AddPolicy("Assisstant", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "Assisstant"));
 				options.AddPolicy("TeamLeader", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "TeamLeader"));
+				options.AddPolicy("MinusSales", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "TeamLeader", "HR", "ProjectManager", "Assisstant"));
+				options.AddPolicy("MinusAssisstant", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "TeamLeader", "HR", "ProjectManager", "Sales"));
+				options.AddPolicy("HRAssisstant", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "HR", "Assisstant"));
 			});
 
 			services.AddScoped<IClaimsTransformation, ClaimsTransformer>();

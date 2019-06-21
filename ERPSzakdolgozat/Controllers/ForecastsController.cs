@@ -27,7 +27,6 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Forecasts
-		[Authorize(Policy = "TeamLeader")]
 		public async Task<IActionResult> Index(int? team, int? employee, int? weekNumber)
 		{
 			IQueryable<ForecastWeek> forecastWeeks = _context.ForecastWeeks.Include(f => f.Employee);
@@ -92,7 +91,6 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Forecasts/Details/5
-		[Authorize(Policy = "TeamLeader")]
 		public async Task<IActionResult> Details(int? id)
 		{
 			if (id == null)
@@ -100,17 +98,16 @@ namespace ERPSzakdolgozat.Controllers
 				return NotFound();
 			}
 
-			var forecast = await _context.Forecast
-				.Include(f => f.Employee)
-				.Include(f => f.ForecastWeek)
-				.Include(f => f.Project)
-				.FirstOrDefaultAsync(m => m.Id == id);
-			if (forecast == null)
+			var forecastWeek = await _context.ForecastWeeks.FindAsync(id);
+			if (forecastWeek == null)
 			{
 				return NotFound();
 			}
 
-			return View(forecast);
+			var forecasts = await _context.Forecast.Where(f => f.ForecastWeekId == id).ToListAsync();
+			FillViewData(forecastWeek);
+
+			return View(forecasts);
 		}
 
 		// GET: Forecasts/Edit/5
@@ -417,7 +414,7 @@ namespace ERPSzakdolgozat.Controllers
 			return null;
 		}
 
-		[Authorize(Policy = "TeamLeader")]
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> FixThisWeek(int fwId)
 		{
 			ForecastWeek fw = await _context.ForecastWeeks.FindAsync(fwId);

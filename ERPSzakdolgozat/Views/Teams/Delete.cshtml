@@ -41,6 +41,15 @@
 	<form asp-action="Delete">
 		<input type="hidden" asp-for="Id" />
 		<a asp-action="Index" class="btn btn-default">Back to List</a>
-		<input type="submit" value="Delete" class="btn btn-danger" />
+
+		@if ((int)ViewData["EmployeeCount"] == 0)
+		{
+			<input type="submit" value="Delete" class="btn btn-danger" />
+		}
+		else
+		{
+			<input type="button" value="Delete" class="btn btn-danger" disabled /> 
+			<span class="text-danger">There are still Employees in this team. Choose another team for them before deletion.</span>
+		}
 	</form>
 </div>

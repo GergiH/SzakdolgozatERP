@@ -1,5 +1,6 @@
 ﻿using ERPSzakdolgozat.Helpers;
 using ERPSzakdolgozat.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,30 +18,14 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Risks
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Index()
 		{
 			return View(await _context.Risks.OrderBy(r => r.RiskName).ToListAsync());
 		}
 
-		// GET: Risks/Details/5
-		public async Task<IActionResult> Details(int? id)
-		{
-			if (id == null)
-			{
-				return NotFound();
-			}
-
-			var risk = await _context.Risks
-				.FirstOrDefaultAsync(m => m.Id == id);
-			if (risk == null)
-			{
-				return NotFound();
-			}
-
-			return View(risk);
-		}
-
 		// GET: Risks/Create
+		[Authorize(Policy = "Admin")]
 		public IActionResult Create()
 		{
 			Risk risk = new Risk();
@@ -50,6 +35,7 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: Risks/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Create(Risk risk)
 		{
 			if (ModelState.IsValid)
@@ -86,6 +72,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Risks/Edit/5
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Edit(int? id)
 		{
 			if (id == null)
@@ -104,6 +91,7 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: Risks/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Edit(int id, Risk risk)
 		{
 			if (id != risk.Id)
@@ -137,6 +125,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Risks/Delete/5
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null)
@@ -157,6 +146,7 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: Risks/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
 			var risk = await _context.Risks.FindAsync(id);

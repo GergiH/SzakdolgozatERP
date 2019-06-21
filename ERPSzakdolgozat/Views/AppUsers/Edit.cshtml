@@ -86,7 +86,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							<a asp-area="" asp-controller="AppUsers" asp-action="ResetPicture" asp-route-id="@Model.AppUser.Id" class="btn btn-warning">Reset</a>
+							<a asp-area="" asp-controller="AppUsers" asp-action="ResetPicture" asp-route-id="@Model.AppUser.Id" class="btn btn-danger">Reset</a>
 						</div>
 					</div>
 				</div>
@@ -95,8 +95,8 @@
 			<div class="form-group">
 				<a asp-action="Index" class="btn btn-default">Back to List</a>
 
-				<input type="submit" value="Save" class="btn btn-primary pull-right ml-lg" />
-				<a href="#" class="btn btn-warning pull-right" onclick="$('#reset-picture-modal').modal()">Reset Picture</a>
+				<input type="submit" value="Save" class="btn btn-warning pull-right ml-lg" />
+				<a href="#" class="btn btn-danger pull-right" onclick="$('#reset-picture-modal').modal()">Reset Picture</a>
 			</div>
 		</form>
 	</div>

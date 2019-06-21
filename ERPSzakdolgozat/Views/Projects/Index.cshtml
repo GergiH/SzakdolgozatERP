@@ -16,7 +16,7 @@
 			<div class="input-group">
 				<input name="search" type="text" class="form-control" value="@(ViewData["search"])">
 				<span class="input-group-btn">
-					<button class="btn btn-primary" type="submit">
+					<button class="btn btn-warning" type="submit">
 						<i class="glyphicon glyphicon-search"></i>
 					</button>
 				</span>
@@ -91,10 +91,10 @@
 					statusLabel = "label label-success";
 					break;
 				case "Executing":
-					statusLabel = "label label-warning";
+					statusLabel = "label label-primary";
 					break;
 				case "Starting":
-					statusLabel = "label label-primary";
+					statusLabel = "label label-default";
 					break;
 				case "Failed":
 					statusLabel = "label label-danger";
@@ -111,7 +111,7 @@
 					contractLabel = "label label-danger";
 					break;
 				case "In progress":
-					contractLabel = "label label-warning";
+					contractLabel = "label label-primary";
 					break;
 				default:
 					break;
@@ -157,10 +157,10 @@
 				</td>
 
 				<td class="col-md-2 text-right text-nowrap">
-					<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+					<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
 						<i class="glyphicon glyphicon-pencil"></i>
 					</a>
-					<a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Details">
+					<a asp-action="Details" asp-route-id="@item.Id" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Details">
 						<i class="glyphicon glyphicon-list"></i>
 					</a>
 					<a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="right" title="" data-original-title="Delete">

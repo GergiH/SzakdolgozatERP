@@ -18,30 +18,14 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Roles
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Index()
 		{
 			return View(await _context.Roles.ToListAsync());
 		}
 
-		// GET: Roles/Details/5
-		public async Task<IActionResult> Details(int? id)
-		{
-			if (id == null)
-			{
-				return NotFound();
-			}
-
-			var role = await _context.Roles
-				.FirstOrDefaultAsync(m => m.Id == id);
-			if (role == null)
-			{
-				return NotFound();
-			}
-
-			return View(role);
-		}
-
 		// GET: Roles/Create
+		[Authorize(Policy = "Admin")]
 		public IActionResult Create()
 		{
 			Role role = new Role();
@@ -52,6 +36,7 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: Roles/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Create(Role role)
 		{
 			if (ModelState.IsValid)
@@ -70,6 +55,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Roles/Edit/5
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Edit(int? id)
 		{
 			if (id == null)
@@ -88,6 +74,7 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: Roles/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Edit(int id, Role role)
 		{
 			if (id != role.Id)
@@ -121,6 +108,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Roles/Delete/5
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null)
@@ -141,6 +129,7 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: Roles/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
 			var role = await _context.Roles.FindAsync(id);

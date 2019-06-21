@@ -1,5 +1,6 @@
 ﻿using ERPSzakdolgozat.Helpers;
 using ERPSzakdolgozat.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,30 +17,14 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: SkillLevels
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Index()
 		{
 			return View(await _context.SkillLevels.ToListAsync());
 		}
 
-		// GET: SkillLevels/Details/5
-		public async Task<IActionResult> Details(int? id)
-		{
-			if (id == null)
-			{
-				return NotFound();
-			}
-
-			var skillLevel = await _context.SkillLevels
-				.FirstOrDefaultAsync(m => m.Id == id);
-			if (skillLevel == null)
-			{
-				return NotFound();
-			}
-
-			return View(skillLevel);
-		}
-
 		// GET: SkillLevels/Create
+		[Authorize(Policy = "Admin")]
 		public IActionResult Create()
 		{
 			SkillLevel sl = new SkillLevel();
@@ -49,6 +34,7 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: SkillLevels/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Create(SkillLevel skillLevel)
 		{
 			if (ModelState.IsValid)
@@ -67,6 +53,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: SkillLevels/Edit/5
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Edit(int? id)
 		{
 			if (id == null)
@@ -85,6 +72,7 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: SkillLevels/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Edit(int id, SkillLevel skillLevel)
 		{
 			if (id != skillLevel.Id)
@@ -118,6 +106,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: SkillLevels/Delete/5
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null)
@@ -138,6 +127,7 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: SkillLevels/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
 			var skillLevel = await _context.SkillLevels.FindAsync(id);

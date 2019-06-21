@@ -18,30 +18,15 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Units
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Index()
 		{
 			var units = _context.Units.AsNoTracking();
 			return View(await units.ToListAsync());
 		}
 
-		// GET: Units/Details/5
-		public async Task<IActionResult> Details(int? id)
-		{
-			if (id == null)
-			{
-				return NotFound();
-			}
-
-			var unit = await _context.Units.FirstOrDefaultAsync(m => m.Id == id);
-			if (unit == null)
-			{
-				return NotFound();
-			}
-
-			return View(unit);
-		}
-
 		// GET: Units/Create
+		[Authorize(Policy = "Admin")]
 		public IActionResult Create()
 		{
 			Unit unit = new Unit
@@ -55,6 +40,7 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: Units/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Create(Unit unit)
 		{
 			if (ModelState.IsValid)
@@ -74,6 +60,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Units/Edit/5
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Edit(int? id)
 		{
 			if (id == null)
@@ -93,6 +80,7 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: Units/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Edit(int id, Unit unit)
 		{
 			if (id != unit.Id)
@@ -127,6 +115,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Units/Delete/5
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null)
@@ -140,12 +129,19 @@ namespace ERPSzakdolgozat.Controllers
 				return NotFound();
 			}
 
+			unit.Teams = await _context.Teams.Where(t => t.UnitId == unit.Id).ToListAsync();
+			if (unit.Teams == null)
+				ViewData["TeamCount"] = 0;
+			else
+				ViewData["TeamCount"] = 1;
+
 			return View(unit);
 		}
 
 		// POST: Units/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
 			var unit = await _context.Units.FindAsync(id);

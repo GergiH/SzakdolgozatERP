@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ERPSzakdolgozat.Models;
 using ERPSzakdolgozat.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ERPSzakdolgozat.Controllers
 {
@@ -37,26 +38,9 @@ namespace ERPSzakdolgozat.Controllers
 			return View(await subs.OrderBy(s => s.SubcontractorName).ToListAsync());
         }
 
-        // GET: Subcontractors/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var subcontractor = await _context.Subcontractors
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (subcontractor == null)
-            {
-                return NotFound();
-            }
-
-            return View(subcontractor);
-        }
-
-        // GET: Subcontractors/Create
-        public IActionResult Create()
+		// GET: Subcontractors/Create
+		[Authorize(Policy = "HRAssisstant")]
+		public IActionResult Create()
         {
 			Subcontractor sub = new Subcontractor();
             return View(sub);
@@ -65,7 +49,8 @@ namespace ERPSzakdolgozat.Controllers
         // POST: Subcontractors/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Subcontractor subcontractor)
+		[Authorize(Policy = "HRAssisstant")]
+		public async Task<IActionResult> Create(Subcontractor subcontractor)
         {
             if (ModelState.IsValid)
             {
@@ -83,6 +68,7 @@ namespace ERPSzakdolgozat.Controllers
         }
 
         // GET: Subcontractors/Edit/5
+		[Authorize(Policy = "HRAssisstant")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -101,7 +87,8 @@ namespace ERPSzakdolgozat.Controllers
         // POST: Subcontractors/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Subcontractor subcontractor)
+		[Authorize(Policy = "HRAssisstant")]
+		public async Task<IActionResult> Edit(int id, Subcontractor subcontractor)
         {
             if (id != subcontractor.Id)
             {
@@ -133,8 +120,9 @@ namespace ERPSzakdolgozat.Controllers
             return View(subcontractor);
         }
 
-        // GET: Subcontractors/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+		// GET: Subcontractors/Delete/5
+		[Authorize(Policy = "HR")]
+		public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -154,7 +142,8 @@ namespace ERPSzakdolgozat.Controllers
         // POST: Subcontractors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+		[Authorize(Policy = "HR")]
+		public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var subcontractor = await _context.Subcontractors.FindAsync(id);
             _context.Subcontractors.Remove(subcontractor);

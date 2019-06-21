@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ERPSzakdolgozat.Models
 {
@@ -11,5 +12,7 @@ namespace ERPSzakdolgozat.Models
 		public string UnitName { get; set; }
 
 		public bool Active { get; set; }
+
+		public List<Team> Teams { get; set; }
 	}
 }

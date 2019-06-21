@@ -29,6 +29,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Employees
+		[Authorize(Policy = "MinusSales")]
 		public async Task<IActionResult> Index(string search, bool active = true)
 		{
 			IQueryable<Employee_Index> employeeVMList = _context.Employees
@@ -70,7 +71,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Employees/Details/5
-		[Authorize(Policy = "HR")]
+		[Authorize(Policy = "HRAssisstant")]
 		public async Task<IActionResult> Details(int? id)
 		{
 			if (id == null)

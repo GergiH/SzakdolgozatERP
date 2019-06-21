@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ERPSzakdolgozat.Models
 {
@@ -16,5 +17,7 @@ namespace ERPSzakdolgozat.Models
 		public bool Active { get; set; }
 		
 		public virtual Unit Unit { get; set; }
+
+		public List<Employee> Employees { get; set; }
 	}
 }
