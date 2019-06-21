@@ -55,7 +55,10 @@ namespace ERPSzakdolgozat.Controllers
 				TempData["WeekNumber"] = weekNumber;
 			}
 
-			ViewData["Employees"] = new SelectList(_context.Employees.OrderBy(e => e.EmployeeName), "Id", "EmployeeName", employee);
+			if (team == null)
+				ViewData["Employees"] = new SelectList(_context.Employees.OrderBy(e => e.EmployeeName), "Id", "EmployeeName", employee);
+			else
+				ViewData["Employees"] = new SelectList(_context.Employees.Where(e => e.TeamId == team).OrderBy(e => e.EmployeeName), "Id", "EmployeeName", employee);
 			ViewData["Teams"] = new SelectList(_context.Teams.OrderBy(t => t.TeamName), "Id", "TeamName", team);
 			ViewData["Weeks"] = new SelectList(
 				_context.ForecastWeeks

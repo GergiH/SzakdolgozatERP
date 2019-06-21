@@ -498,7 +498,7 @@ namespace ERPSzakdolgozat.Controllers
 			return null;
 		}
 
-		// TODO logging
+		// TODO log Resources and Risks
 		private async Task Logging(Project proj)
 		{
 			proj.Client = await _context.Clients.FindAsync(proj.ClientId);

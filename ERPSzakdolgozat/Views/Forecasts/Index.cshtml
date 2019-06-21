@@ -8,22 +8,22 @@
 
 <form asp-action="Index" class="form-horizontal" method="get">
 	<div class="form-group">
-		<div class="col-md-4">
-			<label class="control-label">
-				<strong>Employee</strong>
-			</label>
-
-			<select name="employee" asp-items="@((SelectList)ViewData["Employees"])" class="form-control" onchange="this.form.submit();">
-				<option value=""></option>
-			</select>
-		</div>
-
 		<div class="col-md-3">
 			<label class="control-label">
 				<strong>Team</strong>
 			</label>
 
 			<select name="team" asp-items="@((SelectList)ViewData["Teams"])" class="form-control" onchange="this.form.submit();">
+				<option value=""></option>
+			</select>
+		</div>
+
+		<div class="col-md-4">
+			<label class="control-label">
+				<strong>Employee</strong>
+			</label>
+
+			<select name="employee" asp-items="@((SelectList)ViewData["Employees"])" class="form-control" onchange="this.form.submit();">
 				<option value=""></option>
 			</select>
 		</div>
