@@ -215,8 +215,6 @@ namespace ERPSzakdolgozat.Controllers
 			ViewData["Total"] = forecastWeek.HoursAll;
 		}
 
-		// TODO details page
-
 		private bool ForecastExists(int id)
 		{
 			return _context.Forecast.Any(e => e.Id == id);
@@ -253,7 +251,22 @@ namespace ERPSzakdolgozat.Controllers
 						lastWeekStart = lastWeekStart.AddDays(7);
 						lastWeekNo++;
 
-						// TODO szünnapok tábla
+						double hA = 40;
+						List<WorkDay> workdays = await _context.WorkDays
+							.Where(w => w.WorkDayDate >= lastWeekStart && w.WorkDayDate <= lastWeekStart.AddDays(7))
+							.ToListAsync();
+						
+						// TODO make this on FixThisWeek also
+						if (workdays.Count > 0)
+						{
+							foreach (var item in workdays)
+							{
+								if (item.IsHoliday)
+									hA -= 8;
+								else
+									hA += 8;
+							}
+						}
 
 						foreach (int id in _employeeIds)
 						{
@@ -264,7 +277,7 @@ namespace ERPSzakdolgozat.Controllers
 								CreatedDate = DateTime.Now,
 								EmployeeId = id,
 								HoursAll = 0,
-								HoursAvailable = 40,
+								HoursAvailable = hA,
 								ModifiedDate = DateTime.Now,
 								ProjectHours = 0,
 								SicknessHours = 0,

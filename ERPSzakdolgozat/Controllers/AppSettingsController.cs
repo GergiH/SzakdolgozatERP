@@ -83,7 +83,6 @@ namespace ERPSzakdolgozat.Controllers
 
 		private void SetSettingDropdown(ref AppSetting setting)
 		{
-			// TODO expand the list as settings expand as well
 			switch (setting.SettingName)
 			{
 				case "Default - Currency":

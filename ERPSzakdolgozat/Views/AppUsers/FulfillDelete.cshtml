@@ -1,0 +1,40 @@
+﻿@model IEnumerable<ERPSzakdolgozat.Models.AppUser>
+
+@{
+    ViewData["Title"] = "User - Fulfill Delete Requests";
+}
+
+<h2>Fulfill Delete Requests</h2>
+
+<div>
+    <h4>These Users requested the Admins to remove their data from the application. If you have concerns about any of the requests please contact them about it before fulfilling their request.</h4>
+    <hr />
+
+	<table class="table table-condensed table-hover">
+		<thead>
+			<tr>
+				<th>AD Name</th>
+				<th>Name</th>
+				<th>E-mail</th>
+				<th>Mobile</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model) 
+			{
+			<tr>
+				<td>@item.ADName</td>
+				<td>@item.DisplayName</td>
+				<td>@item.Email</td>
+				<td>@item.Mobile</td>
+				<td>
+					<a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
+						<i class="glyphicon glyphicon-remove"></i>
+					</a>
+				</td>
+			</tr>
+			}
+		</tbody>
+	</table>
+</div>

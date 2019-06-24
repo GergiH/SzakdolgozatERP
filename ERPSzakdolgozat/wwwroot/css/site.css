@@ -416,15 +416,15 @@ input[type="radio"],
 }
 
 .text-warning {
-	color: #bd8119;
+	color: #bd8119 !important;
 }
 
 .text-success {
-	color: #28902a;
+	color: #28902a !important;
 }
 
 .text-info {
-	color: #3989b1;
+	color: #3989b1 !important;
 }
 
 .panel-heading {

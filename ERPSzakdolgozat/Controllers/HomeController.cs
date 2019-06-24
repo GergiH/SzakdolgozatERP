@@ -21,18 +21,24 @@ namespace ERPSzakdolgozat.Controllers
 
 		public IActionResult Index()
 		{
+			// Employees
 			double[] salaries = new double[12];
 
+			// Projects
 			double[] hoursDone = new double[12];
 			double[] hoursTotal = new double[12];
-
 			double[] cost = new double[12];
 			double[] revenue = new double[12];
 			double[] revenueGained = new double[12];
 
+			// Forecasts
+			double[] avaHours = new double[12];
+			double[] totalHours = new double[12];
+
 			bool isAdmin = User.HasClaim(ClaimTypes.Role, "Admin");
 			bool isHR = User.HasClaim(ClaimTypes.Role, "HR");
 			bool isPM = User.HasClaim(ClaimTypes.Role, "ProjectManager");
+			bool isTL = User.HasClaim(ClaimTypes.Role, "TeamLeader");
 
 			List<Employee> employees = new List<Employee>();
 			if (isAdmin || isHR)
@@ -72,6 +78,12 @@ namespace ERPSzakdolgozat.Controllers
 					revenue[i] = _context.Projects.Where(p => p.ModifiedDate.Month == i + 1).Sum(p => p.TotalRevenue);
 					revenueGained[i] = _context.Projects.Where(p => p.ModifiedDate.Month == i + 1).Sum(p => p.ResourcesRevenueGained);
 				}
+
+				if (isAdmin || isTL)
+				{
+					avaHours[i] = _context.ForecastWeeks.Where(f => f.WeekStart.Month == i + 1).Sum(f => f.HoursAvailable);
+					totalHours[i] = _context.ForecastWeeks.Where(f => f.WeekStart.Month == i + 1).Sum(f => f.HoursAll);
+				}
 			}
 
 			// Employees
@@ -95,6 +107,13 @@ namespace ERPSzakdolgozat.Controllers
 				ViewData["Cost"] = cost;
 				ViewData["Revenue"] = revenue;
 				ViewData["RevenueGained"] = revenueGained;
+			}
+
+			// Forecasts
+			if (isAdmin || isTL)
+			{
+				ViewData["AvailableHours"] = avaHours;
+				ViewData["TotalHours"] = totalHours;
 			}
 
 			// texts on the top

@@ -41,13 +41,32 @@
 					string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
 					<img src="@imageSrc" height="30" class="img-circle" />
 				}
-				@Model.DisplayName <span class="caret"></span>
+				@Model.DisplayName
+				@if (User.HasClaim(ClaimTypes.Role, "Admin"))
+				{
+					<span class="badge">@ViewData["UsersToDelete"]</span>
+				}
+				<span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu" role="menu">
 				<li class="dropdown-header text-bold">@User.Identity.Name</li>
 				<li><a asp-area="" asp-controller="AppUsers" asp-action="SelfEdit">Settings</a></li>
-				<li class="divider"></li>
-				<li><a asp-area="" asp-controller="Clients" asp-action="Statistics">Statistics</a></li>
+
+				@if (User.HasClaim(ClaimTypes.Role, "Admin") && (bool)ViewData["DeleteRequestsToBeFulfilled"] == true)
+				{
+					<li class="divider"></li>
+					<li>
+						<a asp-area="" asp-controller="AppUsers" asp-action="FulfillDelete" class="text-warning">Fulfill Delete Reqs.</a>
+					</li>
+				}
+
+				@if (!User.HasClaim(ClaimTypes.Role, "Admin") && (bool)ViewData["DeleteRequestAvailable"] == true)
+				{
+					<li class="divider"></li>
+					<li>
+						<a asp-area="" asp-controller="AppUsers" asp-action="RequestDelete" asp-route-id="@ViewData["UserID"]">Request User Delete</a>
+					</li>
+				}
 			</ul>
 		</li>
 
@@ -68,6 +87,7 @@
 					<li><a asp-area="" asp-controller="SkillLevels" asp-action="Index">Skill Levels</a></li>
 					<li><a asp-area="" asp-controller="Teams" asp-action="Index">Teams</a></li>
 					<li><a asp-area="" asp-controller="Units" asp-action="Index">Units</a></li>
+					<li><a asp-area="" asp-controller="WorkDays" asp-action="Index">Work Days</a></li>
 					<li class="divider"></li>
 					<li><a asp-area="" asp-controller="AppUsers" asp-action="Index">Users</a></li>
 				</ul>

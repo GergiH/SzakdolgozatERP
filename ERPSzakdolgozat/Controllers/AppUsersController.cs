@@ -208,7 +208,19 @@ namespace ERPSzakdolgozat.Controllers
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
 			var user = await _context.AppUsers.FindAsync(id);
-			_context.AppUsers.Remove(user);
+			user.Email = null;
+			user.Mobile = null;
+			_context.Update(user);
+
+			List<UserRoles> roles = await _context.UserRoles.Where(u => u.UserID == user.Id).ToListAsync();
+			_context.UserRoles.RemoveRange(roles);
+
+			var delreq = await _context.DeleteRequests.FirstOrDefaultAsync(d => d.AppUserId == id);
+			if (delreq != null)
+			{
+				delreq.IsFulfilled = true;
+				_context.Update(delreq);
+			}
 			await _context.SaveChangesAsync();
 
 			TempData["Toast"] = Toasts.Deleted;
@@ -328,6 +340,62 @@ namespace ERPSzakdolgozat.Controllers
 			}
 
 			return RedirectToAction("Edit", new { id });
+		}
+
+		public async Task<IActionResult> RequestDelete(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+
+			var user = await _context.AppUsers
+				.FirstOrDefaultAsync(m => m.Id == id);
+
+			if (user == null)
+			{
+				return NotFound();
+			}
+			else if (user.ADName != User.Identity.Name)
+			{
+				return BadRequest();
+			}
+
+			return View(user);
+		}
+
+		public async Task<IActionResult> RequestDeleteConfirmed(int id)
+		{
+			if (_context.DeleteRequests.Any(d => d.AppUserId == id) == false)
+			{
+				DeleteRequest delreq = new DeleteRequest
+				{
+					Id = _context.DeleteRequests.Max(d => d.Id) + 1,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					AppUserId = id,
+					IsFulfilled = false
+				};
+
+				await _context.DeleteRequests.AddAsync(delreq);
+				await _context.SaveChangesAsync();
+
+				TempData["Toast"] = Toasts.Created;
+			}
+
+			return RedirectToAction("Index", "Home");
+		}
+
+		public async Task<IActionResult> FulfillDelete()
+		{
+			List<int> userIds = await _context.DeleteRequests
+				.Where(d => d.IsFulfilled == false).Select(d => d.AppUserId).ToListAsync();
+			List<AppUser> usersToDelete = new List<AppUser>();
+
+			foreach (var item in userIds)
+				usersToDelete.Add(_context.AppUsers.Where(u => u.Id == item).FirstOrDefault());
+
+			return View(usersToDelete);
 		}
 	}
 }

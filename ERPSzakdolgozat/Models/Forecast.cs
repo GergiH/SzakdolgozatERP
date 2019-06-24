@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ERPSzakdolgozat.Models
 {
-	public class Forecast : BaseProperties // TODO make controller, seeding, add to dbcontext, views... maybe chart
+	public class Forecast : BaseProperties
 	{
 		[Required]
 		[ForeignKey("Employee")]

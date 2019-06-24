@@ -2,6 +2,7 @@
 using ERPSzakdolgozat.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,7 +21,22 @@ namespace ERPSzakdolgozat.ViewComponents
 		public async Task<IViewComponentResult> InvokeAsync(string username)
 		{
 			AppUser user = await GetUserAsync(username);
-			//Globals.IsAppUser = user == null ? false : true;
+			user.Roles = await _context.UserRoles.Where(u => u.UserID == user.Id).ToListAsync();
+
+			if (user.Roles.Any(r => r.RoleID == 1) == true)
+			{
+				List<DeleteRequest> delreqs = await _context.DeleteRequests.Where(d => d.IsFulfilled == false).ToListAsync();
+
+				ViewData["UsersToDelete"] = delreqs.Count;
+				
+				if (delreqs.Count > 0)
+				{
+					ViewData["DeleteRequestsToBeFulfilled"] = true;
+				}
+			}
+			ViewData["UserID"] = user.Id;
+			ViewData["DeleteRequestAvailable"] = !_context.DeleteRequests.Any(d => d.AppUserId == user.Id);
+
 			return View("UserNav", user);
 		}
 

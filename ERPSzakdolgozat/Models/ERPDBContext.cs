@@ -32,6 +32,8 @@ namespace ERPSzakdolgozat.Models
 		public DbSet<Subcontractor> Subcontractors { get; set; }
 		public DbSet<Forecast> Forecast { get; set; }
 		public DbSet<ForecastWeek> ForecastWeeks { get; set; }
+		public DbSet<WorkDay> WorkDays { get; set; }
+		public DbSet<DeleteRequest> DeleteRequests { get; set; }
 
 		// Seeding the DB
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -641,7 +643,7 @@ namespace ERPSzakdolgozat.Models
 					modelBuilder.Entity<ProjectRisk>().HasData(
 						new ProjectRisk
 						{
-							Id = 5 + j + i*4,
+							Id = 5 + j + i * 4,
 							CreatedDate = DateTime.Now,
 							ModifiedDate = DateTime.Now,
 							RiskId = 1 + j,
@@ -655,7 +657,7 @@ namespace ERPSzakdolgozat.Models
 					modelBuilder.Entity<ProjectResource>().HasData(
 						new ProjectResource
 						{
-							Id = 3 + k + i*5,
+							Id = 3 + k + i * 5,
 							CreatedDate = DateTime.Now,
 							ModifiedDate = DateTime.Now,
 							ResourceTask = Globals.GenerateRandomString(14),
@@ -815,6 +817,35 @@ namespace ERPSzakdolgozat.Models
 					VacationHours = 0,
 					WeekNumber = 24,
 					WeekStart = new DateTime(2019, 6, 10)
+				});
+
+			modelBuilder.Entity<DeleteRequest>().HasData(
+				new DeleteRequest
+				{
+					Id = 1,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					AppUserId = 1,
+					IsFulfilled = false
+				});
+
+			modelBuilder.Entity<WorkDay>().HasData(
+				new WorkDay
+				{
+					Id = 1,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					IsHoliday = true,
+					WorkDayDate = new DateTime(2019, 12, 25),
+					WorkDayName = "Karácsony"
+				},
+				new WorkDay
+				{
+					Id = 2,
+					CreatedDate = DateTime.Now,
+					ModifiedDate = DateTime.Now,
+					IsHoliday = false,
+					WorkDayDate = new DateTime(2019, 08, 10)
 				});
 
 			// Set relations

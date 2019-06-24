@@ -1,10 +1,10 @@
-﻿@model IEnumerable<ERPSzakdolgozat.Models.SkillLevel>
+﻿@model IEnumerable<ERPSzakdolgozat.Models.WorkDay>
 
 @{
-	ViewData["Title"] = "Skill Levels - Index";
+	ViewData["Title"] = "Work Days - List";
 }
 
-<h2>Skill Levels</h2>
+<h2>Work Days</h2>
 
 <div class="col-md-8 col-md-offset-2">
 	<div class="col-md-12 margin-bottom-sm pr-sm">
@@ -17,10 +17,16 @@
 		<thead>
 			<tr>
 				<th>
-					@Html.DisplayNameFor(model => model.SkillLevelName)
+					@Html.DisplayNameFor(model => model.WorkDayName)
 				</th>
 				<th>
-					@Html.DisplayNameFor(model => model.IsSelectable)
+					@Html.DisplayNameFor(model => model.WorkDayDate)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.IsHoliday)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Comment)
 				</th>
 				<th></th>
 			</tr>
@@ -30,10 +36,16 @@
 			{
 				<tr>
 					<td>
-						@Html.DisplayFor(modelItem => item.SkillLevelName)
+						@Html.DisplayFor(modelItem => item.WorkDayName)
 					</td>
 					<td>
-						@Html.DisplayFor(modelItem => item.IsSelectable)
+						@Html.DisplayFor(modelItem => item.WorkDayDate)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.IsHoliday)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Comment)
 					</td>
 
 					<td class="col-md-2 text-right">

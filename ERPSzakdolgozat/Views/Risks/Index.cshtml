@@ -1,47 +1,50 @@
 ﻿@model IEnumerable<ERPSzakdolgozat.Models.Risk>
 
 @{
-    ViewData["Title"] = "Risks - List";
+	ViewData["Title"] = "Risks - List";
 }
 
 <h2>Risks</h2>
 
-<div class="col-md-12 margin-bottom-sm pr-sm">
-	<a asp-action="Create" class="btn btn-success btn-sm pull-right" data-toggle="tooltip" data-placement="top" title="" data-original-title="Create New">
-		<i class="glyphicon glyphicon-plus"></i>
-	</a>
-</div>
+<div class="col-md-8 col-md-offset-2">
+	<div class="col-md-12 margin-bottom-sm pr-sm">
+		<a asp-action="Create" class="btn btn-success btn-sm pull-right" data-toggle="tooltip" data-placement="top" title="" data-original-title="Create New">
+			<i class="glyphicon glyphicon-plus"></i>
+		</a>
+	</div>
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.RiskName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RiskWeight)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RiskName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RiskWeight)
-            </td>
-			<td class="col-md-2 text-right">
-				<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
-					<i class="glyphicon glyphicon-pencil"></i>
-				</a>
-				<a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="right" title="" data-original-title="Delete">
-					<i class="glyphicon glyphicon-remove"></i>
-				</a>
-			</td>
-        </tr>
-}
-    </tbody>
-</table>
+	<table class="table table-condensed table-hover">
+		<thead>
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.RiskName)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.RiskWeight)
+				</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.RiskName)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.RiskWeight)
+					</td>
+					<td class="col-md-2 text-right">
+						<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+							<i class="glyphicon glyphicon-pencil"></i>
+						</a>
+						<a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="right" title="" data-original-title="Delete">
+							<i class="glyphicon glyphicon-remove"></i>
+						</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

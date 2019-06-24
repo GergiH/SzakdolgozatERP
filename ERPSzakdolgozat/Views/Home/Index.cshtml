@@ -5,6 +5,7 @@
 	bool isAdmin = User.HasClaim(ClaimTypes.Role, "Admin");
 	bool isHR = User.HasClaim(ClaimTypes.Role, "HR");
 	bool isPM = User.HasClaim(ClaimTypes.Role, "ProjectManager");
+	bool isTL = User.HasClaim(ClaimTypes.Role, "TeamLeader");
 }
 
 <div class="row">
@@ -15,25 +16,40 @@
 
 	@if (isAdmin || isHR)
 	{
-		<h3 class="text-center">Employee statistics</h3>
-		<hr />
+		<div class="col-md-12">
+			<h3 class="text-center">Employee statistics</h3>
+			<hr />
+		</div>
 		<div class="col-md-12 mb-lg">
-			<canvas id="salaryChart" width="400" height="120"></canvas>
+			<canvas id="salaryChart" width="500" height="120"></canvas>
 		</div>
 	}
 
 	@if (isAdmin || isPM)
 	{
-		<h3 class="text-center">Project statistics</h3>
-		<hr />
+		<div class="col-md-12">
+			<h3 class="text-center">Project statistics</h3>
+			<hr />
+		</div>
 		<div class="col-md-8">
-			<canvas id="hoursChart" width="400" height="240"></canvas>
+			<canvas id="hoursChart" width="400" height="210"></canvas>
 		</div>
 		<div class="col-md-4">
-			<canvas id="remainingChart" width="400" height="240"></canvas>
+			<canvas id="remainingChart" width="200" height="200"></canvas>
 		</div>
+		<div class="col-md-12 mb-lg">
+			<canvas id="revenueChart" width="400" height="150"></canvas>
+		</div>
+	}
+
+	@if (isAdmin || isTL)
+	{
 		<div class="col-md-12">
-			<canvas id="revenueChart" width="400" height="200"></canvas>
+			<h3 class="text-center">Forecast statistics</h3>
+			<hr />
+		</div>
+		<div class="col-md-12 ">
+			<canvas id="forecastChart" width="300" height="50"></canvas>
 		</div>
 	}
 </div>
@@ -166,6 +182,46 @@
 					borderColor: 'rgba(255, 150, 50, 1)',
 					borderWidth: 1,
 					data: revenueGained,
+					fill: false
+				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+						}
+					}]
+				},
+				animation: {
+					animateScale: true,
+					animateRotate: true
+				}
+			}
+		});
+
+		// Forecasts
+		var avaHours = @Html.Raw(Json.Serialize(ViewData["AvailableHours"]));
+		var totalHours = @Html.Raw(Json.Serialize(ViewData["TotalHours"]));
+
+		var ctx = document.getElementById('forecastChart').getContext('2d');
+		var forecastChart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+				datasets: [{
+					label: 'Available Hours',
+					backgroundColor: 'rgba(0, 255, 100, 0.5)',
+					borderColor: 'rgba(0, 255, 100, 0.5)',
+					borderWidth: 1,
+					data: avaHours,
+					fill: false
+				}, {
+					label: 'Total Hours',
+					backgroundColor: 'rgba(0, 100, 255, 0.5)',
+					borderColor: 'rgba(0, 100, 255, 0.5)',
+					borderWidth: 1,
+					data: totalHours,
 					fill: false
 				}]
 			},

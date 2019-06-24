@@ -1,0 +1,39 @@
+﻿@model ERPSzakdolgozat.Models.AppUser
+
+@{
+    ViewData["Title"] = "User - Request Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to make a request to Delete your User? All your personal data will be removed, except your name.</h3>
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ADName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ADName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DisplayName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DisplayName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+    </dl>
+    
+	<form asp-action="RequestDeleteConfirmed">
+		<input type="hidden" asp-for="Id" />
+		<a asp-action="Index" class="btn btn-default">Back to List</a>
+		<input type="submit" value="Request Delete" class="btn btn-danger" />
+	</form>
+</div>
