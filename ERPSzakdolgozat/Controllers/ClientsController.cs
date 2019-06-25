@@ -1,5 +1,6 @@
 ﻿using ERPSzakdolgozat.Helpers;
 using ERPSzakdolgozat.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -38,6 +39,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Clients/Details/5
+		[Authorize(Policy = "Sales")]
 		public async Task<IActionResult> Details(int? id)
 		{
 			if (id == null)
@@ -56,6 +58,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Clients/Create
+		[Authorize(Policy = "Sales")]
 		public IActionResult Create()
 		{
 			Client client = new Client();
@@ -64,6 +67,7 @@ namespace ERPSzakdolgozat.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "Sales")]
 		public async Task<IActionResult> Create(Client client)
 		{
 			if (ModelState.IsValid)
@@ -82,6 +86,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Clients/Edit/5
+		[Authorize(Policy = "Sales")]
 		public async Task<IActionResult> Edit(int? id)
 		{
 			if (id == null)
@@ -100,6 +105,7 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: Clients/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "Sales")]
 		public async Task<IActionResult> Edit(int id, Client client)
 		{
 			if (id != client.Id)
@@ -133,6 +139,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Clients/Delete/5
+		[Authorize(Policy = "Sales")]
 		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null)
@@ -153,6 +160,7 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: Clients/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "Sales")]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
 			var client = await _context.Clients.FindAsync(id);

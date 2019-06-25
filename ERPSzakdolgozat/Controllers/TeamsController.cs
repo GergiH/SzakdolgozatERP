@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace ERPSzakdolgozat.Controllers
 {
+	[Authorize(Policy = "Admin")]
 	public class TeamsController : MyController
 	{
 		public TeamsController(ERPDBContext context) : base(context)
@@ -18,7 +19,6 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Teams
-		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Index()
 		{
 			var teamList = _context.Teams.AsNoTracking().Include(t => t.Unit);
@@ -26,7 +26,6 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Teams/Create
-		[Authorize(Policy = "Admin")]
 		public IActionResult Create()
 		{
 			ViewData["UnitId"] = new SelectList(_context.Units, "Id", "UnitName");
@@ -42,7 +41,6 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: Teams/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Create(Team team)
 		{
 			if (ModelState.IsValid)
@@ -63,7 +61,6 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Teams/Edit/5
-		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Edit(int? id)
 		{
 			if (id == null)
@@ -84,7 +81,6 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: Teams/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Edit(int id, Team team)
 		{
 			if (id != team.Id)
@@ -119,7 +115,6 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Teams/Delete/5
-		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null)
@@ -147,7 +142,6 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: Teams/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
-		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
 			var team = await _context.Teams.FindAsync(id);

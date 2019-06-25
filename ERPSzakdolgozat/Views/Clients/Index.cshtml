@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<ERPSzakdolgozat.Models.Client>
+@using System.Security.Claims
 
 @{
 	ViewData["Title"] = "Clients - List";
@@ -32,9 +33,12 @@
 			</div>
 		</div>
 
-		<a asp-action="Create" class="btn btn-success btn-sm pull-right mt-lg" data-toggle="tooltip" data-placement="top" title="" data-original-title="Create New">
-			<i class="glyphicon glyphicon-plus"></i>
-		</a>
+		@if (User.HasClaim(ClaimTypes.Role, "Admin") || User.HasClaim(ClaimTypes.Role, "Sales"))
+		{
+			<a asp-action="Create" class="btn btn-success btn-sm pull-right mt-lg" data-toggle="tooltip" data-placement="top" title="" data-original-title="Create New">
+				<i class="glyphicon glyphicon-plus"></i>
+			</a>
+		}
 	</div>
 </form>
 
@@ -98,15 +102,18 @@
 				</td>
 
 				<td class="col-md-2 text-right text-nowrap">
-					<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
-						<i class="glyphicon glyphicon-pencil"></i>
-					</a>
-					<a asp-action="Details" asp-route-id="@item.Id" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Details">
-						<i class="glyphicon glyphicon-list"></i>
-					</a>
-					<a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="right" title="" data-original-title="Delete">
-						<i class="glyphicon glyphicon-remove"></i>
-					</a>
+					@if (User.HasClaim(ClaimTypes.Role, "Admin") || User.HasClaim(ClaimTypes.Role, "Sales"))
+					{
+						<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+							<i class="glyphicon glyphicon-pencil"></i>
+						</a>
+						<a asp-action="Details" asp-route-id="@item.Id" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Details">
+							<i class="glyphicon glyphicon-list"></i>
+						</a>
+						<a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="right" title="" data-original-title="Delete">
+							<i class="glyphicon glyphicon-remove"></i>
+						</a>
+					}
 				</td>
 			</tr>
 		}

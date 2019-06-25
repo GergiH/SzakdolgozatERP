@@ -65,7 +65,7 @@ namespace ERPSzakdolgozat.Models
 					ADName = "CORP\\ghorvath", // Work UserName
 											   //ADName = "NYOMDNEKINYUSZI\\Horváth Gergely",
 											   //ADName = User.Identity.Name, // This would be best for debugging, but doesn't work
-					Email = "van@denincs.com",
+					Email = "gergelyzsolt.hrv@gmail.com",
 					Mobile = "+36901234567",
 					DisplayName = "Horváth Gergely"
 				},
@@ -75,19 +75,19 @@ namespace ERPSzakdolgozat.Models
 					CreatedDate = DateTime.Now,
 					ModifiedDate = DateTime.Now,
 					ADName = "CORP\\UndefinedUser",
-					Email = "van@denincs.com",
-					Mobile = "+36901234567",
-					DisplayName = "Not Available"
+					Email = "is@an.email",
+					Mobile = "+36123456789",
+					DisplayName = "Who Is This"
 				},
 				new AppUser
 				{
 					Id = 3,
 					CreatedDate = DateTime.Now,
 					ModifiedDate = DateTime.Now,
-					ADName = "CORP\\Ghost",
-					Email = "van@denincs.com",
-					Mobile = "+36901234567",
-					DisplayName = "Ghost in the Dark"
+					ADName = "CORP\\HRGuy",
+					Email = "another@user.email",
+					Mobile = "+36123456789",
+					DisplayName = "I Hire People"
 				});
 
 			// random AppUsers
@@ -101,7 +101,7 @@ namespace ERPSzakdolgozat.Models
 						ModifiedDate = DateTime.Now,
 						ADName = "CORP\\" + Globals.GenerateRandomString(7),
 						Email = Globals.GenerateRandomString(5) + "@provider.address",
-						Mobile = "+36901234567",
+						Mobile = "+36" + Globals.GenerateRandomNumber(100000000, 700000000).ToString(),
 						DisplayName = Globals.GenerateRandomString(6) + " " + Globals.GenerateRandomString(8)
 					});
 			}
@@ -183,17 +183,17 @@ namespace ERPSzakdolgozat.Models
 					Active = true,
 					CompanyIdentifier = "XY0001",
 					DateOfBirth = new DateTime(1990, 12, 26),
-					Email = "kiskutya@corgik.hu",
+					Email = "lildog@corgies.com",
 					LeaderId = 2,
-					Mobile = "+36901234567",
+					Mobile = "+36123456789",
 					JoinedOn = DateTime.Now.AddYears(-1),
-					EmployeeName = "Kis Kutya",
+					EmployeeName = "Should Be Me",
 					TeamId = 1,
 					SameAddress = false,
 					HomeZIP = "2400",
-					HomeCountry = "Magyarország",
+					HomeCountry = "Hungary",
 					HomeCity = "Dunaújváros",
-					HomeStreet = "Táncsics M. u. 28.",
+					HomeStreet = "Táncsics M. str. 28.",
 					IsLeader = false,
 					RoleId = 1
 				},
@@ -205,21 +205,21 @@ namespace ERPSzakdolgozat.Models
 					Active = true,
 					CompanyIdentifier = "ZZ9999",
 					DateOfBirth = new DateTime(1990, 12, 25),
-					Email = "nagykutya@husky.hu",
+					Email = "bigdog@husky.com",
 					LeaderId = 2,
-					Mobile = "+36909999999",
+					Mobile = "+36999999999",
 					JoinedOn = DateTime.Now.AddYears(-1),
-					EmployeeName = "Nagy Kutya",
+					EmployeeName = "The Big Boss",
 					TeamId = 1,
 					SameAddress = true,
 					HomeZIP = "2400",
-					HomeCountry = "Magyarország",
+					HomeCountry = "Hungary",
 					HomeCity = "Dunaújváros",
-					HomeStreet = "Táncsics M. u. 1/a.",
+					HomeStreet = "Táncsics M. str. 1/a.",
 					MailZIP = "2400",
-					MailCountry = "Magyarország",
+					MailCountry = "Hungary",
 					MailCity = "Dunaújváros",
-					MailStreet = "Táncsics M. u. 1/a.",
+					MailStreet = "Táncsics M. str. 1/a.",
 					IsLeader = true,
 					RoleId = 2
 				});
@@ -236,17 +236,17 @@ namespace ERPSzakdolgozat.Models
 						Active = i % 2 == 0 ? true : false,
 						CompanyIdentifier = Globals.GenerateRandomString(5).ToUpper(),
 						DateOfBirth = new DateTime(1990, 12, 26),
-						Email = Globals.GenerateRandomString(5) + "@corgik.hu",
+						Email = Globals.GenerateRandomString(5) + "@corgies.com",
 						LeaderId = 2,
-						Mobile = "+36901234567",
+						Mobile = "+36" + Globals.GenerateRandomNumber(100000000, 700000000).ToString(),
 						JoinedOn = DateTime.Now.AddYears(-1),
 						EmployeeName = Globals.GenerateRandomString(7) + " " + Globals.GenerateRandomString(5),
 						TeamId = i < 10 ? 1 : 2,
 						SameAddress = false,
 						HomeZIP = "2400",
-						HomeCountry = "Magyarország",
+						HomeCountry = "Hungary",
 						HomeCity = "Dunaújváros",
-						HomeStreet = Globals.GenerateRandomString(11) + " u." + (i + 2).ToString() + ".",
+						HomeStreet = Globals.GenerateRandomString(11) + " str." + (i + 2).ToString() + ".",
 						IsLeader = false,
 						RoleId = i < 5 ? 1 : i < 10 ? 2 : 3,
 						SkillLevelId = i < 5 ? 1 : i < 19 ? 2 : 3
@@ -439,14 +439,14 @@ namespace ERPSzakdolgozat.Models
 					ModifiedDate = DateTime.Now,
 					Active = true,
 					ClientId = "CLIENT001",
-					City = "Nagylackunháza",
-					ClientName = "Kliens neve",
-					ContactName = "Helybenjáró Kelemen",
-					Country = "Mexikó",
-					Email = "kelemen@itt.hu",
-					Mobile = "06901112222",
+					City = "Mexico City",
+					ClientName = "Serious Company Lt.",
+					ContactName = "Joze Huan",
+					Country = "Mexico",
+					Email = "huan@company.com",
+					Mobile = "06111112222",
 					Phone = "061987987",
-					Street = "Nagymama u. 99.",
+					Street = "Taco str. 99.",
 					TaxNumber = "554-4444554-222",
 					ZIP = "1234"
 				},
@@ -457,14 +457,14 @@ namespace ERPSzakdolgozat.Models
 					ModifiedDate = DateTime.Now,
 					Active = true,
 					ClientId = "CLIENT002",
-					City = "Kistejföl",
-					ClientName = "Nem is a neve",
-					ContactName = "Helybenjáró Kelemen",
-					Country = "Oroszország",
-					Email = "kelemen@itt_is.hu",
-					Mobile = "06901112222",
+					City = "Moscow",
+					ClientName = "Atom Splitting Lt.",
+					ContactName = "Valery Legasov",
+					Country = "Russia",
+					Email = "rtg@too.high",
+					Mobile = "06191112222",
 					Phone = "061987988",
-					Street = "Papa u. 1.",
+					Street = "Kyiv Oblast str. 1.",
 					TaxNumber = "52254-4124-2222322",
 					ZIP = "4321"
 				});
@@ -482,12 +482,12 @@ namespace ERPSzakdolgozat.Models
 					ClientId = Globals.GenerateRandomString(5).ToUpper(),
 					City = "Nagykun" + Globals.GenerateRandomString(6),
 					ClientName = Globals.GenerateRandomString(4) + " " + Globals.GenerateRandomString(5),
-					ContactName = "Helybenjáró " + Globals.GenerateRandomString(6),
-					Country = "Mexikó",
-					Email = Globals.GenerateRandomString(5) + "@itt.hu",
-					Mobile = "06901112222",
+					ContactName = "Contact " + Globals.GenerateRandomString(6),
+					Country = "Italy",
+					Email = Globals.GenerateRandomString(5) + "@pizza.it",
+					Mobile = "06151112222",
 					Phone = "061987987",
-					Street = "Nagymama u. " + Globals.GenerateRandomNumber(1, 99).ToString() + ".",
+					Street = "Lasange str. " + Globals.GenerateRandomNumber(1, 99).ToString() + ".",
 					TaxNumber = "554-" + Globals.GenerateRandomNumber(10000, 99999).ToString() + "-222",
 					ZIP = Globals.GenerateRandomNumber(1000, 9999).ToString()
 				});
@@ -533,7 +533,7 @@ namespace ERPSzakdolgozat.Models
 					Id = 1,
 					CreatedDate = DateTime.Now,
 					ModifiedDate = DateTime.Now,
-					SubcontractorName = "Külsős Kálmán",
+					SubcontractorName = "Outsider Otto",
 					IsActive = true
 				},
 				new Subcontractor
@@ -541,7 +541,7 @@ namespace ERPSzakdolgozat.Models
 					Id = 2,
 					CreatedDate = DateTime.Now,
 					ModifiedDate = DateTime.Now,
-					SubcontractorName = "Beépített Benedek",
+					SubcontractorName = "Undercover Ubul",
 					IsActive = true
 				},
 				new Subcontractor
@@ -549,7 +549,7 @@ namespace ERPSzakdolgozat.Models
 					Id = 3,
 					CreatedDate = DateTime.Now,
 					ModifiedDate = DateTime.Now,
-					SubcontractorName = "Kiszervezett Kamilla",
+					SubcontractorName = "Outsourced Olga",
 					IsActive = true
 				});
 
@@ -578,7 +578,7 @@ namespace ERPSzakdolgozat.Models
 					ContractValue = 2800000,
 					CurrencyId = 2,
 					CustomId = "PRJ001",
-					Description = "Nagyon szuper projekt, ami mindenkinek örömet okoz.",
+					Description = "Super project which everyone loves.",
 					EstimatedEndDate = DateTime.Today.AddMonths(6),
 					HoursAll = 200,
 					HoursDone = 150,
@@ -665,13 +665,10 @@ namespace ERPSzakdolgozat.Models
 							ResourceEmployee = Globals.GenerateRandomNumber(1, 22),
 							ResourceName = Globals.GenerateRandomString(10),
 							Cost = Globals.GenerateRandomNumber(800, 6000),
-							//HoursAll = Globals.GenerateRandomNumber(10, 100),
 							HoursDone = Globals.GenerateRandomNumber(0, 40),
 							HoursRemaining = Globals.GenerateRandomNumber(0, 20),
-							//OvertimeAll = Globals.GenerateRandomNumber(10, 50),
 							OvertimeDone = Globals.GenerateRandomNumber(0, 10),
 							OvertimeRemaining = Globals.GenerateRandomNumber(0, 5),
-							//Revenue = Globals.GenerateRandomNumber(4000, 25000)
 						});
 				}
 			}
@@ -758,7 +755,7 @@ namespace ERPSzakdolgozat.Models
 					ResourceTask = "Doesn't do anything",
 					ProjectId = 1,
 					ResourceEmployee = 1,
-					ResourceName = "Kis Kutya",
+					ResourceName = "Should Be Me",
 					Cost = 5000,
 					HoursAll = 150,
 					HoursDone = 100,
@@ -776,7 +773,7 @@ namespace ERPSzakdolgozat.Models
 					ResourceTask = "Pretends he does something",
 					ProjectId = 1,
 					ResourceSubcontractor = 1,
-					ResourceName = "Külsős Kálmán",
+					ResourceName = "Outsider Otto",
 					Cost = 7000,
 					HoursAll = 50,
 					HoursDone = 50,
@@ -837,7 +834,7 @@ namespace ERPSzakdolgozat.Models
 					ModifiedDate = DateTime.Now,
 					IsHoliday = true,
 					WorkDayDate = new DateTime(2019, 12, 25),
-					WorkDayName = "Karácsony"
+					WorkDayName = "Christmas"
 				},
 				new WorkDay
 				{

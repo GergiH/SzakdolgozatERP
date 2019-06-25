@@ -39,13 +39,13 @@ namespace ERPSzakdolgozat
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-			// TODO dont know how this works... need to change options to something
-			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-				.AddCookie(options =>
-				{
-					options.LoginPath = "/auth/login";
-					options.AccessDeniedPath = "/auth/accessdenied";
-				});
+			// if custom authentication ever needed, this could help
+			//services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+			//	.AddCookie(options =>
+			//	{
+			//		options.LoginPath = "/auth/login";
+			//		options.AccessDeniedPath = "/auth/accessdenied";
+			//	});
 
 			// Setting up policies for authorization
 			services.AddAuthorization(options =>

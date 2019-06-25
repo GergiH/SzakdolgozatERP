@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace ERPSzakdolgozat.Controllers
 {
+	// TODO Excel export if possible within the time limit
 	public class ForecastsController : MyController
 	{
 		private readonly HashSet<int> _employeeIds;
@@ -256,7 +257,6 @@ namespace ERPSzakdolgozat.Controllers
 							.Where(w => w.WorkDayDate >= lastWeekStart && w.WorkDayDate <= lastWeekStart.AddDays(7))
 							.ToListAsync();
 						
-						// TODO make this on FixThisWeek also
 						if (workdays.Count > 0)
 						{
 							foreach (var item in workdays)
@@ -308,6 +308,22 @@ namespace ERPSzakdolgozat.Controllers
 					lastWeekStart = lastWeekStart.AddDays(7);
 					lastWeekNo++;
 
+					double hA = 40;
+					List<WorkDay> workdays = await _context.WorkDays
+						.Where(w => w.WorkDayDate >= lastWeekStart && w.WorkDayDate <= lastWeekStart.AddDays(7))
+						.ToListAsync();
+
+					if (workdays.Count > 0)
+					{
+						foreach (var item in workdays)
+						{
+							if (item.IsHoliday)
+								hA -= 8;
+							else
+								hA += 8;
+						}
+					}
+
 					foreach (int id in _employeeIds)
 					{
 						maxWeekId++;
@@ -317,7 +333,7 @@ namespace ERPSzakdolgozat.Controllers
 							CreatedDate = DateTime.Now,
 							EmployeeId = id,
 							HoursAll = 0,
-							HoursAvailable = 40,
+							HoursAvailable = hA,
 							ModifiedDate = DateTime.Now,
 							ProjectHours = 0,
 							SicknessHours = 0,
@@ -440,6 +456,22 @@ namespace ERPSzakdolgozat.Controllers
 			{
 				if (!fWeeks.Any(f => f.EmployeeId == id))
 				{
+					double hA = 40;
+					List<WorkDay> workdays = await _context.WorkDays
+						.Where(w => w.WorkDayDate >= fw.WeekStart && w.WorkDayDate <= fw.WeekStart.AddDays(7))
+						.ToListAsync();
+
+					if (workdays.Count > 0)
+					{
+						foreach (var item in workdays)
+						{
+							if (item.IsHoliday)
+								hA -= 8;
+							else
+								hA += 8;
+						}
+					}
+
 					maxWeekId++;
 					ForecastWeek newFW = new ForecastWeek
 					{
@@ -447,7 +479,7 @@ namespace ERPSzakdolgozat.Controllers
 						CreatedDate = DateTime.Now,
 						EmployeeId = id,
 						HoursAll = 0,
-						HoursAvailable = 40,
+						HoursAvailable = hA,
 						ModifiedDate = DateTime.Now,
 						ProjectHours = 0,
 						SicknessHours = 0,

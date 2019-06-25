@@ -18,7 +18,6 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Units
-		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Index()
 		{
 			var units = _context.Units.AsNoTracking();
@@ -26,7 +25,6 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Units/Create
-		[Authorize(Policy = "Admin")]
 		public IActionResult Create()
 		{
 			Unit unit = new Unit
@@ -40,7 +38,6 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: Units/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Create(Unit unit)
 		{
 			if (ModelState.IsValid)
@@ -60,7 +57,6 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Units/Edit/5
-		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Edit(int? id)
 		{
 			if (id == null)
@@ -80,7 +76,6 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: Units/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Edit(int id, Unit unit)
 		{
 			if (id != unit.Id)
@@ -115,7 +110,6 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Units/Delete/5
-		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null)
@@ -141,7 +135,6 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: Units/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
-		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
 			var unit = await _context.Units.FindAsync(id);

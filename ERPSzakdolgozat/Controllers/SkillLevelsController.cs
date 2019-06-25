@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace ERPSzakdolgozat.Controllers
 {
+	[Authorize(Policy = "Admin")]
 	public class SkillLevelsController : MyController
 	{
 		public SkillLevelsController(ERPDBContext context) : base(context)
@@ -17,14 +18,12 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: SkillLevels
-		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Index()
 		{
 			return View(await _context.SkillLevels.ToListAsync());
 		}
 
 		// GET: SkillLevels/Create
-		[Authorize(Policy = "Admin")]
 		public IActionResult Create()
 		{
 			SkillLevel sl = new SkillLevel();
@@ -34,7 +33,6 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: SkillLevels/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Create(SkillLevel skillLevel)
 		{
 			if (ModelState.IsValid)
@@ -53,7 +51,6 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: SkillLevels/Edit/5
-		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Edit(int? id)
 		{
 			if (id == null)
@@ -72,7 +69,6 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: SkillLevels/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Edit(int id, SkillLevel skillLevel)
 		{
 			if (id != skillLevel.Id)
@@ -106,7 +102,6 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: SkillLevels/Delete/5
-		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null)
@@ -127,7 +122,6 @@ namespace ERPSzakdolgozat.Controllers
 		// POST: SkillLevels/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
-		[Authorize(Policy = "Admin")]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
 			var skillLevel = await _context.SkillLevels.FindAsync(id);
