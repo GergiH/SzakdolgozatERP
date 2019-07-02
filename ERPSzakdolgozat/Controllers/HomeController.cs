@@ -62,7 +62,8 @@ namespace ERPSzakdolgozat.Controllers
 							.Where(f => f.ActiveFrom.Month == i + 1)
 							.Select(f => f.GrossSalary)
 							.FirstOrDefault(); // TODO if multiple records are present for the same month, a random one is selected (should get the latest of the month)
-						countOfGrosses += actualGross == 0 ? 1 : 0;
+						if (actualGross != 0)
+							countOfGrosses++;
 						grossesForMonth += actualGross;
 					}
 

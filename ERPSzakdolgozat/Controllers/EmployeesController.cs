@@ -247,11 +247,6 @@ namespace ERPSzakdolgozat.Controllers
 			return RedirectToAction(nameof(Index));
 		}
 
-		public async Task<IActionResult> Statistics()
-		{
-			return View();
-		}
-
 		[Authorize(Policy = "HR")]
 		public JsonResult AddFinancial(int currencyId, int workHours, double grossSalary, double cafeteria, double bonus, int employeeId)
 		{
