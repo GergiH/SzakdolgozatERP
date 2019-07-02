@@ -97,7 +97,7 @@
 	<tbody>
 		@foreach (var item in Model)
 		{
-			<tr>
+			<tr style="@(item.HoursAll < item.HoursAvailable ? "font-style: italic; color: #a94442;" : "")">
 				<td>
 					@Html.DisplayFor(modelItem => item.WeekNumber)
 				</td>
