@@ -32,7 +32,7 @@
 				</div>
 			</div>
 
-			@if (User.HasClaim(ClaimTypes.Role, "Admin") || User.HasClaim(ClaimTypes.Role, "HR") || User.HasClaim(ClaimTypes.Role, "HRAssisstant"))
+			@if (User.HasClaim(ClaimTypes.Role, "Admin") || User.HasClaim(ClaimTypes.Role, "HR") || User.HasClaim(ClaimTypes.Role, "HRAssistant"))
 			{
 				<a asp-action="Create" class="btn btn-success btn-sm pull-right mt-lg" data-toggle="tooltip" data-placement="top" title="" data-original-title="Create New">
 					<i class="glyphicon glyphicon-plus"></i>
@@ -63,7 +63,7 @@
 					<td>
 						@Html.DisplayFor(modelItem => item.IsActive)
 					</td>
-					@if (User.HasClaim(ClaimTypes.Role, "Admin") || User.HasClaim(ClaimTypes.Role, "HR") || User.HasClaim(ClaimTypes.Role, "HRAssisstant"))
+					@if (User.HasClaim(ClaimTypes.Role, "Admin") || User.HasClaim(ClaimTypes.Role, "HR") || User.HasClaim(ClaimTypes.Role, "HRAssistant"))
 					{
 						<td class="col-md-2 text-right">
 							<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">

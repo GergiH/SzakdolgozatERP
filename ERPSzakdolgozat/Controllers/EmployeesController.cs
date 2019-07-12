@@ -71,7 +71,7 @@ namespace ERPSzakdolgozat.Controllers
 		}
 
 		// GET: Employees/Details/5
-		[Authorize(Policy = "HRAssisstant")]
+		[Authorize(Policy = "HRAssistant")]
 		public async Task<IActionResult> Details(int? id)
 		{
 			if (id == null)

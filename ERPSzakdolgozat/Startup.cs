@@ -54,11 +54,11 @@ namespace ERPSzakdolgozat
 				options.AddPolicy("HR", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "HR"));
 				options.AddPolicy("ProjectManager", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "ProjectManager"));
 				options.AddPolicy("Sales", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "Sales"));
-				options.AddPolicy("Assisstant", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "Assisstant"));
+				options.AddPolicy("Assistant", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "Assistant"));
 				options.AddPolicy("TeamLeader", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "TeamLeader"));
-				options.AddPolicy("MinusSales", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "TeamLeader", "HR", "ProjectManager", "Assisstant"));
-				options.AddPolicy("MinusAssisstant", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "TeamLeader", "HR", "ProjectManager", "Sales"));
-				options.AddPolicy("HRAssisstant", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "HR", "Assisstant"));
+				options.AddPolicy("MinusSales", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "TeamLeader", "HR", "ProjectManager", "Assistant"));
+				options.AddPolicy("MinusAssistant", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "TeamLeader", "HR", "ProjectManager", "Sales"));
+				options.AddPolicy("HRAssistant", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "HR", "Assistant"));
 			});
 
 			services.AddScoped<IClaimsTransformation, ClaimsTransformer>();

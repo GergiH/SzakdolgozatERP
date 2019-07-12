@@ -39,7 +39,7 @@ namespace ERPSzakdolgozat.Controllers
         }
 
 		// GET: Subcontractors/Create
-		[Authorize(Policy = "HRAssisstant")]
+		[Authorize(Policy = "HRAssistant")]
 		public IActionResult Create()
         {
 			Subcontractor sub = new Subcontractor();
@@ -49,7 +49,7 @@ namespace ERPSzakdolgozat.Controllers
         // POST: Subcontractors/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-		[Authorize(Policy = "HRAssisstant")]
+		[Authorize(Policy = "HRAssistant")]
 		public async Task<IActionResult> Create(Subcontractor subcontractor)
         {
             if (ModelState.IsValid)
@@ -68,7 +68,7 @@ namespace ERPSzakdolgozat.Controllers
         }
 
         // GET: Subcontractors/Edit/5
-		[Authorize(Policy = "HRAssisstant")]
+		[Authorize(Policy = "HRAssistant")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -87,7 +87,7 @@ namespace ERPSzakdolgozat.Controllers
         // POST: Subcontractors/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-		[Authorize(Policy = "HRAssisstant")]
+		[Authorize(Policy = "HRAssistant")]
 		public async Task<IActionResult> Edit(int id, Subcontractor subcontractor)
         {
             if (id != subcontractor.Id)

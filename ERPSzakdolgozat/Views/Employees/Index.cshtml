@@ -101,7 +101,7 @@
 					@Html.DisplayFor(modelItem => item.Email)
 				</td>
 
-				@if (User.HasClaim(ClaimTypes.Role, "Admin") || User.HasClaim(ClaimTypes.Role, "HR") || User.HasClaim(ClaimTypes.Role, "HRAssisstant"))
+				@if (User.HasClaim(ClaimTypes.Role, "Admin") || User.HasClaim(ClaimTypes.Role, "HR") || User.HasClaim(ClaimTypes.Role, "HRAssistant"))
 				{
 					<td class="col-md-2 text-right text-nowrap">
 						@if (User.HasClaim(ClaimTypes.Role, "Admin") || User.HasClaim(ClaimTypes.Role, "HR"))

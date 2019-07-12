@@ -140,7 +140,7 @@ namespace ERPSzakdolgozat.Models
 					Id = 5,
 					CreatedDate = DateTime.Now,
 					ModifiedDate = DateTime.Now,
-					RoleName = "Assisstant"
+					RoleName = "Assistant"
 				},
 				new AppRole
 				{
