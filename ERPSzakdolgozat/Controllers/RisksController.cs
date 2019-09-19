@@ -47,19 +47,27 @@ namespace ERPSzakdolgozat.Controllers
 
 				// create ProjectRisk for all Projects
 				List<Project> projects = await _context.Projects.ToListAsync();
-				foreach (Project proj in projects)
-				{
-					ProjectRisk newPR = new ProjectRisk()
-					{
-						CreatedDate = DateTime.Now,
-						ModifiedDate = DateTime.Now,
-						Id = _context.ProjectRisks.Max(r => r.Id) + 1,
-						IsSelected = false,
-						ProjectId = proj.Id,
-						RiskId = risk.Id
-					};
+                int projRiskMax = _context.ProjectRisks.Max(r => r.Id) + 1;
 
-					await _context.AddAsync(newPR);
+                foreach (Project proj in projects)
+				{
+                    bool exists = _context.ProjectRisks.Where(r => r.ProjectId == proj.Id).Any(r => r.RiskId == risk.Id);
+
+                    if (exists == false)
+                    {
+                        ProjectRisk newPR = new ProjectRisk()
+                        {
+                            CreatedDate = DateTime.Now,
+                            ModifiedDate = DateTime.Now,
+                            Id = projRiskMax,
+                            IsSelected = false,
+                            ProjectId = proj.Id,
+                            RiskId = risk.Id
+                        };
+
+                        await _context.AddAsync(newPR);
+                        projRiskMax++;
+                    }
 				}
 				await _context.SaveChangesAsync();
 
@@ -147,17 +155,9 @@ namespace ERPSzakdolgozat.Controllers
 			_context.Risks.Remove(risk);
 			await _context.SaveChangesAsync();
 
-			// remove ProjectRisk for all Projects
-			List<Project> projects = await _context.Projects.ToListAsync();
-			foreach (Project proj in projects)
-			{
-				ProjectRisk pr = _context.ProjectRisks.Where(r => r.ProjectId == proj.Id && r.RiskId == id).FirstOrDefault();
-
-				if (pr != null)
-				{
-					_context.Remove(pr);
-				}
-			}
+            // remove ProjectRisk for all Projects
+            List<ProjectRisk> risksToRemove = await _context.ProjectRisks.Where(r => r.RiskId == id).ToListAsync();
+            _context.ProjectRisks.RemoveRange(risksToRemove);
 			await _context.SaveChangesAsync();
 
 			TempData["Toast"] = Toasts.Deleted;
