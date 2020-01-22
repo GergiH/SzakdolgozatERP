@@ -316,7 +316,7 @@ namespace ERPSzakdolgozat.Models
 					CreatedDate = DateTime.Now,
 					ModifiedDate = DateTime.Now,
 					ExchangeValue = 1,
-					InYear = 2019,
+					InYear = 2020,
 					CurrencyName = "HUF"
 				},
 				new Currency
@@ -325,7 +325,7 @@ namespace ERPSzakdolgozat.Models
 					CreatedDate = DateTime.Now,
 					ModifiedDate = DateTime.Now,
 					ExchangeValue = 300,
-					InYear = 2019,
+					InYear = 2020,
 					CurrencyName = "USD"
 				});
 
@@ -812,8 +812,8 @@ namespace ERPSzakdolgozat.Models
 					SicknessHours = 0,
 					TrainingHours = 0,
 					VacationHours = 0,
-					WeekNumber = 24,
-					WeekStart = new DateTime(2019, 6, 10)
+					WeekNumber = 2,
+					WeekStart = new DateTime(2020, 1, 6)
 				});
 
 			modelBuilder.Entity<DeleteRequest>().HasData(
@@ -826,24 +826,24 @@ namespace ERPSzakdolgozat.Models
 					IsFulfilled = false
 				});
 
-			modelBuilder.Entity<WorkDay>().HasData(
-				new WorkDay
-				{
-					Id = 1,
-					CreatedDate = DateTime.Now,
-					ModifiedDate = DateTime.Now,
-					IsHoliday = true,
-					WorkDayDate = new DateTime(2019, 12, 25),
-					WorkDayName = "Christmas"
-				},
-				new WorkDay
-				{
-					Id = 2,
-					CreatedDate = DateTime.Now,
-					ModifiedDate = DateTime.Now,
-					IsHoliday = false,
-					WorkDayDate = new DateTime(2019, 08, 10)
-				});
+            modelBuilder.Entity<WorkDay>().HasData(
+                new WorkDay
+                {
+                    Id = 1,
+                    CreatedDate = DateTime.Now,
+                    ModifiedDate = DateTime.Now,
+                    IsHoliday = true,
+                    WorkDayDate = new DateTime(2020, 12, 25),
+                    WorkDayName = "Christmas"
+                });
+				//new WorkDay
+				//{
+				//	Id = 2,
+				//	CreatedDate = DateTime.Now,
+				//	ModifiedDate = DateTime.Now,
+				//	IsHoliday = false,
+				//	WorkDayDate = new DateTime(2020, 1, 8)
+				//});
 
 			// Set relations
 			modelBuilder.Entity<EmployeeFinancial>()
